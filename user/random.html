@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Random Number Generation &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/random';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Device management" href="device-management.html" />
+    <link rel="prev" title="Cooperative Groups" href="cooperative_groups.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Random...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="random-number-generation">
+<span id="cuda-random"></span><h1>Random Number Generation<a class="headerlink" href="#random-number-generation" title="Link to this heading">#</a></h1>
+<p>Numba provides a random number generation algorithm that can be executed on
+the GPU.  Due to technical issues with how NVIDIA implemented cuRAND, however,
+Numba’s GPU random number generator is not based on cuRAND.  Instead, Numba’s
+GPU RNG is an implementation of the <a class="reference external" href="http://xoroshiro.di.unimi.it/">xoroshiro128+ algorithm</a>. The xoroshiro128+ algorithm has a period of
+<code class="docutils literal notranslate"><span class="pre">2**128</span> <span class="pre">-</span> <span class="pre">1</span></code>, which is shorter than the period of the XORWOW algorithm
+used by default in cuRAND, but xoroshiro128+ still passes the BigCrush tests
+of random number generator quality.</p>
+<p>When using any RNG on the GPU, it is important to make sure that each thread
+has its own RNG state, and they have been initialized to produce non-overlapping
+sequences.  The  numba.cuda.random module provides a host function to do this,
+as well as CUDA device functions to obtain uniformly or normally distributed
+random numbers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Numba (like cuRAND) uses the
+<cite>Box-Muller transform &lt;https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform&gt;</cite>
+to generate normally distributed random numbers from a uniform generator.
+However, Box-Muller generates pairs of random numbers, and the current
+implementation only returns one of them.  As a result, generating normally
+distributed values is half the speed of uniformly distributed values.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">create_xoroshiro128p_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsequence_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Returns a new device array initialized for n random number generators.</p>
+<p>This initializes the RNG states so that each state in the array corresponds
+subsequences in the separated by 2**64 steps from each other in the main
+sequence.  Therefore, as long no CUDA thread requests more than 2**64
+random numbers, all of the RNG states produced by this function are
+guaranteed to be independent.</p>
+<p>The subsequence_start parameter can be used to advance the first RNG state
+by a multiple of 2**64 steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – number of RNG states to create</p></li>
+<li><p><strong>seed</strong> (<em>uint64</em>) – starting seed for list of generators</p></li>
+<li><p><strong>subsequence_start</strong> (<em>uint64</em>)</p></li>
+<li><p><strong>stream</strong> (<em>CUDA stream</em>) – stream to run initialization kernel on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">init_xoroshiro128p_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsequence_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Initialize RNG states on the GPU for parallel generators.</p>
+<p>This initializes the RNG states so that each state in the array corresponds
+subsequences in the separated by 2**64 steps from each other in the main
+sequence.  Therefore, as long no CUDA thread requests more than 2**64
+random numbers, all of the RNG states produced by this function are
+guaranteed to be independent.</p>
+<p>The subsequence_start parameter can be used to advance the first RNG state
+by a multiple of 2**64 steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> (<em>1D DeviceNDArray</em><em>, </em><em>dtype=xoroshiro128p_dtype</em>) – array of RNG states</p></li>
+<li><p><strong>seed</strong> (<em>uint64</em>) – starting seed for list of generators</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">xoroshiro128p_normal_float32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a normally distributed float32 and advance <code class="docutils literal notranslate"><span class="pre">states[index]</span></code>.</p>
+<p>The return value is drawn from a Gaussian of mean=0 and sigma=1 using the
+Box-Muller transform.  This advances the RNG sequence by two steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> (<em>1D array</em><em>, </em><em>dtype=xoroshiro128p_dtype</em>) – array of RNG states</p></li>
+<li><p><strong>index</strong> (<em>int64</em>) – offset in states to update</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">xoroshiro128p_normal_float64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a normally distributed float32 and advance <code class="docutils literal notranslate"><span class="pre">states[index]</span></code>.</p>
+<p>The return value is drawn from a Gaussian of mean=0 and sigma=1 using the
+Box-Muller transform.  This advances the RNG sequence by two steps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> (<em>1D array</em><em>, </em><em>dtype=xoroshiro128p_dtype</em>) – array of RNG states</p></li>
+<li><p><strong>index</strong> (<em>int64</em>) – offset in states to update</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float64</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">xoroshiro128p_uniform_float32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a float32 in range [0.0, 1.0) and advance <code class="docutils literal notranslate"><span class="pre">states[index]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> (<em>1D array</em><em>, </em><em>dtype=xoroshiro128p_dtype</em>) – array of RNG states</p></li>
+<li><p><strong>index</strong> (<em>int64</em>) – offset in states to update</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.random.</span></span><span class="sig-name descname"><span class="pre">xoroshiro128p_uniform_float64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a float64 in range [0.0, 1.0) and advance <code class="docutils literal notranslate"><span class="pre">states[index]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>states</strong> (<em>1D array</em><em>, </em><em>dtype=xoroshiro128p_dtype</em>) – array of RNG states</p></li>
+<li><p><strong>index</strong> (<em>int64</em>) – offset in states to update</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float64</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="a-simple-example">
+<h2>A simple example<a class="headerlink" href="#a-simple-example" title="Link to this heading">#</a></h2>
+<p>Here is a sample program that uses the random number generator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="kn">from</span> <span class="nn">numba.cuda.random</span> <span class="kn">import</span> <span class="n">create_xoroshiro128p_states</span><span class="p">,</span> <span class="n">xoroshiro128p_uniform_float32</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">compute_pi</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the maximum value in values and store in result[0]&quot;&quot;&quot;</span>
+    <span class="n">thread_id</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Compute pi by drawing random (x, y) points and finding what</span>
+    <span class="c1"># fraction lie inside a unit circle</span>
+    <span class="n">inside</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xoroshiro128p_uniform_float32</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">thread_id</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">xoroshiro128p_uniform_float32</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">thread_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">inside</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">out</span><span class="p">[</span><span class="n">thread_id</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">inside</span> <span class="o">/</span> <span class="n">iterations</span>
+
+<span class="n">threads_per_block</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">blocks</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="n">rng_states</span> <span class="o">=</span> <span class="n">create_xoroshiro128p_states</span><span class="p">(</span><span class="n">threads_per_block</span> <span class="o">*</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">threads_per_block</span> <span class="o">*</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">compute_pi</span><span class="p">[</span><span class="n">blocks</span><span class="p">,</span> <span class="n">threads_per_block</span><span class="p">](</span><span class="n">rng_states</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pi:&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="an-example-of-managing-rng-state-size-and-using-a-3d-grid">
+<h2>An example of managing RNG state size and using a 3D grid<a class="headerlink" href="#an-example-of-managing-rng-state-size-and-using-a-3d-grid" title="Link to this heading">#</a></h2>
+<p>The number of RNG states scales with the number of threads using the RNG, so it
+is often better to use strided loops in conjunction with the RNG in order to
+keep the state size manageable.</p>
+<p>In the following example, which initializes a large 3D array with random
+numbers, using one thread per output element would result in 453,617,100 RNG
+states.  This would take a long time to initialize and poorly utilize the GPU.
+Instead, it uses a fixed size 3D grid with a total of 2,097,152 (<code class="docutils literal notranslate"><span class="pre">(16</span> <span class="pre">**</span> <span class="pre">3)</span> <span class="pre">*</span>
+<span class="pre">(8</span> <span class="pre">**</span> <span class="pre">3)</span></code>) threads striding over the output array. The 3D thread indices
+<code class="docutils literal notranslate"><span class="pre">startx</span></code>, <code class="docutils literal notranslate"><span class="pre">starty</span></code>, and <code class="docutils literal notranslate"><span class="pre">startz</span></code>  are linearized into a 1D index,
+<code class="docutils literal notranslate"><span class="pre">tid</span></code>, to index into the 2,097,152 RNG states.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_3d_grid</span> <span class="pre">of</span> <span class="pre">``numba/cuda/tests/doc_example/test_random.py</span></code></span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">numba.cuda.random</span> <span class="kn">import</span> <span class="p">(</span><span class="n">create_xoroshiro128p_states</span><span class="p">,</span>
+<span class="linenos"> 3</span>                               <span class="n">xoroshiro128p_uniform_float32</span><span class="p">)</span>
+<span class="linenos"> 4</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 7</span><span class="k">def</span> <span class="nf">random_3d</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">):</span>
+<span class="linenos"> 8</span>    <span class="c1"># Per-dimension thread indices and strides</span>
+<span class="linenos"> 9</span>    <span class="n">startx</span><span class="p">,</span> <span class="n">starty</span><span class="p">,</span> <span class="n">startz</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">10</span>    <span class="n">stridex</span><span class="p">,</span> <span class="n">stridey</span><span class="p">,</span> <span class="n">stridez</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">gridsize</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="c1"># Linearized thread index</span>
+<span class="linenos">13</span>    <span class="n">tid</span> <span class="o">=</span> <span class="p">(</span><span class="n">startz</span> <span class="o">*</span> <span class="n">stridey</span> <span class="o">*</span> <span class="n">stridex</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">starty</span> <span class="o">*</span> <span class="n">stridex</span><span class="p">)</span> <span class="o">+</span> <span class="n">startx</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="c1"># Use strided loops over the array to assign a random value to each entry</span>
+<span class="linenos">16</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">startz</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stridez</span><span class="p">):</span>
+<span class="linenos">17</span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">starty</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">stridey</span><span class="p">):</span>
+<span class="linenos">18</span>            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">startx</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">stridex</span><span class="p">):</span>
+<span class="linenos">19</span>                <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">xoroshiro128p_uniform_float32</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">tid</span><span class="p">)</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="c1"># Array dimensions</span>
+<span class="linenos">22</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="mi">701</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">719</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="c1"># Block and grid dimensions</span>
+<span class="linenos">25</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">bz</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span>
+<span class="linenos">26</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">gz</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="c1"># Total number of threads</span>
+<span class="linenos">29</span><span class="n">nthreads</span> <span class="o">=</span> <span class="n">bx</span> <span class="o">*</span> <span class="n">by</span> <span class="o">*</span> <span class="n">bz</span> <span class="o">*</span> <span class="n">gx</span> <span class="o">*</span> <span class="n">gy</span> <span class="o">*</span> <span class="n">gz</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="c1"># Initialize a state for each thread</span>
+<span class="linenos">32</span><span class="n">rng_states</span> <span class="o">=</span> <span class="n">create_xoroshiro128p_states</span><span class="p">(</span><span class="n">nthreads</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="c1"># Generate random numbers</span>
+<span class="linenos">35</span><span class="n">arr</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">device_array</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="linenos">36</span><span class="n">random_3d</span><span class="p">[(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">gz</span><span class="p">),</span> <span class="p">(</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">bz</span><span class="p">)](</span><span class="n">arr</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cooperative_groups.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cooperative Groups</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="device-management.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Device management</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example">A simple example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-managing-rng-state-size-and-using-a-3d-grid">An example of managing RNG state size and using a 3D grid</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

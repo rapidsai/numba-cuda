@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Compiling Python functions for use with other languages &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/cuda_compilation';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="On-disk Kernel Caching" href="caching.html" />
+    <link rel="prev" title="Calling foreign functions from Python kernels" href="cuda_ffi.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Compiling...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="compiling-python-functions-for-use-with-other-languages">
+<span id="cuda-compilation"></span><h1>Compiling Python functions for use with other languages<a class="headerlink" href="#compiling-python-functions-for-use-with-other-languages" title="Link to this heading">#</a></h1>
+<p>Numba can compile Python code to PTX or LTO-IR so that Python functions can be
+incorporated into CUDA code written in other languages (e.g. C/C++).  It is
+commonly used to support User-Defined Functions written in Python within the
+context of a library or application.</p>
+<p>The compilation API can be used without a GPU present, as it uses no driver
+functions and avoids initializing CUDA in the process. It is invoked through
+the following function:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ptx'</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Compile a Python function to PTX or LTO-IR for a given set of argument
+types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pyfunc</strong> – The Python function to compile.</p></li>
+<li><p><strong>sig</strong> – The signature representing the function’s input and output
+types. If this is a tuple of argument types without a return
+type, the inferred return type is returned by this function. If
+a signature including a return type is passed, the compiled code
+will include a cast from the inferred return type to the
+specified return type, and this function will return the
+specified return type.</p></li>
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include debug info in the compiled code.</p></li>
+<li><p><strong>lineinfo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include a line mapping from the compiled code
+to the source code. Usually this is used with optimized
+code (since debug mode would automatically include this),
+so we want debug info in the LLVM IR but only the line
+mapping in the final output.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to compile a device function.</p></li>
+<li><p><strong>fastmath</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to enable fast math flags (ftz=1, prec_sqrt=0,
+prec_div=, and fma=1)</p></li>
+<li><p><strong>cc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a>) – Compute capability to compile for, as a tuple
+<code class="docutils literal notranslate"><span class="pre">(MAJOR,</span> <span class="pre">MINOR)</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">0)</span></code>.</p></li>
+<li><p><strong>opt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable optimizations. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>abi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ABI for a compiled function - either <code class="docutils literal notranslate"><span class="pre">&quot;numba&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;c&quot;</span></code>. Note that the Numba ABI is not considered stable.
+The C ABI is only supported for device functions at present.</p></li>
+<li><p><strong>abi_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dict of ABI-specific options. The <code class="docutils literal notranslate"><span class="pre">&quot;c&quot;</span></code> ABI supports
+one option, <code class="docutils literal notranslate"><span class="pre">&quot;abi_name&quot;</span></code>, for providing the wrapper
+function’s name. The <code class="docutils literal notranslate"><span class="pre">&quot;numba&quot;</span></code> ABI has no options.</p></li>
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Type of output to generate, either <code class="docutils literal notranslate"><span class="pre">&quot;ptx&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;ltoir&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(code, resty): The compiled code and inferred return type</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>If a device is available and compiled code for the compute capability of the
+current device is required (for example when building a JIT compilation
+workflow using Numba), the <code class="docutils literal notranslate"><span class="pre">compile_for_current_device</span></code> function can be used:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_for_current_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ptx'</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Compile a Python function to PTX or LTO-IR for a given signature for the
+current device’s compute capabilility. This calls <a class="reference internal" href="../reference/host.html#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> with an
+appropriate <code class="docutils literal notranslate"><span class="pre">cc</span></code> value for the current device.</p>
+</dd></dl>
+
+<p>Most users should use the two functions described above; for backwards
+compatibility with existing use cases, the following functions are also
+provided:</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_ptx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numba'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Compile a Python function to PTX for a given signature. See
+<a class="reference internal" href="../reference/host.html#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>. The defaults for this function are to compile a kernel
+with the Numba ABI, rather than <a class="reference internal" href="../reference/host.html#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>’s default of compiling a
+device function with the C ABI.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_ptx_for_current_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numba'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Compile a Python function to PTX for a given signature for the current
+device’s compute capabilility. See <a class="reference internal" href="../reference/host.html#numba.cuda.compile_ptx" title="numba.cuda.compile_ptx"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile_ptx()</span></code></a>.</p>
+</dd></dl>
+
+<section id="using-the-c-abi">
+<span id="cuda-using-the-c-abi"></span><h2>Using the C ABI<a class="headerlink" href="#using-the-c-abi" title="Link to this heading">#</a></h2>
+<p>Numba internally uses its own ABI - this is as described in
+<a class="reference internal" href="cuda_ffi.html#device-function-abi"><span class="std std-ref">Device function ABI</span></a>, without the <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> modifier. Calling Numba
+ABI device functions requires three issues to be addressed:</p>
+<ul class="simple">
+<li><p>The name of the function will be mangled according to Numba’s ABI rules -
+these are based on the Itanium C++ ABI rules, but are extended beyond its
+specifications.</p></li>
+<li><p>The Python return value is expected to be stored into a pointer value passed
+in the first argument.</p></li>
+<li><p>The return value of the compiled function will contain a status code, instead
+of the return value of the function. For use of Numba-compiled functions
+outside of Numba, this can generally be ignored.</p></li>
+</ul>
+<p>A simple way to address all these issues is to compile device functions with
+the C ABI instead. This results in the following:</p>
+<ul class="simple">
+<li><p>The name of the device function in the compiled code can be controlled. By
+default it will match the name of the function in Python, so it is easy to
+determine.  This is the function’s <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, rather than
+<code class="docutils literal notranslate"><span class="pre">__qualname__</span></code>, because <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code> encodes additional scoping
+information that would make the function name hard to predict, and in a lot
+of cases, an illegal identifier in C.</p></li>
+<li><p>The returned value of the Python code is placed in the return value of the
+compiled function.</p></li>
+<li><p>Status codes are ignored / unreported, so they do not need to be handled.</p></li>
+</ul>
+<p>If the name of the compiled function needs to be specified, it can be controlled
+by passing the name in the <code class="docutils literal notranslate"><span class="pre">abi_info</span></code> dict, under the key <code class="docutils literal notranslate"><span class="pre">'abi_name'</span></code>.</p>
+<p>Compilation with the C ABI is the default when using the <a class="reference external" href="https://docs.python.org/3/library/functions.html#compile" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">compile_for_current_device()</span></code> functions. The <code class="xref py py-func docutils literal notranslate"><span class="pre">compile_ptx()</span></code> and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">compile_ptx_for_current_device()</span></code> functions default to the Numba ABI in
+order to maintain compatibility with existing use cases.</p>
+</section>
+<section id="c-and-numba-abi-examples">
+<h2>C and Numba ABI examples<a class="headerlink" href="#c-and-numba-abi-examples" title="Link to this heading">#</a></h2>
+<p>The following function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>compiled for the Numba ABI using, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ptx</span><span class="p">,</span> <span class="n">resty</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">compile_ptx</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">int32</span><span class="p">(</span><span class="n">int32</span><span class="p">,</span> <span class="n">int32</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>results in PTX where the function prototype is:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.visible .func  (.param .b32 func_retval0) _ZN8__main__3addB2v1B94cw51cXTLSUwv1sCUt9Uw1VEw0NRRQPKzLTg4gaGKFsG2oMQGEYakJSQB1PQBk0Bynm21OiwU1a0UoLGhDpQE8oxrNQE_3dEii(
+    .param .b64 _ZN8__main__3addB2v1B94cw51cXTLSUwv1sCUt9Uw1VEw0NRRQPKzLTg4gaGKFsG2oMQGEYakJSQB1PQBk0Bynm21OiwU1a0UoLGhDpQE8oxrNQE_3dEii_param_0,
+    .param .b32 _ZN8__main__3addB2v1B94cw51cXTLSUwv1sCUt9Uw1VEw0NRRQPKzLTg4gaGKFsG2oMQGEYakJSQB1PQBk0Bynm21OiwU1a0UoLGhDpQE8oxrNQE_3dEii_param_1,
+    .param .b32 _ZN8__main__3addB2v1B94cw51cXTLSUwv1sCUt9Uw1VEw0NRRQPKzLTg4gaGKFsG2oMQGEYakJSQB1PQBk0Bynm21OiwU1a0UoLGhDpQE8oxrNQE_3dEii_param_2
+ )
+</pre></div>
+</div>
+<p>Note that there are three parameters, for the pointer to the return value,
+<code class="docutils literal notranslate"><span class="pre">x</span></code>, and <code class="docutils literal notranslate"><span class="pre">y</span></code>. The name is mangled in a way that is hard to predict outside
+of Numba internals.</p>
+<p>Compiling for the C ABI with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ptx</span><span class="p">,</span> <span class="n">resty</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">compile_ptx</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">int32</span><span class="p">(</span><span class="n">int32</span><span class="p">,</span> <span class="n">int32</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">abi</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>instead results in the following PTX prototype:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.visible .func  (.param .b32 func_retval0) add(
+    .param .b32 add_param_0,
+    .param .b32 add_param_1
+)
+</pre></div>
+</div>
+<p>The function name matches the Python source function name, and there are exactly
+two parameters, for <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>. The result of the function is directly
+placed in the return value:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>add.s32      %r3, %r2, %r1;
+st.param.b32         [func_retval0+0], %r3;
+</pre></div>
+</div>
+<p>To distinguish one variant of the compiled <code class="docutils literal notranslate"><span class="pre">add()</span></code> function from another, the
+following example specifies its ABI name in the <code class="docutils literal notranslate"><span class="pre">abi_info</span></code> dict:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ptx</span><span class="p">,</span> <span class="n">resty</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">compile_ptx</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">float32</span><span class="p">(</span><span class="n">float32</span><span class="p">,</span> <span class="n">float32</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                              <span class="n">abi</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">abi_info</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;abi_name&quot;</span><span class="p">:</span> <span class="s2">&quot;add_f32&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Resulting in the PTX prototype:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>.visible .func  (.param .b32 func_retval0) add_f32(
+    .param .b32 add_f32_param_0,
+    .param .b32 add_f32_param_1
+)
+</pre></div>
+</div>
+<p>which will not clash with definitions by other names (e.g. the variant for
+<code class="docutils literal notranslate"><span class="pre">int32</span></code> above).</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cuda_ffi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Calling foreign functions from Python kernels</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="caching.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">On-disk Kernel Caching</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-c-abi">Using the C ABI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-and-numba-abi-examples">C and Numba ABI examples</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

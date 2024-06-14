@@ -1,0 +1,1035 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CUDA Array Interface (Version 3) &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/cuda_array_interface';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="External Memory Management (EMM) Plugin interface" href="external-memory.html" />
+    <link rel="prev" title="Sharing CUDA Memory" href="ipc.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">CUDA Array...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cuda-array-interface-version-3">
+<span id="cuda-array-interface"></span><h1>CUDA Array Interface (Version 3)<a class="headerlink" href="#cuda-array-interface-version-3" title="Link to this heading">#</a></h1>
+<p>The <em>CUDA Array Interface</em> (or CAI) is created for interoperability between
+different implementations of CUDA array-like objects in various projects. The
+idea is borrowed from the <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.interface.html#__array_interface__">NumPy array interface</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, we only define the Python-side interface.  In the future, we may
+add a C-side interface for efficient exchange of the information in
+compiled code.</p>
+</div>
+<section id="python-interface-specification">
+<h2>Python Interface Specification<a class="headerlink" href="#python-interface-specification" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Experimental feature.  Specification may change.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code> attribute returns a dictionary (<code class="docutils literal notranslate"><span class="pre">dict</span></code>)
+that must contain the following entries:</p>
+<ul>
+<li><p><strong>shape</strong>: <code class="docutils literal notranslate"><span class="pre">(integer,</span> <span class="pre">...)</span></code></p>
+<p>A tuple of <code class="docutils literal notranslate"><span class="pre">int</span></code> (or <code class="docutils literal notranslate"><span class="pre">long</span></code>) representing the size of each dimension.</p>
+</li>
+<li><p><strong>typestr</strong>: <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+<p>The type string.  This has the same definition as <code class="docutils literal notranslate"><span class="pre">typestr</span></code> in the
+<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.interface.html#__array_interface__">NumPy array interface</a>.</p>
+</li>
+<li><p><strong>data</strong>: <code class="docutils literal notranslate"><span class="pre">(integer,</span> <span class="pre">boolean)</span></code></p>
+<p>The <strong>data</strong> is a 2-tuple.  The first element is the data pointer
+as a Python <code class="docutils literal notranslate"><span class="pre">int</span></code> (or <code class="docutils literal notranslate"><span class="pre">long</span></code>).  The data must be device-accessible.
+For zero-size arrays, use <code class="docutils literal notranslate"><span class="pre">0</span></code> here.
+The second element is the read-only flag as a Python <code class="docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<p>Because the user of the interface may or may not be in the same context,
+the most common case is to use <code class="docutils literal notranslate"><span class="pre">cuPointerGetAttribute</span></code> with
+<code class="docutils literal notranslate"><span class="pre">CU_POINTER_ATTRIBUTE_DEVICE_POINTER</span></code> in the CUDA driver API (or the
+equivalent CUDA Runtime API) to retrieve a device pointer that
+is usable in the currently active context.</p>
+</li>
+<li><p><strong>version</strong>: <code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
+<p>An integer for the version of the interface being exported.
+The current version is <em>3</em>.</p>
+</li>
+</ul>
+<p>The following are optional entries:</p>
+<ul>
+<li><p><strong>strides</strong>: <code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">(integer,</span> <span class="pre">...)</span></code></p>
+<p>If <strong>strides</strong> is not given, or it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the array is in
+C-contiguous layout. Otherwise, a tuple of <code class="docutils literal notranslate"><span class="pre">int</span></code> (or <code class="docutils literal notranslate"><span class="pre">long</span></code>) is explicitly
+given for representing the number of bytes to skip to access the next
+element at each dimension.</p>
+</li>
+<li><p><strong>descr</strong></p>
+<p>This is for describing more complicated types.  This follows the same
+specification as in the <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.interface.html#__array_interface__">NumPy array interface</a>.</p>
+</li>
+<li><p><strong>mask</strong>: <code class="docutils literal notranslate"><span class="pre">None</span></code> or object exposing the <code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code></p>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> then all values in <strong>data</strong> are valid. All elements of the mask
+array should be interpreted only as true or not true indicating which
+elements of this array are valid. This has the same definition as <code class="docutils literal notranslate"><span class="pre">mask</span></code>
+in the <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.interface.html#__array_interface__">NumPy array interface</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Numba does not currently support working with masked CUDA arrays
+and will raise a <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> exception if one is passed
+to a GPU function.</p>
+</div>
+</li>
+<li><p><strong>stream</strong>: <code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">integer</span></code></p>
+<p>An optional stream upon which synchronization must take place at the point of
+consumption, either by synchronizing on the stream or enqueuing operations on
+the data on the given stream. Integer values in this entry are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: This is disallowed as it would be ambiguous between <code class="docutils literal notranslate"><span class="pre">None</span></code> and the
+default stream, and also between the legacy and per-thread default streams.
+Any use case where <code class="docutils literal notranslate"><span class="pre">0</span></code> might be given should either use <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">2</span></code> instead for clarity.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: The legacy default stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: The per-thread default stream.</p></li>
+<li><p>Any other integer: a <code class="docutils literal notranslate"><span class="pre">cudaStream_t</span></code> represented as a Python integer.</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">None</span></code>, no synchronization is required. See the
+<a class="reference internal" href="#cuda-array-interface-synchronization"><span class="std std-ref">Synchronization</span></a> section below for further details.</p>
+<p>In a future revision of the interface, this entry may be expanded (or another
+entry added) so that an event to synchronize on can be specified instead of a
+stream.</p>
+</li>
+</ul>
+<section id="synchronization">
+<span id="cuda-array-interface-synchronization"></span><h3>Synchronization<a class="headerlink" href="#synchronization" title="Link to this heading">#</a></h3>
+<section id="definitions">
+<h4>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h4>
+<p>When discussing synchronization, the following definitions are used:</p>
+<ul class="simple">
+<li><p><em>Producer</em>: The library / object on which <code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code> is
+accessed.</p></li>
+<li><p><em>Consumer</em>: The library / function that accesses the
+<code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code> of the Producer.</p></li>
+<li><p><em>User Code</em>: Code that induces a Producer and Consumer to share data through
+the CAI.</p></li>
+<li><p><em>User</em>: The person writing or maintaining the User Code. The User may
+implement User Code without knowledge of the CAI, since the CAI accesses can
+be hidden from their view.</p></li>
+</ul>
+<p>In the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cupy</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+
+<span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">stride</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">gridsize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stride</span><span class="p">):</span>
+        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">cupy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">cupy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">add</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">](</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the <code class="docutils literal notranslate"><span class="pre">add</span></code> kernel is launched:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">out</span></code> are Producers.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">add</span></code> kernel is the Consumer.</p></li>
+<li><p>The User Code is specifically <code class="docutils literal notranslate"><span class="pre">add[1,</span> <span class="pre">32](a,</span> <span class="pre">b,</span> <span class="pre">out)</span></code>.</p></li>
+<li><p>The author of the code is the User.</p></li>
+</ul>
+</section>
+<section id="design-motivations">
+<h4>Design Motivations<a class="headerlink" href="#design-motivations" title="Link to this heading">#</a></h4>
+<p>Elements of the CAI design related to synchronization seek to fulfill these
+requirements:</p>
+<ol class="arabic">
+<li><p>Producers and Consumers that exchange data through the CAI must be able to do
+so without data races.</p></li>
+<li><p>Requirement 1 should be met without requiring the user to be
+aware of any particulars of the CAI - in other words, exchanging data between
+Producers and Consumers that operate on data asynchronously should be correct
+by default.</p>
+<ul>
+<li><p>An exception to this requirement is made for Producers and Consumers that
+explicitly document that the User is required to take additional steps to
+ensure correctness with respect to synchronization. In this case, Users
+are required to understand the details of the CUDA Array Interface, and
+the Producer/Consumer library documentation must specify the steps that
+Users are required to take.</p>
+<p>Use of this exception should be avoided where possible, as it is provided
+for libraries that cannot implement the synchronization semantics without
+the involvement of the User - for example, those interfacing with
+third-party libraries oblivious to the CUDA Array Interface.</p>
+</li>
+</ul>
+</li>
+<li><p>Where the User is aware of the particulars of the CAI and implementation
+details of the Producer and Consumer, they should be able to, at their
+discretion, override some of the synchronization semantics of the interface
+to reduce the synchronization overhead. Overriding synchronization semantics
+implies that:</p>
+<ul class="simple">
+<li><p>The CAI design, and the design and implementation of the Producer and
+Consumer do not specify or guarantee correctness with respect to data
+races.</p></li>
+<li><p>Instead, the User is responsible for ensuring correctness with respect to
+data races.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="interface-requirements">
+<h4>Interface Requirements<a class="headerlink" href="#interface-requirements" title="Link to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">stream</span></code> entry enables Producers and Consumers to avoid hazards when
+exchanging data. Expected behaviour of the Consumer is as follows:</p>
+<ul>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">stream</span></code> is not present or is <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
+<ul class="simple">
+<li><p>No synchronization is required on the part of the Consumer.</p></li>
+<li><p>The Consumer may enqueue operations on the underlying data immediately on
+any stream.</p></li>
+</ul>
+</li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">stream</span></code> is an integer, its value indicates the stream on which the
+Producer may have in-progress operations on the data, and which the Consumer
+is expected to either:</p>
+<ul class="simple">
+<li><p>Synchronize on before accessing the data, or</p></li>
+<li><p>Enqueue operations in when accessing the data.</p></li>
+</ul>
+<p>The Consumer can choose which mechanism to use, with the following
+considerations:</p>
+<ul class="simple">
+<li><p>If the Consumer synchronizes on the provided stream prior to accessing the
+data, then it must ensure that no computation can take place in the provided
+stream until its operations in its own choice of stream have taken place.
+This could be achieved by either:</p>
+<ul>
+<li><p>Placing a wait on an event in the provided stream that occurs once all
+of the Consumer’s operations on the data are completed, or</p></li>
+<li><p>Avoiding returning control to the user code until after its operations
+on its own stream have completed.</p></li>
+</ul>
+</li>
+<li><p>If the consumer chooses to only enqueue operations on the data in the
+provided stream, then it may return control to the User code immediately
+after enqueueing its work, as the work will all be serialized on the
+exported array’s stream. This is sufficient to ensure correctness even if
+the User code were to induce the Producer to subsequently start enqueueing
+more work on the same stream.</p></li>
+</ul>
+</li>
+<li><p>If the User has set the Consumer to ignore CAI synchronization semantics, the
+Consumer may assume it can operate on the data immediately in any stream with
+no further synchronization, even if the <code class="docutils literal notranslate"><span class="pre">stream</span></code> member has an integer
+value.</p></li>
+</ul>
+<p>When exporting an array through the CAI, Producers must ensure that:</p>
+<ul class="simple">
+<li><p>If there is work on the data enqueued in one or more streams, then
+synchronization on the provided <code class="docutils literal notranslate"><span class="pre">stream</span></code> is sufficient to ensure
+synchronization with all pending work.</p>
+<ul>
+<li><p>If the Producer has no enqueued work, or work only enqueued on the stream
+identified by <code class="docutils literal notranslate"><span class="pre">stream</span></code>, then this condition is met.</p></li>
+<li><p>If the Producer has enqueued work on the data on multiple streams, then it
+must enqueue events on those streams that follow the enqueued work, and
+then wait on those events in the provided <code class="docutils literal notranslate"><span class="pre">stream</span></code>. For example:</p>
+<ol class="arabic simple">
+<li><p>Work is enqueued by the Producer on streams <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>, and <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p></li>
+<li><p>Events are then enqueued on each of streams <code class="docutils literal notranslate"><span class="pre">7</span></code>, <code class="docutils literal notranslate"><span class="pre">9</span></code>, and <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p></li>
+<li><p>Producer then tells stream <code class="docutils literal notranslate"><span class="pre">3</span></code> to wait on the events from Step 2, and
+the <code class="docutils literal notranslate"><span class="pre">stream</span></code> entry is set to <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>If there is no work enqueued on the data, then the <code class="docutils literal notranslate"><span class="pre">stream</span></code> entry may be
+either <code class="docutils literal notranslate"><span class="pre">None</span></code>, or not provided.</p></li>
+</ul>
+<p>Optionally, to facilitate the User relaxing conformance to synchronization
+semantics:</p>
+<ul class="simple">
+<li><p>Producers may provide a configuration option to always set <code class="docutils literal notranslate"><span class="pre">stream</span></code> to
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p>Consumers may provide a configuration option to ignore the value of <code class="docutils literal notranslate"><span class="pre">stream</span></code>
+and act as if it were <code class="docutils literal notranslate"><span class="pre">None</span></code> or not provided.  This elides synchronization
+on the Producer-provided streams, and allows enqueuing work on streams other
+than that provided by the Producer.</p></li>
+</ul>
+<p>These options should not be set by default in either a Producer or a Consumer.
+The CAI specification does not prescribe the exact mechanism by which these
+options are set, or related options that Producers or Consumers might provide
+to allow the user further control over synchronization behavior.</p>
+</section>
+<section id="synchronization-in-numba">
+<h4>Synchronization in Numba<a class="headerlink" href="#synchronization-in-numba" title="Link to this heading">#</a></h4>
+<p>Numba is neither strictly a Producer nor a Consumer - it may be used to
+implement either by a User. In order to facilitate the correct implementation of
+synchronization semantics, Numba exhibits the following behaviors related to
+synchronization of the interface:</p>
+<ul class="simple">
+<li><p>When Numba acts as a Consumer (for example when an array-like object is passed
+to a kernel launch): If <code class="docutils literal notranslate"><span class="pre">stream</span></code> is an integer, then Numba will immediately
+synchronize on the provided <code class="docutils literal notranslate"><span class="pre">stream</span></code>. A Numba <a class="reference internal" href="../reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray" title="numba.cuda.cudadrv.devicearray.DeviceNDArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">Device</span> <span class="pre">Array</span></code></a> created from an array-like
+object has its <em>default stream</em> set to the provided stream.</p></li>
+<li><p>When Numba acts as a Producer (when the <code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code> property
+of a Numba CUDA Array is accessed): If the exported CUDA Array has a
+<em>default stream</em>, then it is given as the <code class="docutils literal notranslate"><span class="pre">stream</span></code> entry. Otherwise,
+<code class="docutils literal notranslate"><span class="pre">stream</span></code> is set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Numba’s terminology, an array’s <em>default stream</em> is a property
+specifying the stream that Numba will enqueue asynchronous
+transfers in if no other stream is provided as an argument to the
+function invoking the transfer. It is not the same as the <a class="reference external" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#default-stream">Default
+Stream</a>
+in normal CUDA terminology.</p>
+</div>
+<p>Numba’s synchronization behavior results in the following intended
+consequences:</p>
+<ul class="simple">
+<li><p>Exchanging data either as a Producer or a Consumer will be correct without
+the need for any further action from the User, provided that the other side
+of the interaction also follows the CAI synchronization semantics.</p></li>
+<li><p>The User is expected to either:</p>
+<ul>
+<li><p>Avoid launching kernels or other operations on streams that
+are not the default stream for their parameters, or</p></li>
+<li><p>When launching operations on a stream that is not the default stream for
+a given parameter, they should then insert an event into the stream that
+they are operating in, and wait on that event in the default stream for
+the parameter. For an example of this, <a class="reference internal" href="#example-multi-streams"><span class="std std-ref">see below</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+<p>The User may override Numba’s synchronization behavior by setting the
+environment variable <code class="docutils literal notranslate"><span class="pre">NUMBA_CUDA_ARRAY_INTERFACE_SYNC</span></code> or the config variable
+<code class="docutils literal notranslate"><span class="pre">CUDA_ARRAY_INTERFACE_SYNC</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code> (see <a class="reference internal" href="../reference/envvars.html#numba-envvars-gpu-support"><span class="std std-ref">GPU Support Environment
+Variables</span></a>).  When set, Numba will not synchronize
+on the streams of imported arrays, and it is the responsibility of the user to
+ensure correctness with respect to stream synchronization. Synchronization when
+creating a Numba CUDA Array from an object exporting the CUDA Array Interface
+may also be elided by passing <code class="docutils literal notranslate"><span class="pre">sync=False</span></code> when creating the Numba CUDA
+Array with <a class="reference internal" href="#numba.cuda.as_cuda_array" title="numba.cuda.as_cuda_array"><code class="xref py py-func docutils literal notranslate"><span class="pre">numba.cuda.as_cuda_array()</span></code></a> or
+<a class="reference internal" href="#numba.cuda.from_cuda_array_interface" title="numba.cuda.from_cuda_array_interface"><code class="xref py py-func docutils literal notranslate"><span class="pre">numba.cuda.from_cuda_array_interface()</span></code></a>.</p>
+<p>There is scope for Numba’s synchronization implementation to be optimized in
+the future, by eliding synchronizations when a kernel or driver API operation
+(e.g.  a memcopy or memset) is launched on the same stream as an imported
+array.</p>
+</section>
+<section id="an-example-launching-on-an-array-s-non-default-stream">
+<span id="example-multi-streams"></span><h4>An example launching on an array’s non-default stream<a class="headerlink" href="#an-example-launching-on-an-array-s-non-default-stream" title="Link to this heading">#</a></h4>
+<p>This example shows how to ensure that a Consumer can safely consume an array
+with a default stream when it is passed to a kernel launched in a different
+stream.</p>
+<p>First we need to import Numba and a consumer library (a fictitious library named
+<code class="docutils literal notranslate"><span class="pre">other_cai_library</span></code> for this example):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span><span class="p">,</span> <span class="n">int32</span><span class="p">,</span> <span class="n">void</span>
+<span class="kn">import</span> <span class="nn">other_cai_library</span>
+</pre></div>
+</div>
+<p>Now we’ll define a kernel - this initializes the elements of the array, setting
+each entry to its index:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">void</span><span class="p">,</span> <span class="n">int32</span><span class="p">[::</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">initialize_array</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</pre></div>
+</div>
+<p>Next we will create two streams:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array_stream</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span>
+<span class="n">kernel_stream</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">stream</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then create an array with one of the streams as its default stream:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">16384</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">device_array</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">array_stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we launch the kernel in the other stream:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">nblocks</span> <span class="o">=</span> <span class="n">N</span> <span class="o">//</span> <span class="n">nthreads</span>
+
+<span class="n">initialize_array</span><span class="p">[</span><span class="n">nthreads</span><span class="p">,</span> <span class="n">nblocks</span><span class="p">,</span> <span class="n">kernel_stream</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we were to pass <code class="docutils literal notranslate"><span class="pre">x</span></code> to a Consumer now, there is a risk that it may operate on
+it in <code class="docutils literal notranslate"><span class="pre">array_stream</span></code> whilst the kernel is still running in <code class="docutils literal notranslate"><span class="pre">kernel_stream</span></code>.
+To prevent operations in <code class="docutils literal notranslate"><span class="pre">array_stream</span></code> starting before the kernel launch is
+finished, we create an event and wait on it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create event</span>
+<span class="n">evt</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
+<span class="c1"># Record the event after the kernel launch in kernel_stream</span>
+<span class="n">evt</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="n">kernel_stream</span><span class="p">)</span>
+<span class="c1"># Wait for the event in array_stream</span>
+<span class="n">evt</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">array_stream</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is now safe for <code class="docutils literal notranslate"><span class="pre">other_cai_library</span></code> to consume <code class="docutils literal notranslate"><span class="pre">x</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">other_cai_library</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lifetime-management">
+<h3>Lifetime management<a class="headerlink" href="#lifetime-management" title="Link to this heading">#</a></h3>
+<section id="data">
+<h4>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h4>
+<p>Obtaining the value of the <code class="docutils literal notranslate"><span class="pre">__cuda_array_interface__</span></code> property of any object
+has no effect on the lifetime of the object from which it was created. In
+particular, note that the interface has no slot for the owner of the data.</p>
+<p>The User code must preserve the lifetime of the object owning the data for as
+long as the Consumer might use it.</p>
+</section>
+<section id="streams">
+<h4>Streams<a class="headerlink" href="#streams" title="Link to this heading">#</a></h4>
+<p>Like data, CUDA streams also have a finite lifetime. It is therefore required
+that a Producer exporting data on the interface with an associated stream
+ensures that the exported stream’s lifetime is equal to or surpasses the
+lifetime of the object from which the interface was exported.</p>
+</section>
+</section>
+<section id="lifetime-management-in-numba">
+<h3>Lifetime management in Numba<a class="headerlink" href="#lifetime-management-in-numba" title="Link to this heading">#</a></h3>
+<section id="producing-arrays">
+<h4>Producing Arrays<a class="headerlink" href="#producing-arrays" title="Link to this heading">#</a></h4>
+<p>Numba takes no steps to maintain the lifetime of an object from which the
+interface is exported - it is the user’s responsibility to ensure that the
+underlying object is kept alive for the duration that the exported interface
+might be used.</p>
+<p>The lifetime of any Numba-managed stream exported on the interface is guaranteed
+to equal or surpass the lifetime of the underlying object, because the
+underlying object holds a reference to the stream.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Numba-managed streams are those created with
+<code class="docutils literal notranslate"><span class="pre">cuda.default_stream()</span></code>, <code class="docutils literal notranslate"><span class="pre">cuda.legacy_default_stream()</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">cuda.per_thread_default_stream()</span></code>. Streams not managed by Numba
+are created from an external stream with <code class="docutils literal notranslate"><span class="pre">cuda.external_stream()</span></code>.</p>
+</div>
+</section>
+<section id="consuming-arrays">
+<h4>Consuming Arrays<a class="headerlink" href="#consuming-arrays" title="Link to this heading">#</a></h4>
+<p>Numba provides two mechanisms for creating device arrays from objects exporting
+the CUDA Array Interface. Which to use depends on whether the created device
+array should maintain the life of the object from which it is created:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">as_cuda_array</span></code>: This creates a device array that holds a reference to the
+owning object. As long as a reference to the device array is held, its
+underlying data will also be kept alive, even if all other references to the
+original owning object have been dropped.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from_cuda_array_interface</span></code>: This creates a device array with no reference
+to the owning object by default. The owning object, or some other object to
+be considered the owner can be passed in the <code class="docutils literal notranslate"><span class="pre">owner</span></code> parameter.</p></li>
+</ul>
+<p>The interfaces of these functions are:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.as_cuda_array">
+<span class="sig-prename descclassname"><span class="pre">cuda.</span></span><span class="sig-name descname"><span class="pre">as_cuda_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.as_cuda_array" title="Link to this definition">#</a></dt>
+<dd><p>Create a DeviceNDArray from any object that implements
+the <a class="reference internal" href="#cuda-array-interface"><span class="std std-ref">cuda array interface</span></a>.</p>
+<p>A view of the underlying GPU buffer is created.  No copying of the data
+is done.  The resulting DeviceNDArray will acquire a reference from <cite>obj</cite>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">sync</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, then the imported stream (if present) will be
+synchronized.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.from_cuda_array_interface">
+<span class="sig-prename descclassname"><span class="pre">cuda.</span></span><span class="sig-name descname"><span class="pre">from_cuda_array_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.from_cuda_array_interface" title="Link to this definition">#</a></dt>
+<dd><p>Create a DeviceNDArray from a cuda-array-interface description.
+The <code class="docutils literal notranslate"><span class="pre">owner</span></code> is the owner of the underlying memory.
+The resulting DeviceNDArray will acquire a reference from it.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">sync</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, then the imported stream (if present) will be
+synchronized.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="pointer-attributes">
+<h3>Pointer Attributes<a class="headerlink" href="#pointer-attributes" title="Link to this heading">#</a></h3>
+<p>Additional information about the data pointer can be retrieved using
+<code class="docutils literal notranslate"><span class="pre">cuPointerGetAttribute</span></code> or <code class="docutils literal notranslate"><span class="pre">cudaPointerGetAttributes</span></code>.  Such information
+include:</p>
+<ul class="simple">
+<li><p>the CUDA context that owns the pointer;</p></li>
+<li><p>is the pointer host-accessible?</p></li>
+<li><p>is the pointer a managed memory?</p></li>
+</ul>
+</section>
+<section id="differences-with-cuda-array-interface-version-0">
+<h3>Differences with CUDA Array Interface (Version 0)<a class="headerlink" href="#differences-with-cuda-array-interface-version-0" title="Link to this heading">#</a></h3>
+<p>Version 0 of the CUDA Array Interface did not have the optional <strong>mask</strong>
+attribute to support masked arrays.</p>
+</section>
+<section id="differences-with-cuda-array-interface-version-1">
+<h3>Differences with CUDA Array Interface (Version 1)<a class="headerlink" href="#differences-with-cuda-array-interface-version-1" title="Link to this heading">#</a></h3>
+<p>Versions 0 and 1 of the CUDA Array Interface neither clarified the
+<strong>strides</strong> attribute for C-contiguous arrays nor specified the treatment for
+zero-size arrays.</p>
+</section>
+<section id="differences-with-cuda-array-interface-version-2">
+<h3>Differences with CUDA Array Interface (Version 2)<a class="headerlink" href="#differences-with-cuda-array-interface-version-2" title="Link to this heading">#</a></h3>
+<p>Prior versions of the CUDA Array Interface made no statement about
+synchronization.</p>
+</section>
+<section id="interoperability">
+<h3>Interoperability<a class="headerlink" href="#interoperability" title="Link to this heading">#</a></h3>
+<p>The following Python libraries have adopted the CUDA Array Interface:</p>
+<ul>
+<li><p>Numba</p></li>
+<li><p><a class="reference external" href="https://docs-cupy.chainer.org/en/stable/reference/interoperability.html">CuPy</a></p></li>
+<li><p><a class="reference external" href="https://pytorch.org">PyTorch</a></p></li>
+<li><p><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.cuda.Context.html#pyarrow.cuda.Context.buffer_from_object">PyArrow</a></p></li>
+<li><p><a class="reference external" href="https://mpi4py.readthedocs.io/en/latest/overview.html#support-for-cuda-aware-mpi">mpi4py</a></p></li>
+<li><p><a class="reference external" href="https://github.com/xnd-project/arrayviews">ArrayViews</a></p></li>
+<li><p><a class="reference external" href="https://jax.readthedocs.io/en/latest/index.html">JAX</a></p></li>
+<li><p><a class="reference external" href="https://documen.tician.de/pycuda/tutorial.html#interoperability-with-other-libraries-using-the-cuda-array-interface">PyCUDA</a></p></li>
+<li><p><a class="reference external" href="https://github.com/NVIDIA/DALI">DALI: the NVIDIA Data Loading Library</a> :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://docs.nvidia.com/deeplearning/dali/user-guide/docs/data_types.html#nvidia.dali.backend.TensorGPU">TensorGPU objects</a>
+expose the CUDA Array Interface.</p></li>
+<li><p><a class="reference external" href="https://docs.nvidia.com/deeplearning/dali/user-guide/docs/supported_ops.html#nvidia.dali.fn.external_source">The External Source operator</a>
+consumes objects exporting the CUDA Array Interface.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The RAPIDS stack:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://rapidsai.github.io/projects/cudf/en/0.11.0/10min-cudf-cupy.html">cuDF</a></p></li>
+<li><p><a class="reference external" href="https://docs.rapids.ai/api/cuml/nightly/">cuML</a></p></li>
+<li><p><a class="reference external" href="https://github.com/rapidsai/cusignal">cuSignal</a></p></li>
+<li><p><a class="reference external" href="https://docs.rapids.ai/api/rmm/stable/">RMM</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>If your project is not on this list, please feel free to report it on the <a class="reference external" href="https://github.com/numba/numba/issues">Numba issue tracker</a>.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ipc.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Sharing CUDA Memory</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="external-memory.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">External Memory Management (EMM) Plugin interface</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-interface-specification">Python Interface Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronization">Synchronization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definitions">Definitions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#design-motivations">Design Motivations</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interface-requirements">Interface Requirements</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronization-in-numba">Synchronization in Numba</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-launching-on-an-array-s-non-default-stream">An example launching on an array’s non-default stream</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lifetime-management">Lifetime management</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#streams">Streams</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lifetime-management-in-numba">Lifetime management in Numba</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#producing-arrays">Producing Arrays</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#consuming-arrays">Consuming Arrays</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.as_cuda_array"><code class="docutils literal notranslate"><span class="pre">cuda.as_cuda_array()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.from_cuda_array_interface"><code class="docutils literal notranslate"><span class="pre">cuda.from_cuda_array_interface()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-attributes">Pointer Attributes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-with-cuda-array-interface-version-0">Differences with CUDA Array Interface (Version 0)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-with-cuda-array-interface-version-1">Differences with CUDA Array Interface (Version 1)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-with-cuda-array-interface-version-2">Differences with CUDA Array Interface (Version 2)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interoperability">Interoperability</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

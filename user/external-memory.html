@@ -1,0 +1,1181 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>External Memory Management (EMM) Plugin interface &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/external-memory';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CUDA Bindings" href="bindings.html" />
+    <link rel="prev" title="CUDA Array Interface (Version 3)" href="cuda_array_interface.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">External...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="external-memory-management-emm-plugin-interface">
+<span id="cuda-emm-plugin"></span><h1>External Memory Management (EMM) Plugin interface<a class="headerlink" href="#external-memory-management-emm-plugin-interface" title="Link to this heading">#</a></h1>
+<p>The <a class="reference internal" href="cuda_array_interface.html#cuda-array-interface"><span class="std std-ref">CUDA Array Interface</span></a> enables sharing of data
+between different Python libraries that access CUDA devices. However, each
+library manages its own memory distinctly from the others. For example:</p>
+<ul class="simple">
+<li><p>By default, Numba allocates memory on CUDA devices by interacting with the
+CUDA driver API to call functions such as <code class="docutils literal notranslate"><span class="pre">cuMemAlloc</span></code> and <code class="docutils literal notranslate"><span class="pre">cuMemFree</span></code>,
+which is suitable for many use cases.</p></li>
+<li><p>The RAPIDS libraries (cuDF, cuML, etc.) use the <a class="reference external" href="https://github.com/rapidsai/rmm">RAPIDS Memory Manager (RMM)</a> for allocating device memory.</p></li>
+<li><p><a class="reference external" href="https://cupy.chainer.org/">CuPy</a> includes a <a class="reference external" href="https://docs-cupy.chainer.org/en/stable/reference/memory.html">memory pool implementation</a> for both
+device and pinned memory.</p></li>
+</ul>
+<p>When multiple CUDA-aware libraries are used together, it may be preferable for
+Numba to defer to another library for memory management. The EMM Plugin
+interface facilitates this, by enabling Numba to use another CUDA-aware library
+for all allocations and deallocations.</p>
+<p>An EMM Plugin is used to facilitate the use of an external library for memory
+management. An EMM Plugin can be a part of an external library, or could be
+implemented as a separate library.</p>
+<section id="overview-of-external-memory-management">
+<h2>Overview of External Memory Management<a class="headerlink" href="#overview-of-external-memory-management" title="Link to this heading">#</a></h2>
+<p>When an EMM Plugin is in use (see <a class="reference internal" href="#setting-emm-plugin"><span class="std std-ref">Setting the EMM Plugin</span></a>), Numba will make
+memory allocations and deallocations through the Plugin. It will never directly call
+functions such as <code class="docutils literal notranslate"><span class="pre">cuMemAlloc</span></code>, <code class="docutils literal notranslate"><span class="pre">cuMemFree</span></code>, etc.</p>
+<p>EMM Plugins always take responsibility for the management of device memory.
+However, not all CUDA-aware libraries also support managing host memory, so a
+facility for Numba to continue the management of host memory whilst ceding
+control of device memory to the EMM is provided (see
+<a class="reference internal" href="#host-only-cuda-memory-manager"><span class="std std-ref">The Host-Only CUDA Memory Manager</span></a>).</p>
+<section id="effects-on-deallocation-strategies">
+<h3>Effects on Deallocation Strategies<a class="headerlink" href="#effects-on-deallocation-strategies" title="Link to this heading">#</a></h3>
+<p>Numba’s internal <a class="reference internal" href="memory.html#deallocation-behavior"><span class="std std-ref">Deallocation Behavior</span></a> is designed to increase efficiency
+by deferring deallocations until a significant quantity are pending. It also
+provides a mechanism for preventing deallocations entirely during critical
+sections, using the <a class="reference internal" href="memory.html#numba.cuda.defer_cleanup" title="numba.cuda.defer_cleanup"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer_cleanup()</span></code></a> context manager.</p>
+<p>When an EMM Plugin is in use, the deallocation strategy is implemented by the
+EMM, and Numba’s internal deallocation mechanism is not used. The EMM
+Plugin could implement:</p>
+<ul class="simple">
+<li><p>A similar strategy to the Numba deallocation behaviour, or</p></li>
+<li><p>Something more appropriate to the plugin - for example, deallocated memory
+might immediately be returned to a memory pool.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> context manager may behave differently with an EMM Plugin
+- an EMM Plugin should be accompanied by documentation of the behaviour of the
+<code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> context manager when it is in use. For example, a pool
+allocator could always immediately return memory to a pool even when the
+context manager is in use, but could choose not to free empty pools until
+<code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> is not in use.</p>
+</section>
+<section id="management-of-other-objects">
+<h3>Management of other objects<a class="headerlink" href="#management-of-other-objects" title="Link to this heading">#</a></h3>
+<p>In addition to memory, Numba manages the allocation and deallocation of
+<a class="reference internal" href="../reference/host.html#events"><span class="std std-ref">events</span></a>, <a class="reference internal" href="../reference/host.html#streams"><span class="std std-ref">streams</span></a>, and modules (a module is a
+compiled object, which is generated from <code class="docutils literal notranslate"><span class="pre">&#64;cuda.jit</span></code>-ted functions). The
+management of events, streams, and modules is unchanged by the use of an EMM
+Plugin.</p>
+</section>
+<section id="asynchronous-allocation-and-deallocation">
+<h3>Asynchronous allocation and deallocation<a class="headerlink" href="#asynchronous-allocation-and-deallocation" title="Link to this heading">#</a></h3>
+<p>The present EMM Plugin interface does not provide support for asynchronous
+allocation and deallocation. This may be added to a future version of the
+interface.</p>
+</section>
+</section>
+<section id="implementing-an-emm-plugin">
+<h2>Implementing an EMM Plugin<a class="headerlink" href="#implementing-an-emm-plugin" title="Link to this heading">#</a></h2>
+<p>An EMM Plugin is implemented by deriving from
+<a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a>. A summary of considerations for the
+implementation follows:</p>
+<ul class="simple">
+<li><p>Numba instantiates one instance of the EMM Plugin class per context. The
+context that owns an EMM Plugin object is accessible through <code class="docutils literal notranslate"><span class="pre">self.context</span></code>,
+if required.</p></li>
+<li><p>The EMM Plugin is transparent to any code that uses Numba - all its methods
+are invoked by Numba, and never need to be called by code that uses Numba.</p></li>
+<li><p>The allocation methods <code class="docutils literal notranslate"><span class="pre">memalloc</span></code>, <code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code>, and <code class="docutils literal notranslate"><span class="pre">mempin</span></code>, should
+use the underlying library to allocate and/or pin device or host memory, and
+construct an instance of a <a class="reference internal" href="#memory-pointers"><span class="std std-ref">memory pointer</span></a>
+representing the memory to return back to Numba. These methods are always
+called when the current CUDA context is the context that owns the EMM Plugin
+instance.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">initialize</span></code> method is called by Numba prior to the first use of the EMM
+Plugin object for a context. This method should do anything required to
+prepare the underlying library for allocations in the current context. This
+method may be called multiple times, and must not invalidate previous state
+when it is called.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">reset</span></code> method is called when all allocations in the context are to be
+cleaned up. It may be called even prior to <code class="docutils literal notranslate"><span class="pre">initialize</span></code>, and an EMM Plugin
+implementation needs to guard against this.</p></li>
+<li><p>To support inter-GPU communication, the <code class="docutils literal notranslate"><span class="pre">get_ipc_handle</span></code> method should
+provide an <a class="reference internal" href="#numba.cuda.IpcHandle" title="numba.cuda.IpcHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">IpcHandle</span></code></a> for a given
+<a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.MemoryPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a> instance. This method is part of the EMM
+interface (rather than being handled within Numba) because the base address of
+the allocation is only known by the underlying library. Closing an IPC handle
+is handled internally within Numba.</p></li>
+<li><p>It is optional to provide memory info from the <code class="docutils literal notranslate"><span class="pre">get_memory_info</span></code> method, which
+provides a count of the total and free memory on the device for the context.
+It is preferable to implement the method, but this may not be practical for
+all allocators. If memory info is not provided, this method should raise a
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> method should return a context manager that ensures that
+expensive cleanup operations are avoided whilst it is active. The nuances of
+this will vary between plugins, so the plugin documentation should include an
+explanation of how deferring cleanup affects deallocations, and performance in
+general.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">interface_version</span></code> property is used to ensure that the plugin version
+matches the interface provided by the version of Numba. At present, this
+should always be 1.</p></li>
+</ul>
+<p>Full documentation for the base class follows:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">BaseCUDAMemoryManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager" title="Link to this definition">#</a></dt>
+<dd><p>Abstract base class for External Memory Management (EMM) Plugins.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.memalloc">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">memalloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.memalloc" title="Link to this definition">#</a></dt>
+<dd><p>Allocate on-device memory in the current context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Size of allocation in bytes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A memory pointer instance that owns the allocated memory</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.MemoryPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.memhostalloc">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">memhostalloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapped</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.memhostalloc" title="Link to this definition">#</a></dt>
+<dd><p>Allocate pinned host memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Size of the allocation in bytes</p></li>
+<li><p><strong>mapped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the allocated memory should be mapped into the
+CUDA address space.</p></li>
+<li><p><strong>portable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the memory will be considered pinned by all
+contexts, and not just the calling context.</p></li>
+<li><p><strong>wc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to allocate the memory as write-combined.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A memory pointer instance that owns the allocated memory. The
+return type depends on whether the region was mapped into
+device memory.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#numba.cuda.MappedMemory" title="numba.cuda.MappedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">MappedMemory</span></code></a> or <a class="reference internal" href="#numba.cuda.PinnedMemory" title="numba.cuda.PinnedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PinnedMemory</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.mempin">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mempin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapped</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.mempin" title="Link to this definition">#</a></dt>
+<dd><p>Pin a region of host memory that is already allocated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owner</strong> – The object that owns the memory.</p></li>
+<li><p><strong>pointer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The pointer to the beginning of the region to pin.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The size of the region in bytes.</p></li>
+<li><p><strong>mapped</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the region should also be mapped into device
+memory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A memory pointer instance that refers to the allocated
+memory.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#numba.cuda.MappedMemory" title="numba.cuda.MappedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">MappedMemory</span></code></a> or <a class="reference internal" href="#numba.cuda.PinnedMemory" title="numba.cuda.PinnedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PinnedMemory</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.initialize">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.initialize" title="Link to this definition">#</a></dt>
+<dd><p>Perform any initialization required for the EMM plugin instance to be
+ready to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.get_ipc_handle">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_ipc_handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.get_ipc_handle" title="Link to this definition">#</a></dt>
+<dd><p>Return an IPC handle from a GPU allocation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>memory</strong> (<a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.MemoryPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a>) – Memory for which the IPC handle should be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>IPC handle for the allocation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#numba.cuda.IpcHandle" title="numba.cuda.IpcHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">IpcHandle</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.get_memory_info">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_memory_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.get_memory_info" title="Link to this definition">#</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">(free,</span> <span class="pre">total)</span></code> memory in bytes in the context. May raise
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>, if returning such information is not
+practical (e.g. for a pool allocator).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Memory info</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#numba.cuda.MemoryInfo" title="numba.cuda.MemoryInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryInfo</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.reset">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.reset" title="Link to this definition">#</a></dt>
+<dd><p>Clears up all memory allocated in this context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.defer_cleanup">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">defer_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.defer_cleanup" title="Link to this definition">#</a></dt>
+<dd><p>Returns a context manager that ensures the implementation of deferred
+cleanup whilst it is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Context manager</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="numba.cuda.BaseCUDAMemoryManager.interface_version">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interface_version</span></span><a class="headerlink" href="#numba.cuda.BaseCUDAMemoryManager.interface_version" title="Link to this definition">#</a></dt>
+<dd><p>Returns an integer specifying the version of the EMM Plugin interface
+supported by the plugin implementation. Should always return 1 for
+implementations of this version of the specification.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="the-host-only-cuda-memory-manager">
+<span id="host-only-cuda-memory-manager"></span><h3>The Host-Only CUDA Memory Manager<a class="headerlink" href="#the-host-only-cuda-memory-manager" title="Link to this heading">#</a></h3>
+<p>Some external memory managers will support management of on-device memory but
+not host memory. For implementing EMM Plugins using one of these memory
+managers, a partial implementation of a plugin that implements host-side
+allocation and pinning is provided. To use it, derive from
+<a class="reference internal" href="#numba.cuda.HostOnlyCUDAMemoryManager" title="numba.cuda.HostOnlyCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager</span></code></a> instead of
+<a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a>. Guidelines for using this class
+are:</p>
+<ul class="simple">
+<li><p>The host-only memory manager implements <code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code> and <code class="docutils literal notranslate"><span class="pre">mempin</span></code> - the
+EMM Plugin should still implement <code class="docutils literal notranslate"><span class="pre">memalloc</span></code>.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">reset</span></code> is overridden, it must also call <code class="docutils literal notranslate"><span class="pre">super().reset()</span></code> to allow the
+host allocations to be cleaned up.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> is overridden, it must hold an active context manager
+from <code class="docutils literal notranslate"><span class="pre">super().defer_cleanup()</span></code> to ensure that host-side cleanup is also
+deferred.</p></li>
+</ul>
+<p>Documentation for the methods of <a class="reference internal" href="#numba.cuda.HostOnlyCUDAMemoryManager" title="numba.cuda.HostOnlyCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager</span></code></a>
+follows:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.HostOnlyCUDAMemoryManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">HostOnlyCUDAMemoryManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.HostOnlyCUDAMemoryManager" title="Link to this definition">#</a></dt>
+<dd><p>Base class for External Memory Management (EMM) Plugins that only
+implement on-device allocation. A subclass need not implement the
+<code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code> and <code class="docutils literal notranslate"><span class="pre">mempin</span></code> methods.</p>
+<p>This class also implements <code class="docutils literal notranslate"><span class="pre">reset</span></code> and <code class="docutils literal notranslate"><span class="pre">defer_cleanup</span></code> (see
+<a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.BaseCUDAMemoryManager</span></code></a>) for its own internal state
+management. If an EMM Plugin based on this class also implements these
+methods, then its implementations of these must also call the method from
+<code class="docutils literal notranslate"><span class="pre">super()</span></code> to give <code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager</span></code> an opportunity to do the
+necessary work for the host allocations it is managing.</p>
+<p>This class does not implement <code class="docutils literal notranslate"><span class="pre">interface_version</span></code>, as it will always be
+consistent with the version of Numba in which it is implemented. An EMM
+Plugin subclassing this class should implement <code class="docutils literal notranslate"><span class="pre">interface_version</span></code>
+instead.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.HostOnlyCUDAMemoryManager.memhostalloc">
+<span class="sig-name descname"><span class="pre">memhostalloc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">portable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.HostOnlyCUDAMemoryManager.memhostalloc" title="Link to this definition">#</a></dt>
+<dd><p>Implements the allocation of pinned host memory.</p>
+<p>It is recommended that this method is not overridden by EMM Plugin
+implementations - instead, use the <a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.HostOnlyCUDAMemoryManager.mempin">
+<span class="sig-name descname"><span class="pre">mempin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapped</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.HostOnlyCUDAMemoryManager.mempin" title="Link to this definition">#</a></dt>
+<dd><p>Implements the pinning of host memory.</p>
+<p>It is recommended that this method is not overridden by EMM Plugin
+implementations - instead, use the <a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.HostOnlyCUDAMemoryManager.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.HostOnlyCUDAMemoryManager.reset" title="Link to this definition">#</a></dt>
+<dd><p>Clears up all host memory (mapped and/or pinned) in the current
+context.</p>
+<p>EMM Plugins that override this method must call <code class="docutils literal notranslate"><span class="pre">super().reset()</span></code> to
+ensure that host allocations are also cleaned up.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.HostOnlyCUDAMemoryManager.defer_cleanup">
+<span class="sig-name descname"><span class="pre">defer_cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.HostOnlyCUDAMemoryManager.defer_cleanup" title="Link to this definition">#</a></dt>
+<dd><p>Returns a context manager that disables cleanup of mapped or pinned
+host memory in the current context whilst it is active.</p>
+<p>EMM Plugins that override this method must obtain the context manager
+from this method before yielding to ensure that cleanup of host
+allocations is also deferred.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="the-ipc-handle-mixin">
+<h3>The IPC Handle Mixin<a class="headerlink" href="#the-ipc-handle-mixin" title="Link to this heading">#</a></h3>
+<p>An implementation of the <code class="docutils literal notranslate"><span class="pre">get_ipc_handle()</span></code> function is is provided in the
+<code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin</span></code> class. This uses the driver API to determine the base
+address of an allocation for opening an IPC handle. If this implementation is
+appropriate for an EMM plugin, it can be added by mixing in the
+<code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin</span></code> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.GetIpcHandleMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">GetIpcHandleMixin</span></span><a class="headerlink" href="#numba.cuda.GetIpcHandleMixin" title="Link to this definition">#</a></dt>
+<dd><p>A class that provides a default implementation of <code class="docutils literal notranslate"><span class="pre">get_ipc_handle()</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.GetIpcHandleMixin.get_ipc_handle">
+<span class="sig-name descname"><span class="pre">get_ipc_handle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.GetIpcHandleMixin.get_ipc_handle" title="Link to this definition">#</a></dt>
+<dd><p>Open an IPC memory handle by using <code class="docutils literal notranslate"><span class="pre">cuMemGetAddressRange</span></code> to
+determine the base pointer of the allocation. An IPC handle of type
+<code class="docutils literal notranslate"><span class="pre">cu_ipc_mem_handle</span></code> is constructed and initialized with
+<code class="docutils literal notranslate"><span class="pre">cuIpcGetMemHandle</span></code>. A <a class="reference internal" href="#numba.cuda.IpcHandle" title="numba.cuda.IpcHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.IpcHandle</span></code></a> is returned,
+populated with the underlying <code class="docutils literal notranslate"><span class="pre">ipc_mem_handle</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="classes-and-structures-of-returned-objects">
+<h2>Classes and structures of returned objects<a class="headerlink" href="#classes-and-structures-of-returned-objects" title="Link to this heading">#</a></h2>
+<p>This section provides an overview of the classes and structures that need to be
+constructed by an EMM Plugin.</p>
+<section id="memory-pointers">
+<span id="id1"></span><h3>Memory Pointers<a class="headerlink" href="#memory-pointers" title="Link to this heading">#</a></h3>
+<p>EMM Plugins should construct memory pointer instances that represent their
+allocations, for return to Numba. The appropriate memory pointer class to use in
+each method is:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.MemoryPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a>: returned from <code class="docutils literal notranslate"><span class="pre">memalloc</span></code></p></li>
+<li><p><a class="reference internal" href="#numba.cuda.MappedMemory" title="numba.cuda.MappedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">MappedMemory</span></code></a>: returned from <code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code> or
+<code class="docutils literal notranslate"><span class="pre">mempin</span></code> when the host memory is mapped into the device memory space.</p></li>
+<li><p><a class="reference internal" href="#numba.cuda.PinnedMemory" title="numba.cuda.PinnedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">PinnedMemory</span></code></a>: return from <code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code> or <code class="docutils literal notranslate"><span class="pre">mempin</span></code>
+when the host memory is not mapped into the device memory space.</p></li>
+</ul>
+<p>Memory pointers can take a finalizer, which is a function that is called when
+the buffer is no longer needed. Usually the finalizer will make a call to the
+memory management library (either internal to Numba, or external if allocated
+by an EMM Plugin) to inform it that the memory is no longer required, and that
+it could potentially be freed and/or unpinned. The memory manager may choose to
+defer actually cleaning up the memory to any later time after the finalizer
+runs - it is not required to free the buffer immediately.</p>
+<p>Documentation for the memory pointer classes follows.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.MemoryPointer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">MemoryPointer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.MemoryPointer" title="Link to this definition">#</a></dt>
+<dd><p>A memory pointer that owns a buffer, with an optional finalizer. Memory
+pointers provide reference counting, and instances are initialized with a
+reference count of 1.</p>
+<p>The base <code class="docutils literal notranslate"><span class="pre">MemoryPointer</span></code> class does not use the
+reference count for managing the buffer lifetime. Instead, the buffer
+lifetime is tied to the memory pointer instance’s lifetime:</p>
+<ul class="simple">
+<li><p>When the instance is deleted, the finalizer will be called.</p></li>
+<li><p>When the reference count drops to 0, no action is taken.</p></li>
+</ul>
+<p>Subclasses of <code class="docutils literal notranslate"><span class="pre">MemoryPointer</span></code> may modify these semantics, for example to
+tie the buffer lifetime to the reference count, so that the buffer is freed
+when there are no more references.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference internal" href="../reference/host.html#numba.cuda.cudadrv.driver.Context" title="numba.cuda.cudadrv.driver.Context"><em>Context</em></a>) – The context in which the pointer was allocated.</p></li>
+<li><p><strong>pointer</strong> (<a class="reference external" href="https://docs.python.org/3/library/ctypes.html#ctypes.c_void_p" title="(in Python v3.12)"><em>ctypes.c_void_p</em></a>) – The address of the buffer.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The size of the allocation in bytes.</p></li>
+<li><p><strong>owner</strong> (<em>NoneType</em>) – The owner is sometimes set by the internals of this class, or
+used for Numba’s internal memory management. It should not be
+provided by an external user of the <code class="docutils literal notranslate"><span class="pre">MemoryPointer</span></code> class
+(e.g. from within an EMM Plugin); the default of <cite>None</cite>
+should always suffice.</p></li>
+<li><p><strong>finalizer</strong> (<em>function</em>) – A function that is called when the buffer is to be freed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">AutoFreePointer</span></code> class need not be used directly, but is documented here
+as it is subclassed by <a class="reference internal" href="#numba.cuda.MappedMemory" title="numba.cuda.MappedMemory"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.MappedMemory</span></code></a>:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.AutoFreePointer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.driver.</span></span><span class="sig-name descname"><span class="pre">AutoFreePointer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.AutoFreePointer" title="Link to this definition">#</a></dt>
+<dd><p>Modifies the ownership semantic of the MemoryPointer so that the
+instance lifetime is directly tied to the number of references.</p>
+<p>When the reference count reaches zero, the finalizer is invoked.</p>
+<p>Constructor arguments are the same as for <a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.cudadrv.driver.MemoryPointer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.MappedMemory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">MappedMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.MappedMemory" title="Link to this definition">#</a></dt>
+<dd><p>A memory pointer that refers to a buffer on the host that is mapped into
+device memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference internal" href="../reference/host.html#numba.cuda.cudadrv.driver.Context" title="numba.cuda.cudadrv.driver.Context"><em>Context</em></a>) – The context in which the pointer was mapped.</p></li>
+<li><p><strong>pointer</strong> (<a class="reference external" href="https://docs.python.org/3/library/ctypes.html#ctypes.c_void_p" title="(in Python v3.12)"><em>ctypes.c_void_p</em></a>) – The address of the buffer.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The size of the buffer in bytes.</p></li>
+<li><p><strong>owner</strong> (<em>NoneType</em>) – The owner is sometimes set by the internals of this class, or
+used for Numba’s internal memory management. It should not be
+provided by an external user of the <code class="docutils literal notranslate"><span class="pre">MappedMemory</span></code> class
+(e.g. from within an EMM Plugin); the default of <cite>None</cite>
+should always suffice.</p></li>
+<li><p><strong>finalizer</strong> (<em>function</em>) – A function that is called when the buffer is to be freed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.PinnedMemory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">PinnedMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.PinnedMemory" title="Link to this definition">#</a></dt>
+<dd><p>A pointer to a pinned buffer on the host.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>context</strong> (<a class="reference internal" href="../reference/host.html#numba.cuda.cudadrv.driver.Context" title="numba.cuda.cudadrv.driver.Context"><em>Context</em></a>) – The context in which the pointer was mapped.</p></li>
+<li><p><strong>owner</strong> – The object owning the memory. For EMM plugin implementation,
+this ca</p></li>
+<li><p><strong>pointer</strong> (<a class="reference external" href="https://docs.python.org/3/library/ctypes.html#ctypes.c_void_p" title="(in Python v3.12)"><em>ctypes.c_void_p</em></a>) – The address of the buffer.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The size of the buffer in bytes.</p></li>
+<li><p><strong>owner</strong> – An object owning the buffer that has been pinned. For EMM
+plugin implementation, the default of <code class="docutils literal notranslate"><span class="pre">None</span></code> suffices for
+memory allocated in <code class="docutils literal notranslate"><span class="pre">memhostalloc</span></code> - for <code class="docutils literal notranslate"><span class="pre">mempin</span></code>, it
+should be the owner passed in to the <code class="docutils literal notranslate"><span class="pre">mempin</span></code> method.</p></li>
+<li><p><strong>finalizer</strong> (<em>function</em>) – A function that is called when the buffer is to be freed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="memory-info">
+<h3>Memory Info<a class="headerlink" href="#memory-info" title="Link to this heading">#</a></h3>
+<p>If an implementation of
+<a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager.get_memory_info" title="numba.cuda.BaseCUDAMemoryManager.get_memory_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_memory_info()</span></code></a> is to provide a
+result, then it should return an instance of the <code class="docutils literal notranslate"><span class="pre">MemoryInfo</span></code> named tuple:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.MemoryInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">MemoryInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">free</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.MemoryInfo" title="Link to this definition">#</a></dt>
+<dd><p>Free and total memory for a device.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.MemoryInfo.free">
+<span class="sig-name descname"><span class="pre">free</span></span><a class="headerlink" href="#numba.cuda.MemoryInfo.free" title="Link to this definition">#</a></dt>
+<dd><p>Free device memory in bytes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.MemoryInfo.total">
+<span class="sig-name descname"><span class="pre">total</span></span><a class="headerlink" href="#numba.cuda.MemoryInfo.total" title="Link to this definition">#</a></dt>
+<dd><p>Total device memory in bytes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ipc">
+<h3>IPC<a class="headerlink" href="#ipc" title="Link to this heading">#</a></h3>
+<p>An instance of <code class="docutils literal notranslate"><span class="pre">IpcHandle</span></code> is required to be returned from an implementation
+of <a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager.get_ipc_handle" title="numba.cuda.BaseCUDAMemoryManager.get_ipc_handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_ipc_handle()</span></code></a>:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.IpcHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">IpcHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.IpcHandle" title="Link to this definition">#</a></dt>
+<dd><p>CUDA IPC handle. Serialization of the CUDA IPC handle object is implemented
+here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base</strong> (<a class="reference internal" href="#numba.cuda.MemoryPointer" title="numba.cuda.MemoryPointer"><em>MemoryPointer</em></a>) – A reference to the original allocation to keep it alive</p></li>
+<li><p><strong>handle</strong> – The CUDA IPC handle, as a ctypes array of bytes.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Size of the original allocation</p></li>
+<li><p><strong>source_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The identity of the device on which the IPC handle was
+opened.</p></li>
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The offset into the underlying allocation of the memory
+referred to by this IPC handle.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Guidance for constructing an IPC handle in the context of implementing an EMM
+Plugin:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">memory</span></code> parameter passed to the <code class="docutils literal notranslate"><span class="pre">get_ipc_handle</span></code> method of an EMM
+Plugin can be passed as the <code class="docutils literal notranslate"><span class="pre">base</span></code> parameter.</p></li>
+<li><p>A suitable type for the <code class="docutils literal notranslate"><span class="pre">handle</span></code> can be constructed as <code class="docutils literal notranslate"><span class="pre">ctypes.c_byte</span> <span class="pre">*</span>
+<span class="pre">64</span></code>. The data for <code class="docutils literal notranslate"><span class="pre">handle</span></code> must be populated using a method for obtaining a
+CUDA IPC handle appropriate to the underlying library.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code> should match the size of the original allocation, which can be
+obtained with <code class="docutils literal notranslate"><span class="pre">memory.size</span></code> in <code class="docutils literal notranslate"><span class="pre">get_ipc_handle</span></code>.</p></li>
+<li><p>An appropriate value for <code class="docutils literal notranslate"><span class="pre">source_info</span></code> can be created by calling
+<code class="docutils literal notranslate"><span class="pre">self.context.device.get_device_identity()</span></code>.</p></li>
+<li><p>If the underlying memory does not point to the base of an allocation returned
+by the CUDA driver or runtime API (e.g. if a pool allocator is in use) then
+the <code class="docutils literal notranslate"><span class="pre">offset</span></code> from the base must be provided.</p></li>
+</ul>
+</section>
+</section>
+<section id="setting-the-emm-plugin">
+<span id="setting-emm-plugin"></span><h2>Setting the EMM Plugin<a class="headerlink" href="#setting-the-emm-plugin" title="Link to this heading">#</a></h2>
+<p>By default, Numba uses its internal memory management - if an EMM Plugin is to
+be used, it must be configured. There are two mechanisms for configuring the use
+of an EMM Plugin: an environment variable, and a function.</p>
+<section id="environment-variable">
+<h3>Environment variable<a class="headerlink" href="#environment-variable" title="Link to this heading">#</a></h3>
+<p>A module name can be provided in the environment variable,
+<code class="docutils literal notranslate"><span class="pre">NUMBA_CUDA_MEMORY_MANAGER</span></code>. If this environment variable is set, Numba will
+attempt to import the module, and and use its <code class="docutils literal notranslate"><span class="pre">_numba_memory_manager</span></code> global
+variable as the memory manager class. This is primarily useful for running the
+Numba test suite with an EMM Plugin, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ NUMBA_CUDA_MEMORY_MANAGER=rmm python -m numba.runtests numba.cuda.tests
+</pre></div>
+</div>
+</section>
+<section id="function">
+<h3>Function<a class="headerlink" href="#function" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="#numba.cuda.set_memory_manager" title="numba.cuda.set_memory_manager"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_memory_manager()</span></code></a> function can be used to set the
+memory manager at runtime. This should be called prior to the initialization of
+any contexts, as EMM Plugin instances are instantiated along with contexts.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.set_memory_manager">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">set_memory_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mm_plugin</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.set_memory_manager" title="Link to this definition">#</a></dt>
+<dd><p>Configure Numba to use an External Memory Management (EMM) Plugin. If
+the EMM Plugin version does not match one supported by this version of
+Numba, a RuntimeError will be raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mm_plugin</strong> (<a class="reference internal" href="#numba.cuda.BaseCUDAMemoryManager" title="numba.cuda.BaseCUDAMemoryManager"><em>BaseCUDAMemoryManager</em></a>) – The class implementing the EMM Plugin.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="resetting-the-memory-manager">
+<h4>Resetting the memory manager<a class="headerlink" href="#resetting-the-memory-manager" title="Link to this heading">#</a></h4>
+<p>It is recommended that the memory manager is set once prior to using any CUDA
+functionality, and left unchanged for the remainder of execution. It is possible
+to set the memory manager multiple times, noting the following:</p>
+<ul class="simple">
+<li><p>At the time of their creation, contexts are bound to an instance of a memory
+manager for their lifetime.</p></li>
+<li><p>Changing the memory manager will have no effect on existing contexts - only
+contexts created after the memory manager was updated will use instances of
+the new memory manager.</p></li>
+<li><p><a class="reference internal" href="../reference/host.html#numba.cuda.close" title="numba.cuda.close"><code class="xref py py-func docutils literal notranslate"><span class="pre">numba.cuda.close()</span></code></a> can be used to destroy contexts after setting the
+memory manager so that they get re-created with the new memory manager.</p>
+<ul>
+<li><p>This will invalidate any arrays, streams, events, and modules owned by the
+context.</p></li>
+<li><p>Attempting to use invalid arrays, streams, or events will likely fail with
+an exception being raised due to a <code class="docutils literal notranslate"><span class="pre">CUDA_ERROR_INVALID_CONTEXT</span></code> or
+<code class="docutils literal notranslate"><span class="pre">CUDA_ERROR_CONTEXT_IS_DESTROYED</span></code> return code from a Driver API function.</p></li>
+<li><p>Attempting to use an invalid module will result in similar, or in some
+cases a segmentation fault / access violation.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The invalidation of modules means that all functions compiled with
+<code class="docutils literal notranslate"><span class="pre">&#64;cuda.jit</span></code> prior to context destruction will need to be
+redefined, as the code underlying them will also have been unloaded
+from the GPU.</p>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cuda_array_interface.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CUDA Array Interface (Version 3)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="bindings.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CUDA Bindings</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-external-memory-management">Overview of External Memory Management</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-on-deallocation-strategies">Effects on Deallocation Strategies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#management-of-other-objects">Management of other objects</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#asynchronous-allocation-and-deallocation">Asynchronous allocation and deallocation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-an-emm-plugin">Implementing an EMM Plugin</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.memalloc"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.memalloc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.memhostalloc"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.memhostalloc()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.mempin"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.mempin()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.initialize"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.initialize()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.get_ipc_handle"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.get_ipc_handle()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.get_memory_info"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.get_memory_info()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.reset"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.defer_cleanup"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.defer_cleanup()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.BaseCUDAMemoryManager.interface_version"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.interface_version</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-host-only-cuda-memory-manager">The Host-Only CUDA Memory Manager</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.HostOnlyCUDAMemoryManager"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.HostOnlyCUDAMemoryManager.memhostalloc"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.memhostalloc()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.HostOnlyCUDAMemoryManager.mempin"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.mempin()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.HostOnlyCUDAMemoryManager.reset"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.reset()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.HostOnlyCUDAMemoryManager.defer_cleanup"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.defer_cleanup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ipc-handle-mixin">The IPC Handle Mixin</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.GetIpcHandleMixin"><code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.GetIpcHandleMixin.get_ipc_handle"><code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin.get_ipc_handle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes-and-structures-of-returned-objects">Classes and structures of returned objects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-pointers">Memory Pointers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.MemoryPointer"><code class="docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.AutoFreePointer"><code class="docutils literal notranslate"><span class="pre">AutoFreePointer</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.MappedMemory"><code class="docutils literal notranslate"><span class="pre">MappedMemory</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.PinnedMemory"><code class="docutils literal notranslate"><span class="pre">PinnedMemory</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-info">Memory Info</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.MemoryInfo"><code class="docutils literal notranslate"><span class="pre">MemoryInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.MemoryInfo.free"><code class="docutils literal notranslate"><span class="pre">MemoryInfo.free</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.MemoryInfo.total"><code class="docutils literal notranslate"><span class="pre">MemoryInfo.total</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ipc">IPC</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.IpcHandle"><code class="docutils literal notranslate"><span class="pre">IpcHandle</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-the-emm-plugin">Setting the EMM Plugin</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variable">Environment variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function">Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.set_memory_manager"><code class="docutils literal notranslate"><span class="pre">set_memory_manager()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#resetting-the-memory-manager">Resetting the memory manager</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

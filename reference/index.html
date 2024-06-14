@@ -1,0 +1,1095 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reference documentation &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/index';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CUDA Host API" href="host.html" />
+    <link rel="prev" title="CUDA Frequently Asked Questions" href="../user/faq.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../user/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Reference documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Reference...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="reference-documentation">
+<h1>Reference documentation<a class="headerlink" href="#reference-documentation" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="host.html">CUDA Host API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="host.html#device-management">Device Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="host.html#device-detection-and-enquiry">Device detection and enquiry</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.is_available"><code class="docutils literal notranslate"><span class="pre">is_available()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.detect"><code class="docutils literal notranslate"><span class="pre">detect()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#context-management">Context management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Context.get_memory_info"><code class="docutils literal notranslate"><span class="pre">Context.get_memory_info()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Context.pop"><code class="docutils literal notranslate"><span class="pre">Context.pop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Context.push"><code class="docutils literal notranslate"><span class="pre">Context.push()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Context.reset"><code class="docutils literal notranslate"><span class="pre">Context.reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.current_context"><code class="docutils literal notranslate"><span class="pre">current_context()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.require_context"><code class="docutils literal notranslate"><span class="pre">require_context()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.synchronize"><code class="docutils literal notranslate"><span class="pre">synchronize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.close"><code class="docutils literal notranslate"><span class="pre">close()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#id1">Device management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.gpus"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gpus</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.gpus.current"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gpus.current</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.devices._DeviceContextManager"><code class="docutils literal notranslate"><span class="pre">_DeviceContextManager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.select_device"><code class="docutils literal notranslate"><span class="pre">select_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.get_current_device"><code class="docutils literal notranslate"><span class="pre">get_current_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.list_devices"><code class="docutils literal notranslate"><span class="pre">list_devices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.compute_capability"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.compute_capability</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.id"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.name"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.name</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.uuid"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.uuid</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.reset"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.reset()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Device.supports_float16"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.supports_float16</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="host.html#compilation">Compilation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.compile_for_current_device"><code class="docutils literal notranslate"><span class="pre">compile_for_current_device()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.compile_ptx"><code class="docutils literal notranslate"><span class="pre">compile_ptx()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.compile_ptx_for_current_device"><code class="docutils literal notranslate"><span class="pre">compile_ptx_for_current_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="host.html#measurement">Measurement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="host.html#profiling">Profiling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.profile_start"><code class="docutils literal notranslate"><span class="pre">profile_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.profile_stop"><code class="docutils literal notranslate"><span class="pre">profile_stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.profiling"><code class="docutils literal notranslate"><span class="pre">profiling()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.event"><code class="docutils literal notranslate"><span class="pre">event()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.event_elapsed_time"><code class="docutils literal notranslate"><span class="pre">event_elapsed_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Event.query"><code class="docutils literal notranslate"><span class="pre">Event.query()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Event.record"><code class="docutils literal notranslate"><span class="pre">Event.record()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Event.synchronize"><code class="docutils literal notranslate"><span class="pre">Event.synchronize()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Event.wait"><code class="docutils literal notranslate"><span class="pre">Event.wait()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="host.html#stream-management">Stream Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Stream"><code class="docutils literal notranslate"><span class="pre">Stream</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Stream.add_callback"><code class="docutils literal notranslate"><span class="pre">Stream.add_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Stream.async_done"><code class="docutils literal notranslate"><span class="pre">Stream.async_done()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Stream.auto_synchronize"><code class="docutils literal notranslate"><span class="pre">Stream.auto_synchronize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.driver.Stream.synchronize"><code class="docutils literal notranslate"><span class="pre">Stream.synchronize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.stream"><code class="docutils literal notranslate"><span class="pre">stream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.default_stream"><code class="docutils literal notranslate"><span class="pre">default_stream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.legacy_default_stream"><code class="docutils literal notranslate"><span class="pre">legacy_default_stream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.per_thread_default_stream"><code class="docutils literal notranslate"><span class="pre">per_thread_default_stream()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.external_stream"><code class="docutils literal notranslate"><span class="pre">external_stream()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="host.html#runtime">Runtime</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.cudadrv.runtime.Runtime"><code class="docutils literal notranslate"><span class="pre">Runtime</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.runtime.Runtime.get_version"><code class="docutils literal notranslate"><span class="pre">Runtime.get_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.runtime.Runtime.is_supported_version"><code class="docutils literal notranslate"><span class="pre">Runtime.is_supported_version()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="host.html#numba.cuda.cudadrv.runtime.Runtime.supported_versions"><code class="docutils literal notranslate"><span class="pre">Runtime.supported_versions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="host.html#numba.cuda.is_supported_version"><code class="docutils literal notranslate"><span class="pre">is_supported_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kernel.html">CUDA Kernel API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html#kernel-declaration">Kernel declaration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#numba.cuda.jit"><code class="docutils literal notranslate"><span class="pre">jit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html#dispatcher-objects">Dispatcher objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.extensions"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.extensions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.forall"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.forall()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_const_mem_size"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.get_const_mem_size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_local_mem_per_thread"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.get_local_mem_per_thread()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_max_threads_per_block"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.get_max_threads_per_block()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_regs_per_thread"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.get_regs_per_thread()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_shared_mem_per_block"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.get_shared_mem_per_block()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_asm"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.inspect_asm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_llvm"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.inspect_llvm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_sass"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.inspect_sass()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_types"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.inspect_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.specialize"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.specialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.dispatcher.CUDADispatcher.specialized"><code class="docutils literal notranslate"><span class="pre">CUDADispatcher.specialized</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html#intrinsic-attributes-and-functions">Intrinsic Attributes and Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#thread-indexing">Thread Indexing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.threadIdx"><code class="docutils literal notranslate"><span class="pre">numba.cuda.threadIdx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.blockIdx"><code class="docutils literal notranslate"><span class="pre">numba.cuda.blockIdx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.blockDim"><code class="docutils literal notranslate"><span class="pre">numba.cuda.blockDim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.gridDim"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gridDim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.laneid"><code class="docutils literal notranslate"><span class="pre">numba.cuda.laneid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.warpsize"><code class="docutils literal notranslate"><span class="pre">numba.cuda.warpsize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.grid"><code class="docutils literal notranslate"><span class="pre">numba.cuda.grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.gridsize"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gridsize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#memory-management">Memory Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.shared.array"><code class="docutils literal notranslate"><span class="pre">numba.cuda.shared.array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.local.array"><code class="docutils literal notranslate"><span class="pre">numba.cuda.local.array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.const.array_like"><code class="docutils literal notranslate"><span class="pre">numba.cuda.const.array_like()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#synchronization-and-atomic-operations">Synchronization and Atomic Operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.add"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.sub"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.sub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.and_"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.and_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.or_"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.or_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.xor"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.xor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.exch"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.exch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.inc"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.inc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.dec"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.dec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.max"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.atomic.cas"><code class="docutils literal notranslate"><span class="pre">numba.cuda.atomic.cas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.syncthreads"><code class="docutils literal notranslate"><span class="pre">numba.cuda.syncthreads()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.syncthreads_count"><code class="docutils literal notranslate"><span class="pre">numba.cuda.syncthreads_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.syncthreads_and"><code class="docutils literal notranslate"><span class="pre">numba.cuda.syncthreads_and()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.syncthreads_or"><code class="docutils literal notranslate"><span class="pre">numba.cuda.syncthreads_or()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#cooperative-groups">Cooperative Groups</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.cg.this_grid"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cg.this_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.cg.GridGroup"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cg.GridGroup</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="kernel.html#numba.cuda.cg.GridGroup.sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cg.GridGroup.sync()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#memory-fences">Memory Fences</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.threadfence"><code class="docutils literal notranslate"><span class="pre">numba.cuda.threadfence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.threadfence_block"><code class="docutils literal notranslate"><span class="pre">numba.cuda.threadfence_block()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.threadfence_system"><code class="docutils literal notranslate"><span class="pre">numba.cuda.threadfence_system()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#warp-intrinsics">Warp Intrinsics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.syncwarp"><code class="docutils literal notranslate"><span class="pre">numba.cuda.syncwarp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.all_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.all_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.any_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.any_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.eq_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.eq_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.ballot_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.ballot_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.shfl_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.shfl_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.shfl_up_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.shfl_up_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.shfl_down_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.shfl_down_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.shfl_xor_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.shfl_xor_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.match_any_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.match_any_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.match_all_sync"><code class="docutils literal notranslate"><span class="pre">numba.cuda.match_all_sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.activemask"><code class="docutils literal notranslate"><span class="pre">numba.cuda.activemask()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.lanemask_lt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.lanemask_lt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#integer-intrinsics">Integer Intrinsics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.popc"><code class="docutils literal notranslate"><span class="pre">numba.cuda.popc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.brev"><code class="docutils literal notranslate"><span class="pre">numba.cuda.brev()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.clz"><code class="docutils literal notranslate"><span class="pre">numba.cuda.clz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.ffs"><code class="docutils literal notranslate"><span class="pre">numba.cuda.ffs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#floating-point-intrinsics">Floating Point Intrinsics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fma"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.cbrt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cbrt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#bit-floating-point-intrinsics">16-bit Floating Point Intrinsics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.is_float16_supported"><code class="docutils literal notranslate"><span class="pre">numba.cuda.is_float16_supported()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hfma"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hfma()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hadd"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hadd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hsub"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hsub()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hmul"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hmul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hdiv"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hdiv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hneg"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hneg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.habs"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.habs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hsin"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hsin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hcos"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hcos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hlog"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hlog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hlog10"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hlog10()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hlog2"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hlog2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hexp"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hexp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hexp10"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hexp10()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hexp2"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hexp2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hfloor"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hfloor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hceil"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hceil()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hsqrt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hsqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hrsqrt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hrsqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hrcp"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hrcp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hrint"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hrint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.htrunc"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.htrunc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.heq"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.heq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hne"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hne()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hgt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hgt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hge"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hlt"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hlt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hle"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hmax"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.fp16.hmin"><code class="docutils literal notranslate"><span class="pre">numba.cuda.fp16.hmin()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#control-flow-instructions">Control Flow Instructions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.selp"><code class="docutils literal notranslate"><span class="pre">numba.cuda.selp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel.html#timer-intrinsics">Timer Intrinsics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="kernel.html#numba.cuda.nanosleep"><code class="docutils literal notranslate"><span class="pre">numba.cuda.nanosleep()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">CUDA-Specific Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="types.html#vector-types">Vector Types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.to_device"><code class="docutils literal notranslate"><span class="pre">to_device()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.device_array"><code class="docutils literal notranslate"><span class="pre">device_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.device_array_like"><code class="docutils literal notranslate"><span class="pre">device_array_like()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.pinned_array"><code class="docutils literal notranslate"><span class="pre">pinned_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.pinned_array_like"><code class="docutils literal notranslate"><span class="pre">pinned_array_like()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.mapped_array"><code class="docutils literal notranslate"><span class="pre">mapped_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.mapped_array_like"><code class="docutils literal notranslate"><span class="pre">mapped_array_like()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.managed_array"><code class="docutils literal notranslate"><span class="pre">managed_array()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.pinned"><code class="docutils literal notranslate"><span class="pre">pinned()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#numba.cuda.mapped"><code class="docutils literal notranslate"><span class="pre">mapped()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#device-objects">Device Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.copy_to_device"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.copy_to_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.copy_to_host"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.copy_to_host()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.is_c_contiguous"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.is_c_contiguous()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.is_f_contiguous"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.is_f_contiguous()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.ravel"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.ravel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.reshape"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.split"><code class="docutils literal notranslate"><span class="pre">DeviceNDArray.split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord"><code class="docutils literal notranslate"><span class="pre">DeviceRecord</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord.copy_to_device"><code class="docutils literal notranslate"><span class="pre">DeviceRecord.copy_to_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord.copy_to_host"><code class="docutils literal notranslate"><span class="pre">DeviceRecord.copy_to_host()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray"><code class="docutils literal notranslate"><span class="pre">MappedNDArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.copy_to_device"><code class="docutils literal notranslate"><span class="pre">MappedNDArray.copy_to_device()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.copy_to_host"><code class="docutils literal notranslate"><span class="pre">MappedNDArray.copy_to_host()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.split"><code class="docutils literal notranslate"><span class="pre">MappedNDArray.split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="libdevice.html">Libdevice functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="libdevice.html#module-numba.cuda.libdevice">Wrapped functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.abs"><code class="docutils literal notranslate"><span class="pre">abs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.acos"><code class="docutils literal notranslate"><span class="pre">acos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.acosf"><code class="docutils literal notranslate"><span class="pre">acosf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.acosh"><code class="docutils literal notranslate"><span class="pre">acosh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.acoshf"><code class="docutils literal notranslate"><span class="pre">acoshf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.asin"><code class="docutils literal notranslate"><span class="pre">asin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.asinf"><code class="docutils literal notranslate"><span class="pre">asinf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.asinh"><code class="docutils literal notranslate"><span class="pre">asinh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.asinhf"><code class="docutils literal notranslate"><span class="pre">asinhf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atan"><code class="docutils literal notranslate"><span class="pre">atan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atan2"><code class="docutils literal notranslate"><span class="pre">atan2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atan2f"><code class="docutils literal notranslate"><span class="pre">atan2f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atanf"><code class="docutils literal notranslate"><span class="pre">atanf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atanh"><code class="docutils literal notranslate"><span class="pre">atanh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.atanhf"><code class="docutils literal notranslate"><span class="pre">atanhf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.brev"><code class="docutils literal notranslate"><span class="pre">brev()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.brevll"><code class="docutils literal notranslate"><span class="pre">brevll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.byte_perm"><code class="docutils literal notranslate"><span class="pre">byte_perm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cbrt"><code class="docutils literal notranslate"><span class="pre">cbrt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cbrtf"><code class="docutils literal notranslate"><span class="pre">cbrtf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ceil"><code class="docutils literal notranslate"><span class="pre">ceil()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ceilf"><code class="docutils literal notranslate"><span class="pre">ceilf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.clz"><code class="docutils literal notranslate"><span class="pre">clz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.clzll"><code class="docutils literal notranslate"><span class="pre">clzll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.copysign"><code class="docutils literal notranslate"><span class="pre">copysign()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.copysignf"><code class="docutils literal notranslate"><span class="pre">copysignf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cos"><code class="docutils literal notranslate"><span class="pre">cos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cosf"><code class="docutils literal notranslate"><span class="pre">cosf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cosh"><code class="docutils literal notranslate"><span class="pre">cosh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.coshf"><code class="docutils literal notranslate"><span class="pre">coshf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cospi"><code class="docutils literal notranslate"><span class="pre">cospi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.cospif"><code class="docutils literal notranslate"><span class="pre">cospif()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dadd_rd"><code class="docutils literal notranslate"><span class="pre">dadd_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dadd_rn"><code class="docutils literal notranslate"><span class="pre">dadd_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dadd_ru"><code class="docutils literal notranslate"><span class="pre">dadd_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dadd_rz"><code class="docutils literal notranslate"><span class="pre">dadd_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ddiv_rd"><code class="docutils literal notranslate"><span class="pre">ddiv_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ddiv_rn"><code class="docutils literal notranslate"><span class="pre">ddiv_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ddiv_ru"><code class="docutils literal notranslate"><span class="pre">ddiv_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ddiv_rz"><code class="docutils literal notranslate"><span class="pre">ddiv_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dmul_rd"><code class="docutils literal notranslate"><span class="pre">dmul_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dmul_rn"><code class="docutils literal notranslate"><span class="pre">dmul_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dmul_ru"><code class="docutils literal notranslate"><span class="pre">dmul_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dmul_rz"><code class="docutils literal notranslate"><span class="pre">dmul_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2float_rd"><code class="docutils literal notranslate"><span class="pre">double2float_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2float_rn"><code class="docutils literal notranslate"><span class="pre">double2float_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2float_ru"><code class="docutils literal notranslate"><span class="pre">double2float_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2float_rz"><code class="docutils literal notranslate"><span class="pre">double2float_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2hiint"><code class="docutils literal notranslate"><span class="pre">double2hiint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2int_rd"><code class="docutils literal notranslate"><span class="pre">double2int_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2int_rn"><code class="docutils literal notranslate"><span class="pre">double2int_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2int_ru"><code class="docutils literal notranslate"><span class="pre">double2int_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2int_rz"><code class="docutils literal notranslate"><span class="pre">double2int_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ll_rd"><code class="docutils literal notranslate"><span class="pre">double2ll_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ll_rn"><code class="docutils literal notranslate"><span class="pre">double2ll_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ll_ru"><code class="docutils literal notranslate"><span class="pre">double2ll_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ll_rz"><code class="docutils literal notranslate"><span class="pre">double2ll_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2loint"><code class="docutils literal notranslate"><span class="pre">double2loint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2uint_rd"><code class="docutils literal notranslate"><span class="pre">double2uint_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2uint_rn"><code class="docutils literal notranslate"><span class="pre">double2uint_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2uint_ru"><code class="docutils literal notranslate"><span class="pre">double2uint_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2uint_rz"><code class="docutils literal notranslate"><span class="pre">double2uint_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ull_rd"><code class="docutils literal notranslate"><span class="pre">double2ull_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ull_rn"><code class="docutils literal notranslate"><span class="pre">double2ull_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ull_ru"><code class="docutils literal notranslate"><span class="pre">double2ull_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double2ull_rz"><code class="docutils literal notranslate"><span class="pre">double2ull_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.double_as_longlong"><code class="docutils literal notranslate"><span class="pre">double_as_longlong()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.drcp_rd"><code class="docutils literal notranslate"><span class="pre">drcp_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.drcp_rn"><code class="docutils literal notranslate"><span class="pre">drcp_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.drcp_ru"><code class="docutils literal notranslate"><span class="pre">drcp_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.drcp_rz"><code class="docutils literal notranslate"><span class="pre">drcp_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dsqrt_rd"><code class="docutils literal notranslate"><span class="pre">dsqrt_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dsqrt_rn"><code class="docutils literal notranslate"><span class="pre">dsqrt_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dsqrt_ru"><code class="docutils literal notranslate"><span class="pre">dsqrt_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.dsqrt_rz"><code class="docutils literal notranslate"><span class="pre">dsqrt_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erf"><code class="docutils literal notranslate"><span class="pre">erf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfc"><code class="docutils literal notranslate"><span class="pre">erfc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfcf"><code class="docutils literal notranslate"><span class="pre">erfcf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfcinv"><code class="docutils literal notranslate"><span class="pre">erfcinv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfcinvf"><code class="docutils literal notranslate"><span class="pre">erfcinvf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfcx"><code class="docutils literal notranslate"><span class="pre">erfcx()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfcxf"><code class="docutils literal notranslate"><span class="pre">erfcxf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erff"><code class="docutils literal notranslate"><span class="pre">erff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfinv"><code class="docutils literal notranslate"><span class="pre">erfinv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.erfinvf"><code class="docutils literal notranslate"><span class="pre">erfinvf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.exp"><code class="docutils literal notranslate"><span class="pre">exp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.exp10"><code class="docutils literal notranslate"><span class="pre">exp10()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.exp10f"><code class="docutils literal notranslate"><span class="pre">exp10f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.exp2"><code class="docutils literal notranslate"><span class="pre">exp2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.exp2f"><code class="docutils literal notranslate"><span class="pre">exp2f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.expf"><code class="docutils literal notranslate"><span class="pre">expf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.expm1"><code class="docutils literal notranslate"><span class="pre">expm1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.expm1f"><code class="docutils literal notranslate"><span class="pre">expm1f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fabs"><code class="docutils literal notranslate"><span class="pre">fabs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fabsf"><code class="docutils literal notranslate"><span class="pre">fabsf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fadd_rd"><code class="docutils literal notranslate"><span class="pre">fadd_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fadd_rn"><code class="docutils literal notranslate"><span class="pre">fadd_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fadd_ru"><code class="docutils literal notranslate"><span class="pre">fadd_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fadd_rz"><code class="docutils literal notranslate"><span class="pre">fadd_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_cosf"><code class="docutils literal notranslate"><span class="pre">fast_cosf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_exp10f"><code class="docutils literal notranslate"><span class="pre">fast_exp10f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_expf"><code class="docutils literal notranslate"><span class="pre">fast_expf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_fdividef"><code class="docutils literal notranslate"><span class="pre">fast_fdividef()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_log10f"><code class="docutils literal notranslate"><span class="pre">fast_log10f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_log2f"><code class="docutils literal notranslate"><span class="pre">fast_log2f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_logf"><code class="docutils literal notranslate"><span class="pre">fast_logf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_powf"><code class="docutils literal notranslate"><span class="pre">fast_powf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_sincosf"><code class="docutils literal notranslate"><span class="pre">fast_sincosf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_sinf"><code class="docutils literal notranslate"><span class="pre">fast_sinf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fast_tanf"><code class="docutils literal notranslate"><span class="pre">fast_tanf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdim"><code class="docutils literal notranslate"><span class="pre">fdim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdimf"><code class="docutils literal notranslate"><span class="pre">fdimf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdiv_rd"><code class="docutils literal notranslate"><span class="pre">fdiv_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdiv_rn"><code class="docutils literal notranslate"><span class="pre">fdiv_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdiv_ru"><code class="docutils literal notranslate"><span class="pre">fdiv_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fdiv_rz"><code class="docutils literal notranslate"><span class="pre">fdiv_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ffs"><code class="docutils literal notranslate"><span class="pre">ffs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ffsll"><code class="docutils literal notranslate"><span class="pre">ffsll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.finitef"><code class="docutils literal notranslate"><span class="pre">finitef()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2half_rn"><code class="docutils literal notranslate"><span class="pre">float2half_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2int_rd"><code class="docutils literal notranslate"><span class="pre">float2int_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2int_rn"><code class="docutils literal notranslate"><span class="pre">float2int_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2int_ru"><code class="docutils literal notranslate"><span class="pre">float2int_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2int_rz"><code class="docutils literal notranslate"><span class="pre">float2int_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ll_rd"><code class="docutils literal notranslate"><span class="pre">float2ll_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ll_rn"><code class="docutils literal notranslate"><span class="pre">float2ll_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ll_ru"><code class="docutils literal notranslate"><span class="pre">float2ll_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ll_rz"><code class="docutils literal notranslate"><span class="pre">float2ll_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2uint_rd"><code class="docutils literal notranslate"><span class="pre">float2uint_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2uint_rn"><code class="docutils literal notranslate"><span class="pre">float2uint_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2uint_ru"><code class="docutils literal notranslate"><span class="pre">float2uint_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2uint_rz"><code class="docutils literal notranslate"><span class="pre">float2uint_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ull_rd"><code class="docutils literal notranslate"><span class="pre">float2ull_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ull_rn"><code class="docutils literal notranslate"><span class="pre">float2ull_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ull_ru"><code class="docutils literal notranslate"><span class="pre">float2ull_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float2ull_rz"><code class="docutils literal notranslate"><span class="pre">float2ull_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.float_as_int"><code class="docutils literal notranslate"><span class="pre">float_as_int()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.floor"><code class="docutils literal notranslate"><span class="pre">floor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.floorf"><code class="docutils literal notranslate"><span class="pre">floorf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fma"><code class="docutils literal notranslate"><span class="pre">fma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fma_rd"><code class="docutils literal notranslate"><span class="pre">fma_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fma_rn"><code class="docutils literal notranslate"><span class="pre">fma_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fma_ru"><code class="docutils literal notranslate"><span class="pre">fma_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fma_rz"><code class="docutils literal notranslate"><span class="pre">fma_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaf"><code class="docutils literal notranslate"><span class="pre">fmaf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaf_rd"><code class="docutils literal notranslate"><span class="pre">fmaf_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaf_rn"><code class="docutils literal notranslate"><span class="pre">fmaf_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaf_ru"><code class="docutils literal notranslate"><span class="pre">fmaf_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaf_rz"><code class="docutils literal notranslate"><span class="pre">fmaf_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmax"><code class="docutils literal notranslate"><span class="pre">fmax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmaxf"><code class="docutils literal notranslate"><span class="pre">fmaxf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmin"><code class="docutils literal notranslate"><span class="pre">fmin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fminf"><code class="docutils literal notranslate"><span class="pre">fminf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmod"><code class="docutils literal notranslate"><span class="pre">fmod()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmodf"><code class="docutils literal notranslate"><span class="pre">fmodf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmul_rd"><code class="docutils literal notranslate"><span class="pre">fmul_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmul_rn"><code class="docutils literal notranslate"><span class="pre">fmul_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmul_ru"><code class="docutils literal notranslate"><span class="pre">fmul_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fmul_rz"><code class="docutils literal notranslate"><span class="pre">fmul_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frcp_rd"><code class="docutils literal notranslate"><span class="pre">frcp_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frcp_rn"><code class="docutils literal notranslate"><span class="pre">frcp_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frcp_ru"><code class="docutils literal notranslate"><span class="pre">frcp_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frcp_rz"><code class="docutils literal notranslate"><span class="pre">frcp_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frexp"><code class="docutils literal notranslate"><span class="pre">frexp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frexpf"><code class="docutils literal notranslate"><span class="pre">frexpf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.frsqrt_rn"><code class="docutils literal notranslate"><span class="pre">frsqrt_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsqrt_rd"><code class="docutils literal notranslate"><span class="pre">fsqrt_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsqrt_rn"><code class="docutils literal notranslate"><span class="pre">fsqrt_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsqrt_ru"><code class="docutils literal notranslate"><span class="pre">fsqrt_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsqrt_rz"><code class="docutils literal notranslate"><span class="pre">fsqrt_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsub_rd"><code class="docutils literal notranslate"><span class="pre">fsub_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsub_rn"><code class="docutils literal notranslate"><span class="pre">fsub_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsub_ru"><code class="docutils literal notranslate"><span class="pre">fsub_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.fsub_rz"><code class="docutils literal notranslate"><span class="pre">fsub_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.hadd"><code class="docutils literal notranslate"><span class="pre">hadd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.half2float"><code class="docutils literal notranslate"><span class="pre">half2float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.hiloint2double"><code class="docutils literal notranslate"><span class="pre">hiloint2double()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.hypot"><code class="docutils literal notranslate"><span class="pre">hypot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.hypotf"><code class="docutils literal notranslate"><span class="pre">hypotf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ilogb"><code class="docutils literal notranslate"><span class="pre">ilogb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ilogbf"><code class="docutils literal notranslate"><span class="pre">ilogbf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int2double_rn"><code class="docutils literal notranslate"><span class="pre">int2double_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int2float_rd"><code class="docutils literal notranslate"><span class="pre">int2float_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int2float_rn"><code class="docutils literal notranslate"><span class="pre">int2float_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int2float_ru"><code class="docutils literal notranslate"><span class="pre">int2float_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int2float_rz"><code class="docutils literal notranslate"><span class="pre">int2float_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.int_as_float"><code class="docutils literal notranslate"><span class="pre">int_as_float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.isfinited"><code class="docutils literal notranslate"><span class="pre">isfinited()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.isinfd"><code class="docutils literal notranslate"><span class="pre">isinfd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.isinff"><code class="docutils literal notranslate"><span class="pre">isinff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.isnand"><code class="docutils literal notranslate"><span class="pre">isnand()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.isnanf"><code class="docutils literal notranslate"><span class="pre">isnanf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.j0"><code class="docutils literal notranslate"><span class="pre">j0()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.j0f"><code class="docutils literal notranslate"><span class="pre">j0f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.j1"><code class="docutils literal notranslate"><span class="pre">j1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.j1f"><code class="docutils literal notranslate"><span class="pre">j1f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.jn"><code class="docutils literal notranslate"><span class="pre">jn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.jnf"><code class="docutils literal notranslate"><span class="pre">jnf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ldexp"><code class="docutils literal notranslate"><span class="pre">ldexp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ldexpf"><code class="docutils literal notranslate"><span class="pre">ldexpf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.lgamma"><code class="docutils literal notranslate"><span class="pre">lgamma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.lgammaf"><code class="docutils literal notranslate"><span class="pre">lgammaf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2double_rd"><code class="docutils literal notranslate"><span class="pre">ll2double_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2double_rn"><code class="docutils literal notranslate"><span class="pre">ll2double_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2double_ru"><code class="docutils literal notranslate"><span class="pre">ll2double_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2double_rz"><code class="docutils literal notranslate"><span class="pre">ll2double_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2float_rd"><code class="docutils literal notranslate"><span class="pre">ll2float_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2float_rn"><code class="docutils literal notranslate"><span class="pre">ll2float_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2float_ru"><code class="docutils literal notranslate"><span class="pre">ll2float_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ll2float_rz"><code class="docutils literal notranslate"><span class="pre">ll2float_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llabs"><code class="docutils literal notranslate"><span class="pre">llabs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llmax"><code class="docutils literal notranslate"><span class="pre">llmax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llmin"><code class="docutils literal notranslate"><span class="pre">llmin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llrint"><code class="docutils literal notranslate"><span class="pre">llrint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llrintf"><code class="docutils literal notranslate"><span class="pre">llrintf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llround"><code class="docutils literal notranslate"><span class="pre">llround()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.llroundf"><code class="docutils literal notranslate"><span class="pre">llroundf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log"><code class="docutils literal notranslate"><span class="pre">log()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log10"><code class="docutils literal notranslate"><span class="pre">log10()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log10f"><code class="docutils literal notranslate"><span class="pre">log10f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log1p"><code class="docutils literal notranslate"><span class="pre">log1p()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log1pf"><code class="docutils literal notranslate"><span class="pre">log1pf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log2"><code class="docutils literal notranslate"><span class="pre">log2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.log2f"><code class="docutils literal notranslate"><span class="pre">log2f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.logb"><code class="docutils literal notranslate"><span class="pre">logb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.logbf"><code class="docutils literal notranslate"><span class="pre">logbf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.logf"><code class="docutils literal notranslate"><span class="pre">logf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.longlong_as_double"><code class="docutils literal notranslate"><span class="pre">longlong_as_double()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.max"><code class="docutils literal notranslate"><span class="pre">max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.min"><code class="docutils literal notranslate"><span class="pre">min()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.modf"><code class="docutils literal notranslate"><span class="pre">modf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.modff"><code class="docutils literal notranslate"><span class="pre">modff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.mul24"><code class="docutils literal notranslate"><span class="pre">mul24()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.mul64hi"><code class="docutils literal notranslate"><span class="pre">mul64hi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.mulhi"><code class="docutils literal notranslate"><span class="pre">mulhi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.nearbyint"><code class="docutils literal notranslate"><span class="pre">nearbyint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.nearbyintf"><code class="docutils literal notranslate"><span class="pre">nearbyintf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.nextafter"><code class="docutils literal notranslate"><span class="pre">nextafter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.nextafterf"><code class="docutils literal notranslate"><span class="pre">nextafterf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.normcdf"><code class="docutils literal notranslate"><span class="pre">normcdf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.normcdff"><code class="docutils literal notranslate"><span class="pre">normcdff()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.normcdfinv"><code class="docutils literal notranslate"><span class="pre">normcdfinv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.normcdfinvf"><code class="docutils literal notranslate"><span class="pre">normcdfinvf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.popc"><code class="docutils literal notranslate"><span class="pre">popc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.popcll"><code class="docutils literal notranslate"><span class="pre">popcll()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.pow"><code class="docutils literal notranslate"><span class="pre">pow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.powf"><code class="docutils literal notranslate"><span class="pre">powf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.powi"><code class="docutils literal notranslate"><span class="pre">powi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.powif"><code class="docutils literal notranslate"><span class="pre">powif()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rcbrt"><code class="docutils literal notranslate"><span class="pre">rcbrt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rcbrtf"><code class="docutils literal notranslate"><span class="pre">rcbrtf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.remainder"><code class="docutils literal notranslate"><span class="pre">remainder()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.remainderf"><code class="docutils literal notranslate"><span class="pre">remainderf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.remquo"><code class="docutils literal notranslate"><span class="pre">remquo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.remquof"><code class="docutils literal notranslate"><span class="pre">remquof()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rhadd"><code class="docutils literal notranslate"><span class="pre">rhadd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rint"><code class="docutils literal notranslate"><span class="pre">rint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rintf"><code class="docutils literal notranslate"><span class="pre">rintf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.round"><code class="docutils literal notranslate"><span class="pre">round()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.roundf"><code class="docutils literal notranslate"><span class="pre">roundf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rsqrt"><code class="docutils literal notranslate"><span class="pre">rsqrt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.rsqrtf"><code class="docutils literal notranslate"><span class="pre">rsqrtf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sad"><code class="docutils literal notranslate"><span class="pre">sad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.saturatef"><code class="docutils literal notranslate"><span class="pre">saturatef()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.scalbn"><code class="docutils literal notranslate"><span class="pre">scalbn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.scalbnf"><code class="docutils literal notranslate"><span class="pre">scalbnf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.signbitd"><code class="docutils literal notranslate"><span class="pre">signbitd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.signbitf"><code class="docutils literal notranslate"><span class="pre">signbitf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sin"><code class="docutils literal notranslate"><span class="pre">sin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sincos"><code class="docutils literal notranslate"><span class="pre">sincos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sincosf"><code class="docutils literal notranslate"><span class="pre">sincosf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sincospi"><code class="docutils literal notranslate"><span class="pre">sincospi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sincospif"><code class="docutils literal notranslate"><span class="pre">sincospif()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sinf"><code class="docutils literal notranslate"><span class="pre">sinf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sinh"><code class="docutils literal notranslate"><span class="pre">sinh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sinhf"><code class="docutils literal notranslate"><span class="pre">sinhf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sinpi"><code class="docutils literal notranslate"><span class="pre">sinpi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sinpif"><code class="docutils literal notranslate"><span class="pre">sinpif()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sqrt"><code class="docutils literal notranslate"><span class="pre">sqrt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.sqrtf"><code class="docutils literal notranslate"><span class="pre">sqrtf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tan"><code class="docutils literal notranslate"><span class="pre">tan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tanf"><code class="docutils literal notranslate"><span class="pre">tanf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tanh"><code class="docutils literal notranslate"><span class="pre">tanh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tanhf"><code class="docutils literal notranslate"><span class="pre">tanhf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tgamma"><code class="docutils literal notranslate"><span class="pre">tgamma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.tgammaf"><code class="docutils literal notranslate"><span class="pre">tgammaf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.trunc"><code class="docutils literal notranslate"><span class="pre">trunc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.truncf"><code class="docutils literal notranslate"><span class="pre">truncf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uhadd"><code class="docutils literal notranslate"><span class="pre">uhadd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uint2double_rn"><code class="docutils literal notranslate"><span class="pre">uint2double_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uint2float_rd"><code class="docutils literal notranslate"><span class="pre">uint2float_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uint2float_rn"><code class="docutils literal notranslate"><span class="pre">uint2float_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uint2float_ru"><code class="docutils literal notranslate"><span class="pre">uint2float_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.uint2float_rz"><code class="docutils literal notranslate"><span class="pre">uint2float_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2double_rd"><code class="docutils literal notranslate"><span class="pre">ull2double_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2double_rn"><code class="docutils literal notranslate"><span class="pre">ull2double_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2double_ru"><code class="docutils literal notranslate"><span class="pre">ull2double_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2double_rz"><code class="docutils literal notranslate"><span class="pre">ull2double_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2float_rd"><code class="docutils literal notranslate"><span class="pre">ull2float_rd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2float_rn"><code class="docutils literal notranslate"><span class="pre">ull2float_rn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2float_ru"><code class="docutils literal notranslate"><span class="pre">ull2float_ru()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ull2float_rz"><code class="docutils literal notranslate"><span class="pre">ull2float_rz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ullmax"><code class="docutils literal notranslate"><span class="pre">ullmax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ullmin"><code class="docutils literal notranslate"><span class="pre">ullmin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.umax"><code class="docutils literal notranslate"><span class="pre">umax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.umin"><code class="docutils literal notranslate"><span class="pre">umin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.umul24"><code class="docutils literal notranslate"><span class="pre">umul24()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.umul64hi"><code class="docutils literal notranslate"><span class="pre">umul64hi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.umulhi"><code class="docutils literal notranslate"><span class="pre">umulhi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.urhadd"><code class="docutils literal notranslate"><span class="pre">urhadd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.usad"><code class="docutils literal notranslate"><span class="pre">usad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.y0"><code class="docutils literal notranslate"><span class="pre">y0()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.y0f"><code class="docutils literal notranslate"><span class="pre">y0f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.y1"><code class="docutils literal notranslate"><span class="pre">y1()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.y1f"><code class="docutils literal notranslate"><span class="pre">y1f()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.yn"><code class="docutils literal notranslate"><span class="pre">yn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="libdevice.html#numba.cuda.libdevice.ynf"><code class="docutils literal notranslate"><span class="pre">ynf()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="envvars.html">Environment Variables</a></li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../user/faq.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CUDA Frequently Asked Questions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="host.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CUDA Host API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

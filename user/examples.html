@@ -1,0 +1,1263 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Examples &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/examples';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Debugging CUDA Python with the the CUDA Simulator" href="simulator.html" />
+    <link rel="prev" title="Device management" href="device-management.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Examples</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
+<section id="vector-addition">
+<span id="cuda-vecadd"></span><h2>Vector Addition<a class="headerlink" href="#vector-addition" title="Link to this heading">#</a></h2>
+<p>This example uses Numba to create on-device arrays and a vector addition kernel;
+it is a warmup for learning how to write GPU kernels using Numba. We’ll begin
+with some required imports:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_vecadd</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_vecadd.py</span></code></span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">2</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+</pre></div>
+</div>
+</div>
+<p>The following function is the kernel. Note that it is defined in terms of Python
+variables with unspecified types. When the kernel is launched, Numba will
+examine the types of the arguments that are passed at runtime and generate a
+CUDA kernel specialized for them.</p>
+<p>Note that Numba kernels do not return values and must write any output into
+arrays passed in as parameters (this is similar to the requirement that CUDA
+C/C++ kernels have <code class="docutils literal notranslate"><span class="pre">void</span></code> return type). Here we pass in <code class="docutils literal notranslate"><span class="pre">c</span></code> for the results
+to be written into.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_vecadd</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_vecadd.py</span></code></span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos">2</span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="linenos">3</span>    <span class="c1"># like threadIdx.x + (blockIdx.x * blockDim.x)</span>
+<span class="linenos">4</span>    <span class="n">tid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span>    <span class="k">if</span> <span class="n">tid</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+<span class="linenos">8</span>        <span class="n">c</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="../reference/memory.html#numba.cuda.to_device" title="numba.cuda.to_device"><code class="xref py py-func docutils literal notranslate"><span class="pre">cuda.to_device()</span></code></a> can be used create device-side
+copies of arrays.  <a class="reference internal" href="../reference/memory.html#numba.cuda.device_array_like" title="numba.cuda.device_array_like"><code class="xref py py-func docutils literal notranslate"><span class="pre">cuda.device_array_like()</span></code></a> creates an uninitialized array of the same shape
+and type as an existing array.  Here we transfer two vectors and create an empty
+vector to hold our results:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_vecadd</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_vecadd.py</span></code></span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="linenos">2</span><span class="n">a</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="linenos">3</span><span class="n">b</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="linenos">4</span><span class="n">c</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">device_array_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>A call to <code class="xref py py-meth docutils literal notranslate"><span class="pre">forall()</span></code> generates
+an appropriate launch configuration with a 1D grid (see
+<a class="reference internal" href="kernels.html#cuda-kernel-invocation"><span class="std std-ref">Kernel invocation</span></a>) for a given data size and is often the simplest
+way of launching a kernel:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_vecadd</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_vecadd.py</span></code></span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">f</span><span class="o">.</span><span class="n">forall</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>This prints:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[0.73548323 1.32061059 0.12582968 ... 1.25925809 1.49335059 1.59315414]
+</pre></div>
+</div>
+<p>One can also configure the grid manually using the subscripting syntax. The
+following example launches a grid with sufficient threads to operate on every
+vector element:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_vecadd</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_vecadd.py</span></code></span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># Enough threads per block for several warps per block</span>
+<span class="linenos">2</span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="linenos">3</span><span class="c1"># Enough blocks to cover the entire vector depending on its length</span>
+<span class="linenos">4</span><span class="n">nblocks</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="n">nthreads</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="linenos">5</span><span class="n">f</span><span class="p">[</span><span class="n">nblocks</span><span class="p">,</span> <span class="n">nthreads</span><span class="p">](</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="linenos">6</span><span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>This also prints:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[0.73548323 1.32061059 0.12582968 ... 1.25925809 1.49335059 1.59315414]
+</pre></div>
+</div>
+</section>
+<section id="d-heat-equation">
+<span id="cuda-laplace"></span><h2>1D Heat Equation<a class="headerlink" href="#d-heat-equation" title="Link to this heading">#</a></h2>
+<p>This example solves Laplace’s equation in one dimension for a certain set of initial
+conditions and boundary conditions. A full discussion of Laplace’s equation is out of
+scope for this documentation, but it will suffice to say that it describes how heat
+propagates through an object over time. It works by discretizing the problem in two ways:</p>
+<ol class="arabic simple">
+<li><p>The domain is partitioned into a mesh of points that each have an individual temperature.</p></li>
+<li><p>Time is partitioned into discrete intervals that are advanced forward sequentially.</p></li>
+</ol>
+<p>Then, the following assumption is applied: The temperature of a point after some interval
+has passed is some weighted average of the temperature of the points that are directly
+adjacent to it. Intuitively, if all the points in the domain are very hot
+and a single point in the middle is very cold, as time passes, the hot points will cause
+the cold one to heat up and the cold point will cause the surrounding hot pieces to cool
+slightly. Simply put, the heat spreads throughout the object.</p>
+<p>We can implement this simulation using a Numba kernel. Let’s start simple by assuming
+we have a one dimensional object which we’ll represent with an array of values. The position
+of the element in the array is the position of a point within the object, and the value
+of the element represents the temperature.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_laplace</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_laplace.py</span></code></span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">2</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+</pre></div>
+</div>
+</div>
+<p>Some initial setup here. Let’s make one point in the center of the object very hot.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_laplace</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_laplace.py</span></code></span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Use an odd problem size.</span>
+<span class="linenos"> 2</span><span class="c1"># This is so there can be an element truly in the &quot;middle&quot; for symmetry.</span>
+<span class="linenos"> 3</span><span class="n">size</span> <span class="o">=</span> <span class="mi">1001</span>
+<span class="linenos"> 4</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c1"># Middle element is made very hot</span>
+<span class="linenos"> 7</span><span class="n">data</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="linenos"> 8</span><span class="n">buf_0</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c1"># This extra array is used for synchronization purposes</span>
+<span class="linenos">11</span><span class="n">buf_1</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">device_array_like</span><span class="p">(</span><span class="n">buf_0</span><span class="p">)</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="n">niter</span> <span class="o">=</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+</div>
+<p>The initial state of the problem can be visualized as:</p>
+<img alt="../_images/laplace_initial.svg" src="../_images/laplace_initial.svg" /><p>In our kernel each thread will be responsible for managing the temperature update for a single element
+in a loop over the desired number of timesteps. The kernel is below. Note the use of cooperative group
+synchronization and the use of two buffers swapped at each iteration to avoid race conditions. See
+<a class="reference internal" href="../reference/kernel.html#numba.cuda.cg.this_grid" title="numba.cuda.cg.this_grid"><code class="xref py py-func docutils literal notranslate"><span class="pre">numba.cuda.cg.this_grid()</span></code></a> for details.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_laplace</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_laplace.py</span></code></span><a class="headerlink" href="#id8" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 2</span><span class="k">def</span> <span class="nf">solve_heat_equation</span><span class="p">(</span><span class="n">buf_0</span><span class="p">,</span> <span class="n">buf_1</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<span class="linenos"> 3</span>    <span class="n">i</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>    <span class="c1"># Don&#39;t continue if our index is outside the domain</span>
+<span class="linenos"> 6</span>    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf_0</span><span class="p">):</span>
+<span class="linenos"> 7</span>        <span class="k">return</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="c1"># Prepare to do a grid-wide synchronization later</span>
+<span class="linenos">10</span>    <span class="n">grid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">cg</span><span class="o">.</span><span class="n">this_grid</span><span class="p">()</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">timesteps</span><span class="p">):</span>
+<span class="linenos">13</span>        <span class="c1"># Select the buffer from the previous timestep</span>
+<span class="linenos">14</span>        <span class="k">if</span> <span class="p">(</span><span class="n">step</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">15</span>            <span class="n">data</span> <span class="o">=</span> <span class="n">buf_0</span>
+<span class="linenos">16</span>            <span class="n">next_data</span> <span class="o">=</span> <span class="n">buf_1</span>
+<span class="linenos">17</span>        <span class="k">else</span><span class="p">:</span>
+<span class="linenos">18</span>            <span class="n">data</span> <span class="o">=</span> <span class="n">buf_1</span>
+<span class="linenos">19</span>            <span class="n">next_data</span> <span class="o">=</span> <span class="n">buf_0</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>        <span class="c1"># Get the current temperature associated with this point</span>
+<span class="linenos">22</span>        <span class="n">curr_temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>        <span class="c1"># Apply formula from finite difference equation</span>
+<span class="linenos">25</span>        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="c1"># Left wall is held at T = 0</span>
+<span class="linenos">27</span>            <span class="n">next_temp</span> <span class="o">=</span> <span class="n">curr_temp</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">curr_temp</span><span class="p">))</span>
+<span class="linenos">28</span>        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<span class="linenos">29</span>            <span class="c1"># Right wall is held at T = 0</span>
+<span class="linenos">30</span>            <span class="n">next_temp</span> <span class="o">=</span> <span class="n">curr_temp</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">curr_temp</span><span class="p">))</span>
+<span class="linenos">31</span>        <span class="k">else</span><span class="p">:</span>
+<span class="linenos">32</span>            <span class="c1"># Interior points are a weighted average of their neighbors</span>
+<span class="linenos">33</span>            <span class="n">next_temp</span> <span class="o">=</span> <span class="n">curr_temp</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span>
+<span class="linenos">34</span>                <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">curr_temp</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+<span class="linenos">35</span>            <span class="p">)</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>        <span class="c1"># Write new value to the next buffer</span>
+<span class="linenos">38</span>        <span class="n">next_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_temp</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>        <span class="c1"># Wait for every thread to write before moving on</span>
+<span class="linenos">41</span>        <span class="n">grid</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Calling the kernel:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_laplace</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_laplace.py</span></code></span><a class="headerlink" href="#id9" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">solve_heat_equation</span><span class="o">.</span><span class="n">forall</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))(</span>
+<span class="linenos">2</span>    <span class="n">buf_0</span><span class="p">,</span> <span class="n">buf_1</span><span class="p">,</span> <span class="n">niter</span><span class="p">,</span> <span class="mf">0.25</span>
+<span class="linenos">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Plotting the final data shows an arc that is highest where
+the object was hot initially and gradually sloping down to zero towards the
+edges where the temperature is fixed at zero. In the limit of infinite time,
+the arc will flatten out completely.</p>
+<img alt="../_images/laplace_final.svg" src="../_images/laplace_final.svg" /></section>
+<section id="shared-memory-reduction">
+<span id="cuda-reduction-shared"></span><h2>Shared Memory Reduction<a class="headerlink" href="#shared-memory-reduction" title="Link to this heading">#</a></h2>
+<p>Numba exposes many CUDA features, including <a class="reference internal" href="memory.html#cuda-shared-memory"><span class="std std-ref">shared memory</span></a>. To demonstrate shared memory, let’s reimplement a
+famous CUDA solution for summing a vector which works by “folding” the data up
+using a successively smaller number of threads.</p>
+<p>Note that this is a fairly naive implementation, and there are more efficient ways of implementing reductions
+using Numba - see <a class="reference internal" href="#cuda-montecarlo"><span class="std std-ref">Monte Carlo Integration</span></a> for an example.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_reduction</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_reduction.py</span></code></span><a class="headerlink" href="#id10" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">2</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="linenos">3</span><span class="kn">from</span> <span class="nn">numba.types</span> <span class="kn">import</span> <span class="n">int32</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s create some one dimensional data that we’ll use to demonstrate the
+kernel itself:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_reduction</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_reduction.py</span></code></span><a class="headerlink" href="#id11" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># generate data</span>
+<span class="linenos">2</span><span class="n">a</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1024</span><span class="p">))</span>
+<span class="linenos">3</span><span class="n">nelem</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Here is a version of the kernel implemented using Numba:</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_reduction</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_reduction.py</span></code></span><a class="headerlink" href="#id12" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 2</span><span class="k">def</span> <span class="nf">array_sum</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="linenos"> 3</span>    <span class="n">tid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">threadIdx</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos"> 4</span>    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 5</span>    <span class="k">if</span> <span class="n">tid</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+<span class="linenos"> 6</span>        <span class="n">i</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>        <span class="c1"># Declare an array in shared memory</span>
+<span class="linenos"> 9</span>        <span class="n">shr</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nelem</span><span class="p">,</span> <span class="n">int32</span><span class="p">)</span>
+<span class="linenos">10</span>        <span class="n">shr</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>        <span class="c1"># Ensure writes to shared memory are visible</span>
+<span class="linenos">13</span>        <span class="c1"># to all threads before reducing</span>
+<span class="linenos">14</span>        <span class="n">cuda</span><span class="o">.</span><span class="n">syncthreads</span><span class="p">()</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>        <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">17</span>        <span class="k">while</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="n">cuda</span><span class="o">.</span><span class="n">blockDim</span><span class="o">.</span><span class="n">x</span><span class="p">:</span>
+<span class="linenos">18</span>            <span class="k">if</span> <span class="n">tid</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">19</span>                <span class="c1"># Stride by `s` and add</span>
+<span class="linenos">20</span>                <span class="n">shr</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">+=</span> <span class="n">shr</span><span class="p">[</span><span class="n">tid</span> <span class="o">+</span> <span class="n">s</span><span class="p">]</span>
+<span class="linenos">21</span>            <span class="n">s</span> <span class="o">*=</span> <span class="mi">2</span>
+<span class="linenos">22</span>            <span class="n">cuda</span><span class="o">.</span><span class="n">syncthreads</span><span class="p">()</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>        <span class="c1"># After the loop, the zeroth  element contains the sum</span>
+<span class="linenos">25</span>        <span class="k">if</span> <span class="n">tid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">26</span>            <span class="n">data</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">shr</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>We can run kernel and verify that the same result is obtained through
+summing data on the host as follows:</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_reduction</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_reduction.py</span></code></span><a class="headerlink" href="#id13" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">array_sum</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">nelem</span><span class="p">](</span><span class="n">a</span><span class="p">)</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                  <span class="c1"># 523776</span>
+<span class="linenos">3</span><span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1024</span><span class="p">)))</span>  <span class="c1"># 523776</span>
+</pre></div>
+</div>
+</div>
+<p>This algorithm can be greatly improved upon by redesigning the inner loop
+to use sequential memory accesses, and even further by using strategies that
+keep more threads active and working, since in this example most threads quickly
+become idle.</p>
+</section>
+<section id="dividing-click-data-into-sessions">
+<span id="cuda-sessionization"></span><h2>Dividing Click Data into Sessions<a class="headerlink" href="#dividing-click-data-into-sessions" title="Link to this heading">#</a></h2>
+<p>A common problem in business analytics is that of grouping the activity of users of an online platform into
+sessions, called “sessionization”. The idea is that users generally traverse through a website and perform
+various actions (clicking something, filling out a form, etc.) in discrete groups. Perhaps a customer spends
+some time shopping for an item in the morning and then again at night - often the business is interested in
+treating these periods as separate interactions with their service, and this creates the problem of
+programmatically splitting up activity in some agreed-upon way.</p>
+<p>Here we’ll illustrate how to write a Numba kernel to solve this problem. We’ll start with data
+containing two fields: let <code class="docutils literal notranslate"><span class="pre">user_id</span></code> represent a unique ID corresponding to an individual customer, and let
+<code class="docutils literal notranslate"><span class="pre">action_time</span></code> be a time that some unknown action was taken on the service. Right now, we’ll assume there’s
+only one type of action, so all there is to know is when it happened.</p>
+<p>Our goal will be to create a new column called <code class="docutils literal notranslate"><span class="pre">session_id</span></code>, which contains a label corresponding to a unique
+session. We’ll define the boundary between sessions as when there has been at least one hour between clicks.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_sessionize</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_sessionize.py</span></code></span><a class="headerlink" href="#id14" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">2</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="c1"># Set the timeout to one hour</span>
+<span class="linenos">5</span><span class="n">session_timeout</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="s2">&quot;3600&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Here is a solution using Numba:</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_sessionize</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_sessionize.py</span></code></span><a class="headerlink" href="#id15" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 2</span><span class="k">def</span> <span class="nf">sessionize</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+<span class="linenos"> 3</span>    <span class="n">gid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 4</span>    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>    <span class="k">if</span> <span class="n">gid</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="p">:</span>
+<span class="linenos"> 7</span>        <span class="k">return</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="c1"># Determine session boundaries</span>
+<span class="linenos">10</span>    <span class="n">is_first_datapoint</span> <span class="o">=</span> <span class="n">gid</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="linenos">11</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_first_datapoint</span><span class="p">:</span>
+<span class="linenos">12</span>        <span class="n">new_user</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">[</span><span class="n">gid</span><span class="p">]</span> <span class="o">!=</span> <span class="n">user_id</span><span class="p">[</span><span class="n">gid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+<span class="linenos">13</span>        <span class="n">timed_out</span> <span class="o">=</span> <span class="p">(</span>
+<span class="linenos">14</span>            <span class="n">timestamp</span><span class="p">[</span><span class="n">gid</span><span class="p">]</span> <span class="o">-</span> <span class="n">timestamp</span><span class="p">[</span><span class="n">gid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">session_timeout</span>
+<span class="linenos">15</span>        <span class="p">)</span>
+<span class="linenos">16</span>        <span class="n">is_sess_boundary</span> <span class="o">=</span> <span class="n">new_user</span> <span class="ow">or</span> <span class="n">timed_out</span>
+<span class="linenos">17</span>    <span class="k">else</span><span class="p">:</span>
+<span class="linenos">18</span>        <span class="n">is_sess_boundary</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="c1"># Determine session labels</span>
+<span class="linenos">21</span>    <span class="k">if</span> <span class="n">is_sess_boundary</span><span class="p">:</span>
+<span class="linenos">22</span>        <span class="c1"># This thread marks the start of a session</span>
+<span class="linenos">23</span>        <span class="n">results</span><span class="p">[</span><span class="n">gid</span><span class="p">]</span> <span class="o">=</span> <span class="n">gid</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>        <span class="c1"># Make sure all session boundaries are written</span>
+<span class="linenos">26</span>        <span class="c1"># before populating the session id</span>
+<span class="linenos">27</span>        <span class="n">grid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">cg</span><span class="o">.</span><span class="n">this_grid</span><span class="p">()</span>
+<span class="linenos">28</span>        <span class="n">grid</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>        <span class="n">look_ahead</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">31</span>        <span class="c1"># Check elements &#39;forward&#39; of this one</span>
+<span class="linenos">32</span>        <span class="c1"># until a new session boundary is found</span>
+<span class="linenos">33</span>        <span class="k">while</span> <span class="n">results</span><span class="p">[</span><span class="n">gid</span> <span class="o">+</span> <span class="n">look_ahead</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">34</span>            <span class="n">results</span><span class="p">[</span><span class="n">gid</span> <span class="o">+</span> <span class="n">look_ahead</span><span class="p">]</span> <span class="o">=</span> <span class="n">gid</span>
+<span class="linenos">35</span>            <span class="n">look_ahead</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="linenos">36</span>            <span class="c1"># Avoid out-of-bounds accesses by the last thread</span>
+<span class="linenos">37</span>            <span class="k">if</span> <span class="n">gid</span> <span class="o">+</span> <span class="n">look_ahead</span> <span class="o">==</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<span class="linenos">38</span>                <span class="n">results</span><span class="p">[</span><span class="n">gid</span> <span class="o">+</span> <span class="n">look_ahead</span><span class="p">]</span> <span class="o">=</span> <span class="n">gid</span>
+<span class="linenos">39</span>                <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s generate some data and try out the kernel:</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_sessionize</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_sessionize.py</span></code></span><a class="headerlink" href="#id16" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Generate data</span>
+<span class="linenos"> 2</span><span class="n">ids</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span>
+<span class="linenos"> 3</span>    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="linenos"> 4</span>        <span class="p">[</span>
+<span class="linenos"> 5</span>            <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="linenos"> 6</span>            <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+<span class="linenos"> 7</span>            <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+<span class="linenos"> 8</span>            <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+<span class="linenos"> 9</span>        <span class="p">]</span>
+<span class="linenos">10</span>    <span class="p">)</span>
+<span class="linenos">11</span><span class="p">)</span>
+<span class="linenos">12</span><span class="n">sec</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span>
+<span class="linenos">13</span>    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+<span class="linenos">14</span>        <span class="p">[</span>
+<span class="linenos">15</span>            <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">5001</span><span class="p">,</span> <span class="mi">5002</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+<span class="linenos">16</span>            <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">5001</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span>
+<span class="linenos">17</span>            <span class="mi">10001</span><span class="p">,</span> <span class="mi">10002</span><span class="p">,</span> <span class="mi">10003</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">150001</span><span class="p">,</span>
+<span class="linenos">18</span>            <span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">50001</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">20000</span><span class="p">,</span>
+<span class="linenos">19</span>            <span class="mi">25000</span><span class="p">,</span> <span class="mi">25001</span><span class="p">,</span> <span class="mi">25002</span><span class="p">,</span> <span class="mi">25003</span><span class="p">,</span>
+<span class="linenos">20</span>        <span class="p">],</span>
+<span class="linenos">21</span>        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;datetime64[ns]&quot;</span><span class="p">,</span>
+<span class="linenos">22</span>    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+<span class="linenos">23</span>        <span class="s2">&quot;int64&quot;</span>
+<span class="linenos">24</span>    <span class="p">)</span>  <span class="c1"># Cast to int64 for compatibility</span>
+<span class="linenos">25</span><span class="p">)</span>
+<span class="linenos">26</span><span class="c1"># Create a vector to hold the results</span>
+<span class="linenos">27</span><span class="n">results</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<p>As can be seen above, the kernel successfully divided the first three datapoints from the second three for the first user ID,
+and a similar pattern is seen throughout.</p>
+</section>
+<section id="jit-function-cpu-gpu-compatibility">
+<span id="cuda-reuse-function"></span><h2>JIT Function CPU-GPU Compatibility<a class="headerlink" href="#jit-function-cpu-gpu-compatibility" title="Link to this heading">#</a></h2>
+<p>This example demonstrates how <code class="docutils literal notranslate"><span class="pre">numba.jit</span></code> can be used to jit compile a function for the CPU, while at the same time making
+it available for use inside CUDA kernels. This can be very useful for users that are migrating workflows from CPU to GPU as
+they can directly reuse potential business logic with fewer code changes.</p>
+<p>Take the following example function:</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cpu_gpu_compat</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_cpu_gpu_compat.py</span></code></span><a class="headerlink" href="#id17" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nd">@numba</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos">2</span><span class="k">def</span> <span class="nf">business_logic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="linenos">3</span>    <span class="k">return</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">business_logic</span></code> can be run standalone in compiled form on the CPU:</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cpu_gpu_compat</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_cpu_gpu_compat.py</span></code></span><a class="headerlink" href="#id18" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nb">print</span><span class="p">(</span><span class="n">business_logic</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># -126.79644737231007</span>
+</pre></div>
+</div>
+</div>
+<p>It can also be directly reused threadwise inside a GPU kernel. For example one may
+generate some vectors to represent <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cpu_gpu_compat</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_cpu_gpu_compat.py</span></code></span><a class="headerlink" href="#id19" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">X</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">234</span><span class="p">])</span>
+<span class="linenos">2</span><span class="n">Y</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4014</span><span class="p">])</span>
+<span class="linenos">3</span><span class="n">Z</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2211</span><span class="p">])</span>
+<span class="linenos">4</span><span class="n">results</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>And a numba kernel referencing the decorated function:</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cpu_gpu_compat</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_cpu_gpu_compat.py</span></code></span><a class="headerlink" href="#id20" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos">2</span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">xarr</span><span class="p">,</span> <span class="n">yarr</span><span class="p">,</span> <span class="n">zarr</span><span class="p">):</span>
+<span class="linenos">3</span>    <span class="n">tid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">4</span>    <span class="k">if</span> <span class="n">tid</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">xarr</span><span class="p">):</span>
+<span class="linenos">5</span>        <span class="c1"># The function decorated with numba.jit may be directly reused</span>
+<span class="linenos">6</span>        <span class="n">res</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">business_logic</span><span class="p">(</span><span class="n">xarr</span><span class="p">[</span><span class="n">tid</span><span class="p">],</span> <span class="n">yarr</span><span class="p">[</span><span class="n">tid</span><span class="p">],</span> <span class="n">zarr</span><span class="p">[</span><span class="n">tid</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>This kernel can be invoked in the normal way:</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cpu_gpu_compat</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_cpu_gpu_compat.py</span></code></span><a class="headerlink" href="#id21" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">f</span><span class="o">.</span><span class="n">forall</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">))(</span><span class="n">results</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+<span class="linenos">2</span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="linenos">3</span><span class="c1"># [-126.79644737231007, 416.28324559588634, -218912930.2987788]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="monte-carlo-integration">
+<span id="cuda-montecarlo"></span><h2>Monte Carlo Integration<a class="headerlink" href="#monte-carlo-integration" title="Link to this heading">#</a></h2>
+<p>This example shows how to use Numba to approximate the value of a definite integral by rapidly generating
+random numbers on the GPU. A detailed description of the mathematical mechanics of Monte Carlo integration
+is out of the scope of the example, but it can briefly be described as an averaging process where the area
+under the curve is approximated by taking the average of many rectangles formed by its function values.</p>
+<p>In addition, this example shows how to perform reductions in numba using the
+<a class="reference internal" href="reduction.html#numba.cuda.Reduce" title="numba.cuda.Reduce"><code class="xref py py-func docutils literal notranslate"><span class="pre">cuda.reduce()</span></code></a> API.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_montecarlo</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_montecarlo.py</span></code></span><a class="headerlink" href="#id22" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">numba</span>
+<span class="linenos">2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">3</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="linenos">4</span><span class="kn">from</span> <span class="nn">numba.cuda.random</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="linenos">5</span>    <span class="n">create_xoroshiro128p_states</span><span class="p">,</span>
+<span class="linenos">6</span>    <span class="n">xoroshiro128p_uniform_float32</span><span class="p">,</span>
+<span class="linenos">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s create a variable to control the number of samples drawn:</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_montecarlo</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_montecarlo.py</span></code></span><a class="headerlink" href="#id23" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># number of samples, higher will lead to a more accurate answer</span>
+<span class="linenos">2</span><span class="n">nsamps</span> <span class="o">=</span> <span class="mi">1000000</span>
+</pre></div>
+</div>
+</div>
+<p>The following kernel implements the main integration routine:</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_montecarlo</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_montecarlo.py</span></code></span><a class="headerlink" href="#id24" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 2</span><span class="k">def</span> <span class="nf">mc_integrator_kernel</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">,</span> <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span><span class="p">):</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 4</span><span class="sd">    kernel to draw random samples and evaluate the function to</span>
+<span class="linenos"> 5</span><span class="sd">    be integrated at those sample values</span>
+<span class="linenos"> 6</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos"> 7</span>    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="n">gid</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">10</span>    <span class="k">if</span> <span class="n">gid</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+<span class="linenos">11</span>        <span class="c1"># draw a sample between 0 and 1 on this thread</span>
+<span class="linenos">12</span>        <span class="n">samp</span> <span class="o">=</span> <span class="n">xoroshiro128p_uniform_float32</span><span class="p">(</span><span class="n">rng_states</span><span class="p">,</span> <span class="n">gid</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>        <span class="c1"># normalize this sample to the limit range</span>
+<span class="linenos">15</span>        <span class="n">samp</span> <span class="o">=</span> <span class="n">samp</span> <span class="o">*</span> <span class="p">(</span><span class="n">upper_lim</span> <span class="o">-</span> <span class="n">lower_lim</span><span class="p">)</span> <span class="o">+</span> <span class="n">lower_lim</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>        <span class="c1"># evaluate the function to be</span>
+<span class="linenos">18</span>        <span class="c1"># integrated at the normalized</span>
+<span class="linenos">19</span>        <span class="c1"># value of the sample</span>
+<span class="linenos">20</span>        <span class="n">y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">samp</span><span class="p">)</span>
+<span class="linenos">21</span>        <span class="n">out</span><span class="p">[</span><span class="n">gid</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<p>This convenience function calls the kernel performs some
+preprocessing and post processing steps. Note the use of Numba’s reduction API to
+take sum of the array and compute the final result:</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_montecarlo</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_montecarlo.py</span></code></span><a class="headerlink" href="#id25" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">reduce</span>
+<span class="linenos"> 2</span><span class="k">def</span> <span class="nf">sum_reduce</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="linenos"> 3</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span> <span class="nf">mc_integrate</span><span class="p">(</span><span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span><span class="p">,</span> <span class="n">nsamps</span><span class="p">):</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 7</span><span class="sd">    approximate the definite integral of `func` from</span>
+<span class="linenos"> 8</span><span class="sd">    `lower_lim` to `upper_lim`</span>
+<span class="linenos"> 9</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">10</span>    <span class="n">out</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nsamps</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">))</span>
+<span class="linenos">11</span>    <span class="n">rng_states</span> <span class="o">=</span> <span class="n">create_xoroshiro128p_states</span><span class="p">(</span><span class="n">nsamps</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>    <span class="c1"># jit the function for use in CUDA kernels</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span>    <span class="n">mc_integrator_kernel</span><span class="o">.</span><span class="n">forall</span><span class="p">(</span><span class="n">nsamps</span><span class="p">)(</span>
+<span class="linenos">16</span>        <span class="n">out</span><span class="p">,</span> <span class="n">rng_states</span><span class="p">,</span> <span class="n">lower_lim</span><span class="p">,</span> <span class="n">upper_lim</span>
+<span class="linenos">17</span>    <span class="p">)</span>
+<span class="linenos">18</span>    <span class="c1"># normalization factor to convert</span>
+<span class="linenos">19</span>    <span class="c1"># to the average: (b - a)/(N - 1)</span>
+<span class="linenos">20</span>    <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">upper_lim</span> <span class="o">-</span> <span class="n">lower_lim</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nsamps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="k">return</span> <span class="n">sum_reduce</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor</span>
+</pre></div>
+</div>
+</div>
+<p>We can now use <code class="docutils literal notranslate"><span class="pre">mc_integrate</span></code> to compute the definite integral of this function between
+two limits:</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_montecarlo</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_montecarlo.py</span></code></span><a class="headerlink" href="#id26" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># define a function to integrate</span>
+<span class="linenos">2</span><span class="nd">@numba</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos">3</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">x</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span><span class="n">mc_integrate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nsamps</span><span class="p">)</span>  <span class="c1"># array(0.6929643, dtype=float32)</span>
+<span class="linenos">7</span><span class="n">mc_integrate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">nsamps</span><span class="p">)</span>  <span class="c1"># array(0.4054021, dtype=float32)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="matrix-multiplication">
+<span id="cuda-matmul"></span><h2>Matrix multiplication<a class="headerlink" href="#matrix-multiplication" title="Link to this heading">#</a></h2>
+<p>First, import the modules needed for this example:</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id27" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span><span class="p">,</span> <span class="n">float32</span>
+<span class="linenos">2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">3</span><span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+</div>
+</div>
+<p>Here is a naïve implementation of matrix multiplication using a CUDA kernel:</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id28" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos">2</span><span class="k">def</span> <span class="nf">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="linenos">3</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform square matrix multiplication of C = A * B.&quot;&quot;&quot;</span>
+<span class="linenos">4</span>    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+<span class="linenos">6</span>        <span class="n">tmp</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="linenos">7</span>        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<span class="linenos">8</span>            <span class="n">tmp</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+<span class="linenos">9</span>        <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+</pre></div>
+</div>
+</div>
+<p>An example usage of this function is as follows:</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id29" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">x_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 2</span><span class="n">y_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 3</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">x_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">x_h</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">y_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">y_h</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">z_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">threadsperblock</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">blockspergrid_x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">z_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">11</span><span class="n">blockspergrid_y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">z_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">12</span><span class="n">blockspergrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">blockspergrid_x</span><span class="p">,</span> <span class="n">blockspergrid_y</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">matmul</span><span class="p">[</span><span class="n">blockspergrid</span><span class="p">,</span> <span class="n">threadsperblock</span><span class="p">](</span><span class="n">x_d</span><span class="p">,</span> <span class="n">y_d</span><span class="p">,</span> <span class="n">z_d</span><span class="p">)</span>
+<span class="linenos">15</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">z_d</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span>
+<span class="linenos">16</span><span class="nb">print</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos">17</span><span class="nb">print</span><span class="p">(</span><span class="n">x_h</span> <span class="o">@</span> <span class="n">y_h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This implementation is straightforward and intuitive but performs poorly,
+because the same matrix elements will be loaded multiple times from device
+memory, which is slow (some devices may have transparent data caches, but
+they may not be large enough to hold the entire inputs at once).</p>
+<p>It will be faster if we use a blocked algorithm to reduce accesses to the
+device memory.  CUDA provides a fast <a class="reference internal" href="memory.html#cuda-shared-memory"><span class="std std-ref">shared memory</span></a>
+for threads in a block to cooperatively compute on a task.  The following
+implements a faster version of the square matrix multiplication using shared
+memory:</p>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id30" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># Controls threads per block and shared memory usage.</span>
+<span class="linenos"> 2</span><span class="c1"># The computation will be done on blocks of TPBxTPB elements.</span>
+<span class="linenos"> 3</span><span class="c1"># TPB should not be larger than 32 in this example</span>
+<span class="linenos"> 4</span><span class="n">TPB</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 7</span><span class="k">def</span> <span class="nf">fast_matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 9</span><span class="sd">    Perform matrix multiplication of C = A * B using CUDA shared memory.</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="sd">    Reference: https://stackoverflow.com/a/64198479/13697228 by @RobertCrovella</span>
+<span class="linenos">12</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">13</span>    <span class="c1"># Define an array in the shared memory</span>
+<span class="linenos">14</span>    <span class="c1"># The size and type of the arrays must be known at compile time</span>
+<span class="linenos">15</span>    <span class="n">sA</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">TPB</span><span class="p">,</span> <span class="n">TPB</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="linenos">16</span>    <span class="n">sB</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">TPB</span><span class="p">,</span> <span class="n">TPB</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    <span class="n">tx</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">threadIdx</span><span class="o">.</span><span class="n">x</span>
+<span class="linenos">21</span>    <span class="n">ty</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">threadIdx</span><span class="o">.</span><span class="n">y</span>
+<span class="linenos">22</span>    <span class="n">bpg</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">gridDim</span><span class="o">.</span><span class="n">x</span>    <span class="c1"># blocks per grid</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>    <span class="c1"># Each thread computes one element in the result matrix.</span>
+<span class="linenos">25</span>    <span class="c1"># The dot product is chunked into dot products of TPB-long vectors.</span>
+<span class="linenos">26</span>    <span class="n">tmp</span> <span class="o">=</span> <span class="n">float32</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bpg</span><span class="p">):</span>
+<span class="linenos">28</span>        <span class="c1"># Preload data into shared memory</span>
+<span class="linenos">29</span>        <span class="n">sA</span><span class="p">[</span><span class="n">ty</span><span class="p">,</span> <span class="n">tx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">30</span>        <span class="n">sB</span><span class="p">[</span><span class="n">ty</span><span class="p">,</span> <span class="n">tx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">31</span>        <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tx</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">TPB</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+<span class="linenos">32</span>            <span class="n">sA</span><span class="p">[</span><span class="n">ty</span><span class="p">,</span> <span class="n">tx</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">tx</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">TPB</span><span class="p">]</span>
+<span class="linenos">33</span>        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ty</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">TPB</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+<span class="linenos">34</span>            <span class="n">sB</span><span class="p">[</span><span class="n">ty</span><span class="p">,</span> <span class="n">tx</span><span class="p">]</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">ty</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">TPB</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>        <span class="c1"># Wait until all threads finish preloading</span>
+<span class="linenos">37</span>        <span class="n">cuda</span><span class="o">.</span><span class="n">syncthreads</span><span class="p">()</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span>        <span class="c1"># Computes partial product on the shared memory</span>
+<span class="linenos">40</span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">TPB</span><span class="p">):</span>
+<span class="linenos">41</span>            <span class="n">tmp</span> <span class="o">+=</span> <span class="n">sA</span><span class="p">[</span><span class="n">ty</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">sB</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">tx</span><span class="p">]</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>        <span class="c1"># Wait until all threads finish computing</span>
+<span class="linenos">44</span>        <span class="n">cuda</span><span class="o">.</span><span class="n">syncthreads</span><span class="p">()</span>
+<span class="linenos">45</span>    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+<span class="linenos">46</span>        <span class="n">C</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+</pre></div>
+</div>
+</div>
+<p>Because the shared memory is a limited resource, the code preloads a small
+block at a time from the input arrays.  Then, it calls
+<a class="reference internal" href="../reference/kernel.html#numba.cuda.syncthreads" title="numba.cuda.syncthreads"><code class="xref py py-func docutils literal notranslate"><span class="pre">syncthreads()</span></code></a> to wait until all threads have finished
+preloading and before doing the computation on the shared memory.
+It synchronizes again after the computation to ensure all threads
+have finished with the data in shared memory before overwriting it
+in the next loop iteration.</p>
+<p>An example usage of the <code class="docutils literal notranslate"><span class="pre">fast_matmul</span></code> function is as follows:</p>
+<div class="literal-block-wrapper docutils container" id="id31">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id31" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">x_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 2</span><span class="n">y_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 3</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">x_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">x_h</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">y_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">y_h</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">z_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">threadsperblock</span> <span class="o">=</span> <span class="p">(</span><span class="n">TPB</span><span class="p">,</span> <span class="n">TPB</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">blockspergrid_x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">z_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">11</span><span class="n">blockspergrid_y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">z_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">12</span><span class="n">blockspergrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">blockspergrid_x</span><span class="p">,</span> <span class="n">blockspergrid_y</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">fast_matmul</span><span class="p">[</span><span class="n">blockspergrid</span><span class="p">,</span> <span class="n">threadsperblock</span><span class="p">](</span><span class="n">x_d</span><span class="p">,</span> <span class="n">y_d</span><span class="p">,</span> <span class="n">z_d</span><span class="p">)</span>
+<span class="linenos">15</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">z_d</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span>
+<span class="linenos">16</span><span class="nb">print</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos">17</span><span class="nb">print</span><span class="p">(</span><span class="n">x_h</span> <span class="o">@</span> <span class="n">y_h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This passes a <a class="reference external" href="https://numba.readthedocs.io/en/latest/user/troubleshoot.html#debugging-cuda-python-code" title="(in Numba v0.61)"><span class="xref std std-ref">CUDA memory check test</span></a>, which
+can help with debugging. Running the code above produces the following output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python fast_matmul.py
+[[ 6.  6.  6.  6.]
+[22. 22. 22. 22.]
+[38. 38. 38. 38.]
+[54. 54. 54. 54.]]
+[[ 6.  6.  6.  6.]
+[22. 22. 22. 22.]
+[38. 38. 38. 38.]
+[54. 54. 54. 54.]]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For high performance matrix multiplication in CUDA, see also the <a class="reference external" href="https://docs.cupy.dev/en/stable/reference/generated/cupy.matmul.html">CuPy implementation</a>.</p>
+</div>
+<p>The approach outlined here generalizes to non-square matrix multiplication as
+follows by adjusting the <code class="docutils literal notranslate"><span class="pre">blockspergrid</span></code> variable:</p>
+<p>Again, here is an example usage:</p>
+<div class="literal-block-wrapper docutils container" id="id32">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_matmul</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_matmul.py</span></code></span><a class="headerlink" href="#id32" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">x_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">115</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">23</span><span class="p">])</span>
+<span class="linenos"> 2</span><span class="n">y_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">23</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="linenos"> 3</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">x_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">x_h</span><span class="p">)</span>
+<span class="linenos"> 6</span><span class="n">y_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">y_h</span><span class="p">)</span>
+<span class="linenos"> 7</span><span class="n">z_d</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="n">threadsperblock</span> <span class="o">=</span> <span class="p">(</span><span class="n">TPB</span><span class="p">,</span> <span class="n">TPB</span><span class="p">)</span>
+<span class="linenos">10</span><span class="n">grid_y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">11</span><span class="n">grid_x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">12</span><span class="n">blockspergrid_x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">grid_x_max</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">13</span><span class="n">blockspergrid_y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">grid_y_max</span> <span class="o">/</span> <span class="n">threadsperblock</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">14</span><span class="n">blockspergrid</span> <span class="o">=</span> <span class="p">(</span><span class="n">blockspergrid_x</span><span class="p">,</span> <span class="n">blockspergrid_y</span><span class="p">)</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="n">fast_matmul</span><span class="p">[</span><span class="n">blockspergrid</span><span class="p">,</span> <span class="n">threadsperblock</span><span class="p">](</span><span class="n">x_d</span><span class="p">,</span> <span class="n">y_d</span><span class="p">,</span> <span class="n">z_d</span><span class="p">)</span>
+<span class="linenos">17</span><span class="n">z_h</span> <span class="o">=</span> <span class="n">z_d</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span>
+<span class="linenos">18</span><span class="nb">print</span><span class="p">(</span><span class="n">z_h</span><span class="p">)</span>
+<span class="linenos">19</span><span class="nb">print</span><span class="p">(</span><span class="n">x_h</span> <span class="o">@</span> <span class="n">y_h</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>and the corresponding output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ python nonsquare_matmul.py
+[[ 253.  253.  253.  253.  253.  253.  253.]
+[ 782.  782.  782.  782.  782.  782.  782.]
+[1311. 1311. 1311. 1311. 1311. 1311. 1311.]
+[1840. 1840. 1840. 1840. 1840. 1840. 1840.]
+[2369. 2369. 2369. 2369. 2369. 2369. 2369.]]
+[[ 253.  253.  253.  253.  253.  253.  253.]
+[ 782.  782.  782.  782.  782.  782.  782.]
+[1311. 1311. 1311. 1311. 1311. 1311. 1311.]
+[1840. 1840. 1840. 1840. 1840. 1840. 1840.]
+[2369. 2369. 2369. 2369. 2369. 2369. 2369.]]
+</pre></div>
+</div>
+</section>
+<section id="calling-a-numpy-ufunc">
+<span id="cuda-ufunc-call-example"></span><h2>Calling a NumPy UFunc<a class="headerlink" href="#calling-a-numpy-ufunc" title="Link to this heading">#</a></h2>
+<p>UFuncs supported in the CUDA target (see <a class="reference internal" href="cudapysupported.html#cuda-numpy-support"><span class="std std-ref">NumPy support</span></a>) can be
+called inside kernels, but the output array must be passed in as a positional
+argument. The following example demonstrates a call to <code class="xref py py-func docutils literal notranslate"><span class="pre">np.sin()</span></code> inside a
+kernel following this pattern:</p>
+<div class="literal-block-wrapper docutils container" id="id33">
+<div class="code-block-caption"><span class="caption-text">from <code class="docutils literal notranslate"><span class="pre">test_ex_cuda_ufunc_call</span></code> in <code class="docutils literal notranslate"><span class="pre">numba/cuda/tests/doc_examples/test_ufunc.py</span></code></span><a class="headerlink" href="#id33" title="Link to this code">#</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cuda</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1"># A kernel calling a ufunc (sin, in this case)</span>
+<span class="linenos"> 5</span><span class="nd">@cuda</span><span class="o">.</span><span class="n">jit</span>
+<span class="linenos"> 6</span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="linenos"> 7</span>    <span class="c1"># Compute sin(x) with result written to r</span>
+<span class="linenos"> 8</span>    <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c1"># Declare input and output arrays</span>
+<span class="linenos">11</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span>
+<span class="linenos">12</span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="c1"># Launch kernel that calls the ufunc</span>
+<span class="linenos">15</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">](</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="c1"># A quick sanity check demonstrating equality of the sine computed by</span>
+<span class="linenos">18</span><span class="c1"># the sin ufunc inside the kernel, and NumPy&#39;s sin ufunc</span>
+<span class="linenos">19</span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="device-management.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Device management</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="simulator.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Debugging CUDA Python with the the CUDA Simulator</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-addition">Vector Addition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-heat-equation">1D Heat Equation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shared-memory-reduction">Shared Memory Reduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dividing-click-data-into-sessions">Dividing Click Data into Sessions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jit-function-cpu-gpu-compatibility">JIT Function CPU-GPU Compatibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-integration">Monte Carlo Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix multiplication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-a-numpy-ufunc">Calling a NumPy UFunc</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

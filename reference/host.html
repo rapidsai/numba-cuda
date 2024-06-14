@@ -1,0 +1,1140 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CUDA Host API &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/host';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CUDA Kernel API" href="kernel.html" />
+    <link rel="prev" title="Reference documentation" href="index.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../user/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Reference documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Reference documentation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">CUDA Host API</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cuda-host-api">
+<h1>CUDA Host API<a class="headerlink" href="#cuda-host-api" title="Link to this heading">#</a></h1>
+<section id="device-management">
+<h2>Device Management<a class="headerlink" href="#device-management" title="Link to this heading">#</a></h2>
+<section id="device-detection-and-enquiry">
+<h3>Device detection and enquiry<a class="headerlink" href="#device-detection-and-enquiry" title="Link to this heading">#</a></h3>
+<p>The following functions are available for querying the available hardware:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.is_available">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">is_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.is_available" title="Link to this definition">#</a></dt>
+<dd><p>Returns a boolean to indicate the availability of a CUDA GPU.</p>
+<p>This will initialize the driver if it hasn’t been initialized.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.detect">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.detect" title="Link to this definition">#</a></dt>
+<dd><p>Detect supported CUDA hardware and print a summary of the detected hardware.</p>
+<p>Returns a boolean indicating whether any supported devices were detected.</p>
+</dd></dl>
+
+</section>
+<section id="context-management">
+<h3>Context management<a class="headerlink" href="#context-management" title="Link to this heading">#</a></h3>
+<p>CUDA Python functions execute within a CUDA context. Each CUDA device in a
+system has an associated CUDA context, and Numba presently allows only one context
+per thread. For further details on CUDA Contexts, refer to the <a class="reference external" href="http://docs.nvidia.com/cuda/cuda-driver-api/group__CUDA__CTX.html">CUDA Driver API
+Documentation on Context Management</a> and the
+<a class="reference external" href="http://docs.nvidia.com/cuda/cuda-c-programming-guide/#context">CUDA C Programming Guide Context Documentation</a>. CUDA Contexts
+are instances of the <a class="reference internal" href="#numba.cuda.cudadrv.driver.Context" title="numba.cuda.cudadrv.driver.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Context">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.driver.</span></span><span class="sig-name descname"><span class="pre">Context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Context" title="Link to this definition">#</a></dt>
+<dd><p>This object wraps a CUDA Context resource.</p>
+<p>Contexts should not be constructed directly by user code.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Context.get_memory_info">
+<span class="sig-name descname"><span class="pre">get_memory_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Context.get_memory_info" title="Link to this definition">#</a></dt>
+<dd><p>Returns (free, total) memory in bytes in the context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Context.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Context.pop" title="Link to this definition">#</a></dt>
+<dd><p>Pops this context off the current CPU thread. Note that this context
+must be at the top of the context stack, otherwise an error will occur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Context.push">
+<span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Context.push" title="Link to this definition">#</a></dt>
+<dd><p>Pushes this context on the current CPU Thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Context.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Context.reset" title="Link to this definition">#</a></dt>
+<dd><p>Clean up all owned resources in this context.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>The following functions can be used to get or select the context:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.current_context">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">current_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">devnum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.current_context" title="Link to this definition">#</a></dt>
+<dd><p>Get the current device or use a device by device number, and
+return the CUDA context.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.require_context">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">require_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.require_context" title="Link to this definition">#</a></dt>
+<dd><p>A decorator that ensures a CUDA context is available when <em>fn</em> is executed.</p>
+<p>Note: The function <em>fn</em> cannot switch CUDA-context.</p>
+</dd></dl>
+
+<p>The following functions affect the current context:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.synchronize">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">synchronize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.synchronize" title="Link to this definition">#</a></dt>
+<dd><p>Synchronize the current context.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.close">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.close" title="Link to this definition">#</a></dt>
+<dd><p>Explicitly clears all contexts in the current thread, and destroys all
+contexts if the current thread is the main thread.</p>
+</dd></dl>
+
+</section>
+<section id="id1">
+<h3>Device management<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Numba maintains a list of supported CUDA-capable devices:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.gpus">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">gpus</span></span><a class="headerlink" href="#numba.cuda.gpus" title="Link to this definition">#</a></dt>
+<dd><p>An indexable list of supported CUDA devices. This list is indexed by integer
+device ID.</p>
+</dd></dl>
+
+<p>Alternatively, the current device can be obtained:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.gpus.current">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.gpus.</span></span><span class="sig-name descname"><span class="pre">current</span></span><a class="headerlink" href="#numba.cuda.gpus.current" title="Link to this definition">#</a></dt>
+<dd><p>The currently-selected device.</p>
+</dd></dl>
+
+<p>Getting a device through <a class="reference internal" href="#numba.cuda.gpus" title="numba.cuda.gpus"><code class="xref py py-attr docutils literal notranslate"><span class="pre">numba.cuda.gpus</span></code></a> always provides an instance of
+<a class="reference internal" href="#numba.cuda.cudadrv.devices._DeviceContextManager" title="numba.cuda.cudadrv.devices._DeviceContextManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.devices._DeviceContextManager</span></code></a>, which acts as a
+context manager for the selected device:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.devices._DeviceContextManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.devices.</span></span><span class="sig-name descname"><span class="pre">_DeviceContextManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.devices._DeviceContextManager" title="Link to this definition">#</a></dt>
+<dd><p>Provides a context manager for executing in the context of the chosen
+device. The normal use of instances of this type is from
+<code class="docutils literal notranslate"><span class="pre">numba.cuda.gpus</span></code>. For example, to execute on device 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">numba</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">gpus</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">d_a</span> <span class="o">=</span> <span class="n">numba</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">to_device</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to copy the array <em>a</em> onto device 2, referred to by <em>d_a</em>.</p>
+</dd></dl>
+
+<p>One may also select a context and device or get the current device using the
+following three functions:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.select_device">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">select_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.select_device" title="Link to this definition">#</a></dt>
+<dd><p>Make the context associated with device <em>device_id</em> the current context.</p>
+<p>Returns a Device instance.</p>
+<p>Raises exception on error.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.get_current_device">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">get_current_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.get_current_device" title="Link to this definition">#</a></dt>
+<dd><p>Get current device associated with the current thread</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.list_devices">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">list_devices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.list_devices" title="Link to this definition">#</a></dt>
+<dd><p>Return a list of all detected devices</p>
+</dd></dl>
+
+<p>The <a class="reference internal" href="#numba.cuda.cudadrv.driver.Device" title="numba.cuda.cudadrv.driver.Device"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device</span></code></a> class can be used to enquire about
+the functionality of the selected device:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.driver.</span></span><span class="sig-name descname"><span class="pre">Device</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device" title="Link to this definition">#</a></dt>
+<dd><p>The device associated with a particular context.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.compute_capability">
+<span class="sig-name descname"><span class="pre">compute_capability</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.compute_capability" title="Link to this definition">#</a></dt>
+<dd><p>A tuple, <em>(major, minor)</em> indicating the supported compute capability.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.id" title="Link to this definition">#</a></dt>
+<dd><p>The integer ID of the device.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.name" title="Link to this definition">#</a></dt>
+<dd><p>The name of the device (e.g. “GeForce GTX 970”).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.uuid" title="Link to this definition">#</a></dt>
+<dd><p>The UUID of the device (e.g. “GPU-e6489c45-5b68-3b03-bab7-0e7c8e809643”).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.reset" title="Link to this definition">#</a></dt>
+<dd><p>Delete the context for the device. This will destroy all memory
+allocations, events, and streams created within the context.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Device.supports_float16">
+<span class="sig-name descname"><span class="pre">supports_float16</span></span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Device.supports_float16" title="Link to this definition">#</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the device supports float16 operations, <code class="docutils literal notranslate"><span class="pre">False</span></code>
+otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">#</a></h2>
+<p>Numba provides an entry point for compiling a Python function without invoking
+any of the driver API. This can be useful for:</p>
+<ul class="simple">
+<li><p>Generating PTX that is to be inlined into other PTX code (e.g. from outside
+the Numba / Python ecosystem).</p></li>
+<li><p>Generating PTX or LTO-IR to link with objects from non-Python translation
+units.</p></li>
+<li><p>Generating code when there is no device present.</p></li>
+<li><p>Generating code prior to a fork without initializing CUDA.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is the user’s responsibility to manage any ABI issues arising from
+the use of compilation to PTX / LTO-IR. Passing the <code class="docutils literal notranslate"><span class="pre">abi=&quot;c&quot;</span></code> keyword
+argument can provide a solution to most issues that may arise - see
+<a class="reference internal" href="../user/cuda_compilation.html#cuda-using-the-c-abi"><span class="std std-ref">Using the C ABI</span></a>.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.compile">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ptx'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.compile" title="Link to this definition">#</a></dt>
+<dd><p>Compile a Python function to PTX or LTO-IR for a given set of argument
+types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pyfunc</strong> – The Python function to compile.</p></li>
+<li><p><strong>sig</strong> – The signature representing the function’s input and output
+types. If this is a tuple of argument types without a return
+type, the inferred return type is returned by this function. If
+a signature including a return type is passed, the compiled code
+will include a cast from the inferred return type to the
+specified return type, and this function will return the
+specified return type.</p></li>
+<li><p><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include debug info in the compiled code.</p></li>
+<li><p><strong>lineinfo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include a line mapping from the compiled code
+to the source code. Usually this is used with optimized
+code (since debug mode would automatically include this),
+so we want debug info in the LLVM IR but only the line
+mapping in the final output.</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to compile a device function.</p></li>
+<li><p><strong>fastmath</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to enable fast math flags (ftz=1, prec_sqrt=0,
+prec_div=, and fma=1)</p></li>
+<li><p><strong>cc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><em>tuple</em></a>) – Compute capability to compile for, as a tuple
+<code class="docutils literal notranslate"><span class="pre">(MAJOR,</span> <span class="pre">MINOR)</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">(5,</span> <span class="pre">0)</span></code>.</p></li>
+<li><p><strong>opt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable optimizations. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>abi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ABI for a compiled function - either <code class="docutils literal notranslate"><span class="pre">&quot;numba&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;c&quot;</span></code>. Note that the Numba ABI is not considered stable.
+The C ABI is only supported for device functions at present.</p></li>
+<li><p><strong>abi_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dict of ABI-specific options. The <code class="docutils literal notranslate"><span class="pre">&quot;c&quot;</span></code> ABI supports
+one option, <code class="docutils literal notranslate"><span class="pre">&quot;abi_name&quot;</span></code>, for providing the wrapper
+function’s name. The <code class="docutils literal notranslate"><span class="pre">&quot;numba&quot;</span></code> ABI has no options.</p></li>
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Type of output to generate, either <code class="docutils literal notranslate"><span class="pre">&quot;ptx&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;ltoir&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(code, resty): The compiled code and inferred return type</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>The environment variable <code class="docutils literal notranslate"><span class="pre">NUMBA_CUDA_DEFAULT_PTX_CC</span></code> can be set to control
+the default compute capability targeted by <code class="docutils literal notranslate"><span class="pre">compile</span></code> - see
+<a class="reference internal" href="envvars.html#numba-envvars-gpu-support"><span class="std std-ref">Environment Variables</span></a>. If code for the compute capability of the
+current device is required, the <code class="docutils literal notranslate"><span class="pre">compile_for_current_device</span></code> function can
+be used:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.compile_for_current_device">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_for_current_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ptx'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.compile_for_current_device" title="Link to this definition">#</a></dt>
+<dd><p>Compile a Python function to PTX or LTO-IR for a given signature for the
+current device’s compute capabilility. This calls <a class="reference internal" href="#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a> with an
+appropriate <code class="docutils literal notranslate"><span class="pre">cc</span></code> value for the current device.</p>
+</dd></dl>
+
+<p>Numba also provides two functions that may be used in legacy code that
+specifically compile to PTX only:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.compile_ptx">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_ptx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numba'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.compile_ptx" title="Link to this definition">#</a></dt>
+<dd><p>Compile a Python function to PTX for a given signature. See
+<a class="reference internal" href="#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>. The defaults for this function are to compile a kernel
+with the Numba ABI, rather than <a class="reference internal" href="#numba.cuda.compile" title="numba.cuda.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>’s default of compiling a
+device function with the C ABI.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.compile_ptx_for_current_device">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">compile_ptx_for_current_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pyfunc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lineinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fastmath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numba'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abi_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.compile_ptx_for_current_device" title="Link to this definition">#</a></dt>
+<dd><p>Compile a Python function to PTX for a given signature for the current
+device’s compute capabilility. See <a class="reference internal" href="#numba.cuda.compile_ptx" title="numba.cuda.compile_ptx"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile_ptx()</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="measurement">
+<h2>Measurement<a class="headerlink" href="#measurement" title="Link to this heading">#</a></h2>
+<section id="profiling">
+<span id="cuda-profiling"></span><h3>Profiling<a class="headerlink" href="#profiling" title="Link to this heading">#</a></h3>
+<p>The NVidia Visual Profiler can be used directly on executing CUDA Python code -
+it is not a requirement to insert calls to these functions into user code.
+However, these functions can be used to allow profiling to be performed
+selectively on specific portions of the code. For further information on
+profiling, see the <a class="reference external" href="https://docs.nvidia.com/cuda/profiler-users-guide/">NVidia Profiler User’s Guide</a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.profile_start">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">profile_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.profile_start" title="Link to this definition">#</a></dt>
+<dd><p>Enable profile collection in the current context.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.profile_stop">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">profile_stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.profile_stop" title="Link to this definition">#</a></dt>
+<dd><p>Disable profile collection in the current context.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.profiling">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">profiling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.profiling" title="Link to this definition">#</a></dt>
+<dd><p>Context manager that enables profiling on entry and disables profiling on
+exit.</p>
+</dd></dl>
+
+</section>
+<section id="events">
+<span id="id2"></span><h3>Events<a class="headerlink" href="#events" title="Link to this heading">#</a></h3>
+<p>Events can be used to monitor the progress of execution and to record the
+timestamps of specific points being reached. Event creation returns immediately,
+and the created event can be queried to determine if it has been reached. For
+further information, see the <a class="reference external" href="http://docs.nvidia.com/cuda/cuda-c-programming-guide/#events">CUDA C Programming Guide Events section</a>.</p>
+<p>The following functions are used for creating and measuring the time between
+events:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.event">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.event" title="Link to this definition">#</a></dt>
+<dd><p>Create a CUDA event. Timing data is only recorded by the event if it is
+created with <code class="docutils literal notranslate"><span class="pre">timing=True</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.event_elapsed_time">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">event_elapsed_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evtstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evtend</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.event_elapsed_time" title="Link to this definition">#</a></dt>
+<dd><p>Compute the elapsed time between two events in milliseconds.</p>
+</dd></dl>
+
+<p>Events are instances of the <a class="reference internal" href="#numba.cuda.cudadrv.driver.Event" title="numba.cuda.cudadrv.driver.Event"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Event</span></code></a> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Event">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.driver.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Event" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Event.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Event.query" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if all work before the most recent record has completed;
+otherwise, returns False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Event.record">
+<span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Event.record" title="Link to this definition">#</a></dt>
+<dd><p>Set the record point of the event to the current point in the given
+stream.</p>
+<p>The event will be considered to have occurred when all work that was
+queued in the stream at the time of the call to <code class="docutils literal notranslate"><span class="pre">record()</span></code> has been
+completed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Event.synchronize">
+<span class="sig-name descname"><span class="pre">synchronize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Event.synchronize" title="Link to this definition">#</a></dt>
+<dd><p>Synchronize the host thread for the completion of the event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Event.wait">
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Event.wait" title="Link to this definition">#</a></dt>
+<dd><p>All future works submitted to stream will wait util the event completes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="stream-management">
+<span id="streams"></span><h2>Stream Management<a class="headerlink" href="#stream-management" title="Link to this heading">#</a></h2>
+<p>Streams allow concurrency of execution on a single device within a given
+context. Queued work items in the same stream execute sequentially, but work
+items in different streams may execute concurrently. Most operations involving a
+CUDA device can be performed asynchronously using streams, including data
+transfers and kernel execution. For further details on streams, see the <a class="reference external" href="http://docs.nvidia.com/cuda/cuda-c-programming-guide/#streams">CUDA C
+Programming Guide Streams section</a>.</p>
+<p>Numba defaults to using the legacy default stream as the default stream. The
+per-thread default stream can be made the default stream by setting the
+environment variable <code class="docutils literal notranslate"><span class="pre">NUMBA_CUDA_PER_THREAD_DEFAULT_STREAM</span></code> to <code class="docutils literal notranslate"><span class="pre">1</span></code> (see the
+<a class="reference internal" href="envvars.html#numba-envvars-gpu-support"><span class="std std-ref">CUDA Environment Variables section</span></a>).
+Regardless of this setting, the objects representing the legacy and per-thread
+default streams can be constructed using the functions below.</p>
+<p>Streams are instances of <a class="reference internal" href="#numba.cuda.cudadrv.driver.Stream" title="numba.cuda.cudadrv.driver.Stream"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Stream</span></code></a>:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Stream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.driver.</span></span><span class="sig-name descname"><span class="pre">Stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Stream" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Stream.add_callback">
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Stream.add_callback" title="Link to this definition">#</a></dt>
+<dd><p>Add a callback to a compute stream.
+The user provided function is called from a driver thread once all
+preceding stream operations are complete.</p>
+<p>Callback functions are called from a CUDA driver thread, not from
+the thread that invoked <cite>add_callback</cite>. No CUDA API functions may
+be called from within the callback function.</p>
+<p>The duration of a callback function should be kept short, as the
+callback will block later work in the stream and may block other
+callbacks from being executed.</p>
+<p>Note: The driver function underlying this method is marked for
+eventual deprecation and may be replaced in a future CUDA release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callback</strong> – Callback function with arguments (stream, status, arg).</p></li>
+<li><p><strong>arg</strong> – Optional user data to be passed to the callback function.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Stream.async_done">
+<span class="sig-name descname"><span class="pre">async_done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Stream.async_done" title="Link to this definition">#</a></dt>
+<dd><p>Return an awaitable that resolves once all preceding stream operations
+are complete. The result of the awaitable is the current stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Stream.auto_synchronize">
+<span class="sig-name descname"><span class="pre">auto_synchronize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Stream.auto_synchronize" title="Link to this definition">#</a></dt>
+<dd><p>A context manager that waits for all commands in this stream to execute
+and commits any pending memory transfers upon exiting the context.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.driver.Stream.synchronize">
+<span class="sig-name descname"><span class="pre">synchronize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.driver.Stream.synchronize" title="Link to this definition">#</a></dt>
+<dd><p>Wait for all commands in this stream to execute. This will commit any
+pending memory transfers.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>To create a new stream:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.stream">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.stream" title="Link to this definition">#</a></dt>
+<dd><p>Create a CUDA stream that represents a command queue for the device.</p>
+</dd></dl>
+
+<p>To get the default stream:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.default_stream">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">default_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.default_stream" title="Link to this definition">#</a></dt>
+<dd><p>Get the default CUDA stream. CUDA semantics in general are that the default
+stream is either the legacy default stream or the per-thread default stream
+depending on which CUDA APIs are in use. In Numba, the APIs for the legacy
+default stream are always the ones in use, but an option to use APIs for
+the per-thread default stream may be provided in future.</p>
+</dd></dl>
+
+<p>To get the default stream with an explicit choice of whether it is the legacy
+or per-thread default stream:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.legacy_default_stream">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">legacy_default_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.legacy_default_stream" title="Link to this definition">#</a></dt>
+<dd><p>Get the legacy default CUDA stream.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.per_thread_default_stream">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">per_thread_default_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.per_thread_default_stream" title="Link to this definition">#</a></dt>
+<dd><p>Get the per-thread default CUDA stream.</p>
+</dd></dl>
+
+<p>To construct a Numba <code class="docutils literal notranslate"><span class="pre">Stream</span></code> object using a stream allocated elsewhere, the
+<code class="docutils literal notranslate"><span class="pre">external_stream</span></code> function is provided. Note that the lifetime of external
+streams must be managed by the user - Numba will not deallocate an external
+stream, and the stream must remain valid whilst the Numba <code class="docutils literal notranslate"><span class="pre">Stream</span></code> object is
+in use.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.external_stream">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">external_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ptr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.external_stream" title="Link to this definition">#</a></dt>
+<dd><p>Create a Numba stream object for a stream allocated outside Numba.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ptr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Pointer to the external stream to wrap in a Numba Stream</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="runtime">
+<h2>Runtime<a class="headerlink" href="#runtime" title="Link to this heading">#</a></h2>
+<p>Numba generally uses the Driver API, but it provides a simple wrapper to the
+Runtime API so that the version of the runtime in use can be queried. This is
+accessed through <code class="docutils literal notranslate"><span class="pre">cuda.runtime</span></code>, which is an instance of the
+<a class="reference internal" href="#numba.cuda.cudadrv.runtime.Runtime" title="numba.cuda.cudadrv.runtime.Runtime"><code class="xref py py-class docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.runtime.Runtime</span></code></a> class:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.runtime.Runtime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">numba.cuda.cudadrv.runtime.</span></span><span class="sig-name descname"><span class="pre">Runtime</span></span><a class="headerlink" href="#numba.cuda.cudadrv.runtime.Runtime" title="Link to this definition">#</a></dt>
+<dd><p>Runtime object that lazily binds runtime API functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.runtime.Runtime.get_version">
+<span class="sig-name descname"><span class="pre">get_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.runtime.Runtime.get_version" title="Link to this definition">#</a></dt>
+<dd><p>Returns the CUDA Runtime version as a tuple (major, minor).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.runtime.Runtime.is_supported_version">
+<span class="sig-name descname"><span class="pre">is_supported_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.cudadrv.runtime.Runtime.is_supported_version" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if the CUDA Runtime is a supported version.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="numba.cuda.cudadrv.runtime.Runtime.supported_versions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">supported_versions</span></span><a class="headerlink" href="#numba.cuda.cudadrv.runtime.Runtime.supported_versions" title="Link to this definition">#</a></dt>
+<dd><p>A tuple of all supported CUDA toolkit versions. Versions are given in
+the form <code class="docutils literal notranslate"><span class="pre">(major_version,</span> <span class="pre">minor_version)</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Whether the current runtime is officially supported and tested with the current
+version of Numba can also be queried:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="numba.cuda.is_supported_version">
+<span class="sig-prename descclassname"><span class="pre">numba.cuda.</span></span><span class="sig-name descname"><span class="pre">is_supported_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#numba.cuda.is_supported_version" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if the CUDA Runtime is a supported version.</p>
+<p>Unsupported versions (e.g. newer versions than those known to Numba)
+may still work; this function provides a facility to check whether the
+current Numba version is tested and known to work with the current
+runtime version. If the current version is unsupported, the caller can
+decide how to act. Options include:</p>
+<ul class="simple">
+<li><p>Continuing silently,</p></li>
+<li><p>Emitting a warning,</p></li>
+<li><p>Generating an error or otherwise preventing the use of CUDA.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Reference documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="kernel.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CUDA Kernel API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#device-management">Device Management</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#device-detection-and-enquiry">Device detection and enquiry</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.is_available"><code class="docutils literal notranslate"><span class="pre">is_available()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.detect"><code class="docutils literal notranslate"><span class="pre">detect()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#context-management">Context management</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Context.get_memory_info"><code class="docutils literal notranslate"><span class="pre">Context.get_memory_info()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Context.pop"><code class="docutils literal notranslate"><span class="pre">Context.pop()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Context.push"><code class="docutils literal notranslate"><span class="pre">Context.push()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Context.reset"><code class="docutils literal notranslate"><span class="pre">Context.reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.current_context"><code class="docutils literal notranslate"><span class="pre">current_context()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.require_context"><code class="docutils literal notranslate"><span class="pre">require_context()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.synchronize"><code class="docutils literal notranslate"><span class="pre">synchronize()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.close"><code class="docutils literal notranslate"><span class="pre">close()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Device management</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.gpus"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gpus</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.gpus.current"><code class="docutils literal notranslate"><span class="pre">numba.cuda.gpus.current</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.devices._DeviceContextManager"><code class="docutils literal notranslate"><span class="pre">_DeviceContextManager</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.select_device"><code class="docutils literal notranslate"><span class="pre">select_device()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.get_current_device"><code class="docutils literal notranslate"><span class="pre">get_current_device()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.list_devices"><code class="docutils literal notranslate"><span class="pre">list_devices()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.compute_capability"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.compute_capability</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.id"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.id</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.name"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.name</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.uuid"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.uuid</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.reset"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.reset()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Device.supports_float16"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.driver.Device.supports_float16</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.compile_for_current_device"><code class="docutils literal notranslate"><span class="pre">compile_for_current_device()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.compile_ptx"><code class="docutils literal notranslate"><span class="pre">compile_ptx()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.compile_ptx_for_current_device"><code class="docutils literal notranslate"><span class="pre">compile_ptx_for_current_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurement">Measurement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#profiling">Profiling</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.profile_start"><code class="docutils literal notranslate"><span class="pre">profile_start()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.profile_stop"><code class="docutils literal notranslate"><span class="pre">profile_stop()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.profiling"><code class="docutils literal notranslate"><span class="pre">profiling()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#events">Events</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.event"><code class="docutils literal notranslate"><span class="pre">event()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.event_elapsed_time"><code class="docutils literal notranslate"><span class="pre">event_elapsed_time()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Event.query"><code class="docutils literal notranslate"><span class="pre">Event.query()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Event.record"><code class="docutils literal notranslate"><span class="pre">Event.record()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Event.synchronize"><code class="docutils literal notranslate"><span class="pre">Event.synchronize()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Event.wait"><code class="docutils literal notranslate"><span class="pre">Event.wait()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stream-management">Stream Management</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Stream"><code class="docutils literal notranslate"><span class="pre">Stream</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Stream.add_callback"><code class="docutils literal notranslate"><span class="pre">Stream.add_callback()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Stream.async_done"><code class="docutils literal notranslate"><span class="pre">Stream.async_done()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Stream.auto_synchronize"><code class="docutils literal notranslate"><span class="pre">Stream.auto_synchronize()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.driver.Stream.synchronize"><code class="docutils literal notranslate"><span class="pre">Stream.synchronize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.stream"><code class="docutils literal notranslate"><span class="pre">stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.default_stream"><code class="docutils literal notranslate"><span class="pre">default_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.legacy_default_stream"><code class="docutils literal notranslate"><span class="pre">legacy_default_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.per_thread_default_stream"><code class="docutils literal notranslate"><span class="pre">per_thread_default_stream()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.external_stream"><code class="docutils literal notranslate"><span class="pre">external_stream()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#runtime">Runtime</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.runtime.Runtime"><code class="docutils literal notranslate"><span class="pre">Runtime</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.runtime.Runtime.get_version"><code class="docutils literal notranslate"><span class="pre">Runtime.get_version()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.runtime.Runtime.is_supported_version"><code class="docutils literal notranslate"><span class="pre">Runtime.is_supported_version()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.cudadrv.runtime.Runtime.supported_versions"><code class="docutils literal notranslate"><span class="pre">Runtime.supported_versions</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numba.cuda.is_supported_version"><code class="docutils literal notranslate"><span class="pre">is_supported_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

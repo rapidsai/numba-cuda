@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>User guide &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user/index';</script>
+    <link rel="icon" href="../_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview" href="overview.html" />
+    <link rel="prev" title="Numba CUDA" href="../index.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="../_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">User guide</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">User guide</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="user-guide">
+<span id="cuda-index"></span><h1>User guide<a class="headerlink" href="#user-guide" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#programming-model">Programming model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements">Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#supported-gpus">Supported GPUs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#software">Software</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="overview.html#cuda-bindings">CUDA Bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="overview.html#setting-cuda-installation-path">Setting CUDA Installation Path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#missing-cuda-features">Missing CUDA Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kernels.html">Writing CUDA Kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html#kernel-declaration">Kernel declaration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html#kernel-invocation">Kernel invocation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kernels.html#choosing-the-block-size">Choosing the block size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kernels.html#multi-dimensional-blocks-and-grids">Multi-dimensional blocks and grids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kernels.html#thread-positioning">Thread positioning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kernels.html#absolute-positions">Absolute positions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kernels.html#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="memory.html">Memory management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#data-transfer">Data transfer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#device-arrays">Device arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#pinned-memory">Pinned memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#mapped-memory">Mapped memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#managed-memory">Managed memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#streams">Streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#shared-memory-and-thread-synchronization">Shared memory and thread synchronization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#dynamic-shared-memory">Dynamic Shared Memory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#local-memory">Local memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#constant-memory">Constant memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#deallocation-behavior">Deallocation Behavior</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="memory.html#numba.cuda.defer_cleanup"><code class="docutils literal notranslate"><span class="pre">defer_cleanup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cudapysupported.html">Supported Python features in CUDA Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#language">Language</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#execution-model">Execution Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#floating-point-error-model">Floating Point Error Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#constructs">Constructs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#recursion">Recursion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#built-in-types">Built-in types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#built-in-functions">Built-in functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#standard-library-modules">Standard library modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#cmath"><code class="docutils literal notranslate"><span class="pre">cmath</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#math"><code class="docutils literal notranslate"><span class="pre">math</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cudapysupported.html#operator"><code class="docutils literal notranslate"><span class="pre">operator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#numpy-support">NumPy support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cudapysupported.html#cffi-support">CFFI support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intrinsics.html">Supported Atomic Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intrinsics.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cooperative_groups.html">Cooperative Groups</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html#supported-features">Supported features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html#using-grid-groups">Using Grid Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html#cooperative-launches">Cooperative Launches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cooperative_groups.html#numba.cuda.dispatcher._Kernel.max_cooperative_grid_blocks"><code class="docutils literal notranslate"><span class="pre">_Kernel.max_cooperative_grid_blocks()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cooperative_groups.html#applications-and-example">Applications and Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="random.html#a-simple-example">A simple example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random.html#an-example-of-managing-rng-state-size-and-using-a-3d-grid">An example of managing RNG state size and using a 3D grid</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="device-management.html">Device management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html#device-selection">Device Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="device-management.html#the-device-list">The Device List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="device-management.html#numba.cuda.cudadrv.devices.gpus"><code class="docutils literal notranslate"><span class="pre">numba.cuda.cudadrv.devices.gpus</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="device-management.html#device-uuids">Device UUIDs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#vector-addition">Vector Addition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#d-heat-equation">1D Heat Equation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#shared-memory-reduction">Shared Memory Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#dividing-click-data-into-sessions">Dividing Click Data into Sessions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#jit-function-cpu-gpu-compatibility">JIT Function CPU-GPU Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#monte-carlo-integration">Monte Carlo Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#matrix-multiplication">Matrix multiplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#calling-a-numpy-ufunc">Calling a NumPy UFunc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulator.html">Debugging CUDA Python with the the CUDA Simulator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html#using-the-simulator">Using the simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulator.html#supported-features">Supported features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reduction.html">GPU Reduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reduction.html#the-reduce-class">The Reduce class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reduction.html#numba.cuda.Reduce"><code class="docutils literal notranslate"><span class="pre">Reduce</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reduction.html#numba.cuda.Reduce.__init__"><code class="docutils literal notranslate"><span class="pre">Reduce.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reduction.html#numba.cuda.Reduce.__call__"><code class="docutils literal notranslate"><span class="pre">Reduce.__call__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html#example-basic-example">Example: Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html#example-calling-device-functions">Example: Calling Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ufunc.html#generalized-cuda-ufuncs">Generalized CUDA ufuncs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ipc.html">Sharing CUDA Memory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html#sharing-between-process">Sharing between process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ipc.html#export-device-array-to-another-process">Export device array to another process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle"><code class="docutils literal notranslate"><span class="pre">IpcArrayHandle</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle.close"><code class="docutils literal notranslate"><span class="pre">IpcArrayHandle.close()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle.open"><code class="docutils literal notranslate"><span class="pre">IpcArrayHandle.open()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ipc.html#import-ipc-memory-from-another-process">Import IPC memory from another process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ipc.html#numba.cuda.open_ipc_array"><code class="docutils literal notranslate"><span class="pre">cuda.open_ipc_array()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cuda_array_interface.html">CUDA Array Interface (Version 3)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cuda_array_interface.html#python-interface-specification">Python Interface Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#synchronization">Synchronization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#definitions">Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#design-motivations">Design Motivations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#interface-requirements">Interface Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#synchronization-in-numba">Synchronization in Numba</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#an-example-launching-on-an-array-s-non-default-stream">An example launching on an array’s non-default stream</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#lifetime-management">Lifetime management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#data">Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#streams">Streams</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#lifetime-management-in-numba">Lifetime management in Numba</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#producing-arrays">Producing Arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cuda_array_interface.html#consuming-arrays">Consuming Arrays</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="cuda_array_interface.html#numba.cuda.as_cuda_array"><code class="docutils literal notranslate"><span class="pre">cuda.as_cuda_array()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="cuda_array_interface.html#numba.cuda.from_cuda_array_interface"><code class="docutils literal notranslate"><span class="pre">cuda.from_cuda_array_interface()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#pointer-attributes">Pointer Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#differences-with-cuda-array-interface-version-0">Differences with CUDA Array Interface (Version 0)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#differences-with-cuda-array-interface-version-1">Differences with CUDA Array Interface (Version 1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#differences-with-cuda-array-interface-version-2">Differences with CUDA Array Interface (Version 2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_array_interface.html#interoperability">Interoperability</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="external-memory.html">External Memory Management (EMM) Plugin interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html#overview-of-external-memory-management">Overview of External Memory Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#effects-on-deallocation-strategies">Effects on Deallocation Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#management-of-other-objects">Management of other objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#asynchronous-allocation-and-deallocation">Asynchronous allocation and deallocation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html#implementing-an-emm-plugin">Implementing an EMM Plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.memalloc"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.memalloc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.memhostalloc"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.memhostalloc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.mempin"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.mempin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.initialize"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.initialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.get_ipc_handle"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.get_ipc_handle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.get_memory_info"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.get_memory_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.reset"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.defer_cleanup"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.defer_cleanup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.BaseCUDAMemoryManager.interface_version"><code class="docutils literal notranslate"><span class="pre">BaseCUDAMemoryManager.interface_version</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#the-host-only-cuda-memory-manager">The Host-Only CUDA Memory Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.memhostalloc"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.memhostalloc()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.mempin"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.mempin()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.reset"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.reset()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.defer_cleanup"><code class="docutils literal notranslate"><span class="pre">HostOnlyCUDAMemoryManager.defer_cleanup()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#the-ipc-handle-mixin">The IPC Handle Mixin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.GetIpcHandleMixin"><code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.GetIpcHandleMixin.get_ipc_handle"><code class="docutils literal notranslate"><span class="pre">GetIpcHandleMixin.get_ipc_handle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html#classes-and-structures-of-returned-objects">Classes and structures of returned objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#memory-pointers">Memory Pointers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.MemoryPointer"><code class="docutils literal notranslate"><span class="pre">MemoryPointer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.cudadrv.driver.AutoFreePointer"><code class="docutils literal notranslate"><span class="pre">AutoFreePointer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.MappedMemory"><code class="docutils literal notranslate"><span class="pre">MappedMemory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.PinnedMemory"><code class="docutils literal notranslate"><span class="pre">PinnedMemory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#memory-info">Memory Info</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.MemoryInfo"><code class="docutils literal notranslate"><span class="pre">MemoryInfo</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.MemoryInfo.free"><code class="docutils literal notranslate"><span class="pre">MemoryInfo.free</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="external-memory.html#numba.cuda.MemoryInfo.total"><code class="docutils literal notranslate"><span class="pre">MemoryInfo.total</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#ipc">IPC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.IpcHandle"><code class="docutils literal notranslate"><span class="pre">IpcHandle</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="external-memory.html#setting-the-emm-plugin">Setting the EMM Plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#environment-variable">Environment variable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external-memory.html#function">Function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#numba.cuda.set_memory_manager"><code class="docutils literal notranslate"><span class="pre">set_memory_manager()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="external-memory.html#resetting-the-memory-manager">Resetting the memory manager</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bindings.html">CUDA Bindings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html#per-thread-default-streams">Per-Thread Default Streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bindings.html#roadmap">Roadmap</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cuda_ffi.html">Calling foreign functions from Python kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#device-function-abi">Device function ABI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#declaration-in-python">Declaration in Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cuda_ffi.html#numba.cuda.declare_device"><code class="docutils literal notranslate"><span class="pre">declare_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#passing-pointers">Passing pointers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#linking-and-calling-functions">Linking and Calling functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#c-c-support">C/C++ Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_ffi.html#complete-example">Complete Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cuda_compilation.html">Compiling Python functions for use with other languages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html#using-the-c-abi">Using the C ABI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuda_compilation.html#c-and-numba-abi-examples">C and Numba ABI examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="caching.html">On-disk Kernel Caching</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="caching.html#compute-capability-considerations">Compute capability considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="minor_version_compatibility.html">CUDA Minor Version Compatibility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="minor_version_compatibility.html#cuda-12">CUDA 12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="minor_version_compatibility.html#cuda-11">CUDA 11</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html#enabling-mvc-support">Enabling MVC Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minor_version_compatibility.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">CUDA Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#nvprof-reports-no-kernels-were-profiled">nvprof reports “No kernels were profiled”</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Numba CUDA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="overview.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="../_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>

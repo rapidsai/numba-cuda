@@ -1,0 +1,2321 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; Numba CUDA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/nvidia-sphinx-theme.css?v=93085937" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <link rel="icon" href="_static/numba-green-icon-rgb.svg"/>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/nvidia-logo-horiz-rgb-blk-for-screen.svg" class="logo__image only-light" alt="Numba CUDA - Home"/>
+    <script>document.write(`<img src="_static/nvidia-logo-horiz-rgb-wht-for-screen.svg" class="logo__image only-dark" alt="Numba CUDA - Home"/>`);</script>
+  
+  
+    <p class="title logo__title">Numba CUDA</p>
+  
+</a>
+
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Table of Contents">
+  <p class="bd-links__title" role="heading" aria-level="1">Table of Contents</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="user/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/kernels.html">Writing CUDA Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/memory.html">Memory management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/device-functions.html">Writing Device Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/cudapysupported.html">Supported Python features in CUDA Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/fastmath.html">CUDA Fast Math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/intrinsics.html">Supported Atomic Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/cooperative_groups.html">Cooperative Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/random.html">Random Number Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/device-management.html">Device management</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="user/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/simulator.html">Debugging CUDA Python with the the CUDA Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/reduction.html">GPU Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/ufunc.html">CUDA Ufuncs and Generalized Ufuncs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/ipc.html">Sharing CUDA Memory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/cuda_array_interface.html">CUDA Array Interface (Version 3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/external-memory.html">External Memory Management (EMM) Plugin interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/bindings.html">CUDA Bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/cuda_ffi.html">Calling foreign functions from Python kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/cuda_compilation.html">Compiling Python functions for use with other languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/caching.html">On-disk Kernel Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/minor_version_compatibility.html">CUDA Minor Version Compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/faq.html">CUDA Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/host.html">CUDA Host API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/kernel.html">CUDA Kernel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/types.html">CUDA-Specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/libdevice.html">Libdevice functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/envvars.html">Environment Variables</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/reduction.html#numba.cuda.Reduce.__call__">__call__() (numba.cuda.Reduce method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/reduction.html#numba.cuda.Reduce.__init__">__init__() (numba.cuda.Reduce method)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.devices._DeviceContextManager">_DeviceContextManager (class in numba.cuda.cudadrv.devices)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.abs">abs() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.acos">acos() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.acosf">acosf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.acosh">acosh() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.acoshf">acoshf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Stream.add_callback">add_callback() (numba.cuda.cudadrv.driver.Stream method)</a>
+</li>
+      <li><a href="user/cuda_array_interface.html#numba.cuda.as_cuda_array">as_cuda_array() (numba.cuda method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.asin">asin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.asinf">asinf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.asinh">asinh() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.asinhf">asinhf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Stream.async_done">async_done() (numba.cuda.cudadrv.driver.Stream method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atan">atan() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atan2">atan2() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atan2f">atan2f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atanf">atanf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atanh">atanh() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.atanhf">atanhf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Stream.auto_synchronize">auto_synchronize() (numba.cuda.cudadrv.driver.Stream method)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.cudadrv.driver.AutoFreePointer">AutoFreePointer (class in numba.cuda.cudadrv.driver)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager">BaseCUDAMemoryManager (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.blockDim">blockDim (numba.cuda attribute)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.blockIdx">blockIdx (numba.cuda attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.brev">brev() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.brevll">brevll() (in module numba.cuda.libdevice)</a>
+</li>
+      <li>
+    built-in function
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.activemask">numba.cuda.activemask()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.all_sync">numba.cuda.all_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.any_sync">numba.cuda.any_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.add">numba.cuda.atomic.add()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.and_">numba.cuda.atomic.and_()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.cas">numba.cuda.atomic.cas()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.dec">numba.cuda.atomic.dec()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.exch">numba.cuda.atomic.exch()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.inc">numba.cuda.atomic.inc()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.max">numba.cuda.atomic.max()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.or_">numba.cuda.atomic.or_()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.sub">numba.cuda.atomic.sub()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.xor">numba.cuda.atomic.xor()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.ballot_sync">numba.cuda.ballot_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.brev">numba.cuda.brev()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.cbrt">numba.cuda.cbrt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.cg.this_grid">numba.cuda.cg.this_grid()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.clz">numba.cuda.clz()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.const.array_like">numba.cuda.const.array_like()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.eq_sync">numba.cuda.eq_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.ffs">numba.cuda.ffs()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fma">numba.cuda.fma()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.habs">numba.cuda.fp16.habs()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hadd">numba.cuda.fp16.hadd()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hceil">numba.cuda.fp16.hceil()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hcos">numba.cuda.fp16.hcos()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hdiv">numba.cuda.fp16.hdiv()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.heq">numba.cuda.fp16.heq()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp">numba.cuda.fp16.hexp()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp10">numba.cuda.fp16.hexp10()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp2">numba.cuda.fp16.hexp2()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hfloor">numba.cuda.fp16.hfloor()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hfma">numba.cuda.fp16.hfma()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hge">numba.cuda.fp16.hge()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hgt">numba.cuda.fp16.hgt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hle">numba.cuda.fp16.hle()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog">numba.cuda.fp16.hlog()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog10">numba.cuda.fp16.hlog10()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog2">numba.cuda.fp16.hlog2()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlt">numba.cuda.fp16.hlt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmax">numba.cuda.fp16.hmax()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmin">numba.cuda.fp16.hmin()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmul">numba.cuda.fp16.hmul()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hne">numba.cuda.fp16.hne()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hneg">numba.cuda.fp16.hneg()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrcp">numba.cuda.fp16.hrcp()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrint">numba.cuda.fp16.hrint()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrsqrt">numba.cuda.fp16.hrsqrt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsin">numba.cuda.fp16.hsin()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsqrt">numba.cuda.fp16.hsqrt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsub">numba.cuda.fp16.hsub()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.htrunc">numba.cuda.fp16.htrunc()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.grid">numba.cuda.grid()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.gridsize">numba.cuda.gridsize()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.is_float16_supported">numba.cuda.is_float16_supported()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.lanemask_lt">numba.cuda.lanemask_lt()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.local.array">numba.cuda.local.array()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.match_all_sync">numba.cuda.match_all_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.match_any_sync">numba.cuda.match_any_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.nanosleep">numba.cuda.nanosleep()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.popc">numba.cuda.popc()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.selp">numba.cuda.selp()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.shared.array">numba.cuda.shared.array()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_down_sync">numba.cuda.shfl_down_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_sync">numba.cuda.shfl_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_up_sync">numba.cuda.shfl_up_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_xor_sync">numba.cuda.shfl_xor_sync()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads">numba.cuda.syncthreads()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_and">numba.cuda.syncthreads_and()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_count">numba.cuda.syncthreads_count()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_or">numba.cuda.syncthreads_or()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.syncwarp">numba.cuda.syncwarp()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence">numba.cuda.threadfence()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence_block">numba.cuda.threadfence_block()</a>
+</li>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence_system">numba.cuda.threadfence_system()</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.byte_perm">byte_perm() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cbrt">cbrt() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cbrtf">cbrtf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ceil">ceil() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ceilf">ceilf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.close">close() (in module numba.cuda)</a>
+
+      <ul>
+        <li><a href="user/ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle.close">(numba.cuda.cudadrv.devicearray.IpcArrayHandle method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.clz">clz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.clzll">clzll() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.compile">compile() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.compile_for_current_device">compile_for_current_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.compile_ptx">compile_ptx() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.compile_ptx_for_current_device">compile_ptx_for_current_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.compute_capability">compute_capability (numba.cuda.cudadrv.driver.Device attribute)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Context">Context (class in numba.cuda.cudadrv.driver)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.copy_to_device">copy_to_device() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+
+      <ul>
+        <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord.copy_to_device">(numba.cuda.cudadrv.devicearray.DeviceRecord method)</a>
+</li>
+        <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.copy_to_device">(numba.cuda.cudadrv.devicearray.MappedNDArray method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.copy_to_host">copy_to_host() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+
+      <ul>
+        <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord.copy_to_host">(numba.cuda.cudadrv.devicearray.DeviceRecord method)</a>
+</li>
+        <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.copy_to_host">(numba.cuda.cudadrv.devicearray.MappedNDArray method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.copysign">copysign() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.copysignf">copysignf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cos">cos() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cosf">cosf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cosh">cosh() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.coshf">coshf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cospi">cospi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.cospif">cospif() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher">CUDADispatcher (class in numba.cuda.dispatcher)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.gpus.current">current (numba.cuda.gpus attribute)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.current_context">current_context() (in module numba.cuda)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dadd_rd">dadd_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dadd_rn">dadd_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dadd_ru">dadd_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dadd_rz">dadd_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ddiv_rd">ddiv_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ddiv_rn">ddiv_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ddiv_ru">ddiv_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ddiv_rz">ddiv_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/cuda_ffi.html#numba.cuda.declare_device">declare_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.default_stream">default_stream() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/memory.html#numba.cuda.defer_cleanup">defer_cleanup() (in module numba.cuda)</a>
+
+      <ul>
+        <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.defer_cleanup">(numba.cuda.BaseCUDAMemoryManager method)</a>
+</li>
+        <li><a href="user/external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.defer_cleanup">(numba.cuda.HostOnlyCUDAMemoryManager method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/host.html#numba.cuda.detect">detect() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.device_array">device_array() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.device_array_like">device_array_like() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray">DeviceNDArray (class in numba.cuda.cudadrv.devicearray)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceRecord">DeviceRecord (class in numba.cuda.cudadrv.devicearray)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dmul_rd">dmul_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dmul_rn">dmul_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dmul_ru">dmul_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dmul_rz">dmul_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2float_rd">double2float_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2float_rn">double2float_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2float_ru">double2float_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2float_rz">double2float_rz() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2hiint">double2hiint() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2int_rd">double2int_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2int_rn">double2int_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2int_ru">double2int_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2int_rz">double2int_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ll_rd">double2ll_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ll_rn">double2ll_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ll_ru">double2ll_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ll_rz">double2ll_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2loint">double2loint() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2uint_rd">double2uint_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2uint_rn">double2uint_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2uint_ru">double2uint_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2uint_rz">double2uint_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ull_rd">double2ull_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ull_rn">double2ull_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ull_ru">double2ull_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double2ull_rz">double2ull_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.double_as_longlong">double_as_longlong() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.drcp_rd">drcp_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.drcp_rn">drcp_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.drcp_ru">drcp_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.drcp_rz">drcp_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dsqrt_rd">dsqrt_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dsqrt_rn">dsqrt_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dsqrt_ru">dsqrt_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.dsqrt_rz">dsqrt_rz() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    environment variable
+
+      <ul>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_ARRAY_INTERFACE_SYNC">NUMBA_CUDA_ARRAY_INTERFACE_SYNC</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_DEFAULT_PTX_CC">NUMBA_CUDA_DEFAULT_PTX_CC</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_DRIVER">NUMBA_CUDA_DRIVER</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_INCLUDE_PATH">NUMBA_CUDA_INCLUDE_PATH</a>, <a href="user/cuda_ffi.html#index-1">[1]</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_LOG_API_ARGS">NUMBA_CUDA_LOG_API_ARGS</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_LOG_LEVEL">NUMBA_CUDA_LOG_LEVEL</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_LOG_SIZE">NUMBA_CUDA_LOG_SIZE</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_LOW_OCCUPANCY_WARNINGS">NUMBA_CUDA_LOW_OCCUPANCY_WARNINGS</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_PER_THREAD_DEFAULT_STREAM">NUMBA_CUDA_PER_THREAD_DEFAULT_STREAM</a>, <a href="user/bindings.html#index-0">[1]</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_USE_NVIDIA_BINDING">NUMBA_CUDA_USE_NVIDIA_BINDING</a>, <a href="user/cuda_ffi.html#index-0">[1]</a>, <a href="user/overview.html#index-0">[2]</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_VERBOSE_JIT_LOG">NUMBA_CUDA_VERBOSE_JIT_LOG</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_CUDA_WARN_ON_IMPLICIT_COPY">NUMBA_CUDA_WARN_ON_IMPLICIT_COPY</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_DISABLE_CUDA">NUMBA_DISABLE_CUDA</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_ENABLE_CUDASIM">NUMBA_ENABLE_CUDASIM</a>, <a href="user/simulator.html#index-0">[1]</a>
+</li>
+        <li><a href="reference/envvars.html#envvar-NUMBA_FORCE_CUDA_CC">NUMBA_FORCE_CUDA_CC</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erf">erf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfc">erfc() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfcf">erfcf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfcinv">erfcinv() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfcinvf">erfcinvf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfcx">erfcx() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfcxf">erfcxf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erff">erff() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfinv">erfinv() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.erfinvf">erfinvf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Event">Event (class in numba.cuda.cudadrv.driver)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.event">event() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.event_elapsed_time">event_elapsed_time() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.exp">exp() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.exp10">exp10() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.exp10f">exp10f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.exp2">exp2() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.exp2f">exp2f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.expf">expf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.expm1">expm1() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.expm1f">expm1f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.extensions">extensions (numba.cuda.dispatcher.CUDADispatcher property)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.external_stream">external_stream() (in module numba.cuda)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fabs">fabs() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fabsf">fabsf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fadd_rd">fadd_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fadd_rn">fadd_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fadd_ru">fadd_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fadd_rz">fadd_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_cosf">fast_cosf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_exp10f">fast_exp10f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_expf">fast_expf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_fdividef">fast_fdividef() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_log10f">fast_log10f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_log2f">fast_log2f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_logf">fast_logf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_powf">fast_powf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_sincosf">fast_sincosf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_sinf">fast_sinf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fast_tanf">fast_tanf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdim">fdim() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdimf">fdimf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdiv_rd">fdiv_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdiv_rn">fdiv_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdiv_ru">fdiv_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fdiv_rz">fdiv_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ffs">ffs() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ffsll">ffsll() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.finitef">finitef() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2half_rn">float2half_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2int_rd">float2int_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2int_rn">float2int_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2int_ru">float2int_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2int_rz">float2int_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ll_rd">float2ll_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ll_rn">float2ll_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ll_ru">float2ll_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ll_rz">float2ll_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2uint_rd">float2uint_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2uint_rn">float2uint_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2uint_ru">float2uint_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2uint_rz">float2uint_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ull_rd">float2ull_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ull_rn">float2ull_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ull_ru">float2ull_ru() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float2ull_rz">float2ull_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.float_as_int">float_as_int() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.floor">floor() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.floorf">floorf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fma">fma() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fma_rd">fma_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fma_rn">fma_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fma_ru">fma_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fma_rz">fma_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaf">fmaf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaf_rd">fmaf_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaf_rn">fmaf_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaf_ru">fmaf_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaf_rz">fmaf_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmax">fmax() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmaxf">fmaxf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmin">fmin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fminf">fminf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmod">fmod() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmodf">fmodf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmul_rd">fmul_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmul_rn">fmul_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmul_ru">fmul_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fmul_rz">fmul_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.forall">forall() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frcp_rd">frcp_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frcp_rn">frcp_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frcp_ru">frcp_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frcp_rz">frcp_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.MemoryInfo.free">free (numba.cuda.MemoryInfo attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frexp">frexp() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frexpf">frexpf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/cuda_array_interface.html#numba.cuda.from_cuda_array_interface">from_cuda_array_interface() (numba.cuda method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.frsqrt_rn">frsqrt_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsqrt_rd">fsqrt_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsqrt_rn">fsqrt_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsqrt_ru">fsqrt_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsqrt_rz">fsqrt_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsub_rd">fsub_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsub_rn">fsub_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsub_ru">fsub_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.fsub_rz">fsub_rz() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_const_mem_size">get_const_mem_size() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.get_current_device">get_current_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.get_ipc_handle">get_ipc_handle() (numba.cuda.BaseCUDAMemoryManager method)</a>
+
+      <ul>
+        <li><a href="user/external-memory.html#numba.cuda.GetIpcHandleMixin.get_ipc_handle">(numba.cuda.GetIpcHandleMixin method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_local_mem_per_thread">get_local_mem_per_thread() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_max_threads_per_block">get_max_threads_per_block() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.get_memory_info">get_memory_info() (numba.cuda.BaseCUDAMemoryManager method)</a>
+
+      <ul>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Context.get_memory_info">(numba.cuda.cudadrv.driver.Context method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_regs_per_thread">get_regs_per_thread() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.get_shared_mem_per_block">get_shared_mem_per_block() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.runtime.Runtime.get_version">get_version() (numba.cuda.cudadrv.runtime.Runtime method)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.GetIpcHandleMixin">GetIpcHandleMixin (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.gpus">gpus (numba.cuda attribute)</a>
+
+      <ul>
+        <li><a href="user/device-management.html#numba.cuda.cudadrv.devices.gpus">(numba.cuda.cudadrv.devices attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/kernel.html#numba.cuda.gridDim">gridDim (numba.cuda attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.hadd">hadd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.half2float">half2float() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.hiloint2double">hiloint2double() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager">HostOnlyCUDAMemoryManager (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.hypot">hypot() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.hypotf">hypotf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.id">id (numba.cuda.cudadrv.driver.Device attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ilogb">ilogb() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ilogbf">ilogbf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.initialize">initialize() (numba.cuda.BaseCUDAMemoryManager method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_asm">inspect_asm() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_llvm">inspect_llvm() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_sass">inspect_sass() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.inspect_types">inspect_types() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int2double_rn">int2double_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int2float_rd">int2float_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int2float_rn">int2float_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int2float_ru">int2float_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int2float_rz">int2float_rz() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.int_as_float">int_as_float() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.interface_version">interface_version (numba.cuda.BaseCUDAMemoryManager property)</a>
+</li>
+      <li><a href="user/ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle">IpcArrayHandle (class in numba.cuda.cudadrv.devicearray)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.IpcHandle">IpcHandle (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.is_available">is_available() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.is_c_contiguous">is_c_contiguous() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.is_f_contiguous">is_f_contiguous() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.is_supported_version">is_supported_version() (in module numba.cuda)</a>
+
+      <ul>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.runtime.Runtime.is_supported_version">(numba.cuda.cudadrv.runtime.Runtime method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.isfinited">isfinited() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.isinfd">isinfd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.isinff">isinff() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.isnand">isnand() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.isnanf">isnanf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.j0">j0() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.j0f">j0f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.j1">j1() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.j1f">j1f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.jit">jit() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.jn">jn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.jnf">jnf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/kernel.html#numba.cuda.laneid">laneid (numba.cuda attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ldexp">ldexp() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ldexpf">ldexpf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.legacy_default_stream">legacy_default_stream() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.lgamma">lgamma() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.lgammaf">lgammaf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.list_devices">list_devices() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2double_rd">ll2double_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2double_rn">ll2double_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2double_ru">ll2double_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2double_rz">ll2double_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2float_rd">ll2float_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2float_rn">ll2float_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2float_ru">ll2float_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ll2float_rz">ll2float_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llabs">llabs() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llmax">llmax() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llmin">llmin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llrint">llrint() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llrintf">llrintf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llround">llround() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.llroundf">llroundf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log">log() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log10">log10() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log10f">log10f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log1p">log1p() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log1pf">log1pf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log2">log2() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.log2f">log2f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.logb">logb() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.logbf">logbf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.logf">logf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.longlong_as_double">longlong_as_double() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/memory.html#numba.cuda.managed_array">managed_array() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.mapped">mapped() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.mapped_array">mapped_array() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.mapped_array_like">mapped_array_like() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.MappedMemory">MappedMemory (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray">MappedNDArray (class in numba.cuda.cudadrv.devicearray)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.max">max() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="user/cooperative_groups.html#numba.cuda.dispatcher._Kernel.max_cooperative_grid_blocks">max_cooperative_grid_blocks() (numba.cuda.dispatcher._Kernel method)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.memalloc">memalloc() (numba.cuda.BaseCUDAMemoryManager method)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.memhostalloc">memhostalloc() (numba.cuda.BaseCUDAMemoryManager method)</a>
+
+      <ul>
+        <li><a href="user/external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.memhostalloc">(numba.cuda.HostOnlyCUDAMemoryManager method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/external-memory.html#numba.cuda.MemoryInfo">MemoryInfo (class in numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.MemoryPointer">MemoryPointer (class in numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.mempin">mempin() (numba.cuda.BaseCUDAMemoryManager method)</a>
+
+      <ul>
+        <li><a href="user/external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.mempin">(numba.cuda.HostOnlyCUDAMemoryManager method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.min">min() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.modf">modf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.modff">modff() (in module numba.cuda.libdevice)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="reference/libdevice.html#module-numba.cuda.libdevice">numba.cuda.libdevice</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.mul24">mul24() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.mul64hi">mul64hi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.mulhi">mulhi() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.name">name (numba.cuda.cudadrv.driver.Device attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.nearbyint">nearbyint() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.nearbyintf">nearbyintf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.nextafter">nextafter() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.nextafterf">nextafterf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.normcdf">normcdf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.normcdff">normcdff() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.normcdfinv">normcdfinv() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.normcdfinvf">normcdfinvf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li>
+    numba.cuda.activemask()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.activemask">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.all_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.all_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.any_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.any_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.add()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.add">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.and_()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.and_">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.cas()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.cas">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.dec()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.dec">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.exch()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.exch">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.inc()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.inc">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.max()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.max">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.or_()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.or_">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.sub()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.sub">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.atomic.xor()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.atomic.xor">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.ballot_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.ballot_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.brev()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.brev">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.cbrt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.cbrt">built-in function</a>
+</li>
+      </ul></li>
+      <li><a href="reference/kernel.html#numba.cuda.cg.GridGroup">numba.cuda.cg.GridGroup (built-in class)</a>
+</li>
+      <li>
+    numba.cuda.cg.this_grid()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.cg.this_grid">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.clz()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.clz">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.const.array_like()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.const.array_like">built-in function</a>
+</li>
+      </ul></li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device">numba.cuda.cudadrv.driver.Device (built-in class)</a>
+</li>
+      <li>
+    numba.cuda.eq_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.eq_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.ffs()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.ffs">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fma()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fma">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.habs()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.habs">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hadd()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hadd">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hceil()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hceil">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hcos()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hcos">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hdiv()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hdiv">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.heq()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.heq">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hexp()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hexp10()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp10">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hexp2()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hexp2">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hfloor()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hfloor">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hfma()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hfma">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hge()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hge">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hgt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hgt">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hle()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hle">built-in function</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    numba.cuda.fp16.hlog()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hlog10()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog10">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hlog2()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlog2">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hlt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hlt">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hmax()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmax">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hmin()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmin">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hmul()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hmul">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hne()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hne">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hneg()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hneg">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hrcp()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrcp">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hrint()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrint">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hrsqrt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hrsqrt">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hsin()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsin">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hsqrt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsqrt">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.hsub()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.hsub">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.fp16.htrunc()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.fp16.htrunc">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.grid()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.grid">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.gridsize()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.gridsize">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.is_float16_supported()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.is_float16_supported">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.lanemask_lt()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.lanemask_lt">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.libdevice
+
+      <ul>
+        <li><a href="reference/libdevice.html#module-numba.cuda.libdevice">module</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.local.array()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.local.array">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.match_all_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.match_all_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.match_any_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.match_any_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.nanosleep()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.nanosleep">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.popc()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.popc">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.selp()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.selp">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.shared.array()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.shared.array">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.shfl_down_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_down_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.shfl_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.shfl_up_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_up_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.shfl_xor_sync()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.shfl_xor_sync">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.syncthreads()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.syncthreads_and()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_and">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.syncthreads_count()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_count">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.syncthreads_or()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.syncthreads_or">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.syncwarp()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.syncwarp">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.threadfence()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.threadfence_block()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence_block">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    numba.cuda.threadfence_system()
+
+      <ul>
+        <li><a href="reference/kernel.html#numba.cuda.threadfence_system">built-in function</a>
+</li>
+      </ul></li>
+      <li><a href="user/cuda_ffi.html#index-1">NUMBA_CUDA_INCLUDE_PATH</a>
+</li>
+      <li><a href="user/bindings.html#index-0">NUMBA_CUDA_PER_THREAD_DEFAULT_STREAM</a>
+</li>
+      <li><a href="user/cuda_ffi.html#index-0">NUMBA_CUDA_USE_NVIDIA_BINDING</a>, <a href="user/overview.html#index-0">[1]</a>
+</li>
+      <li><a href="user/simulator.html#index-0">NUMBA_ENABLE_CUDASIM</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/ipc.html#numba.cuda.cudadrv.devicearray.IpcArrayHandle.open">open() (numba.cuda.cudadrv.devicearray.IpcArrayHandle method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="user/ipc.html#numba.cuda.open_ipc_array">open_ipc_array() (numba.cuda method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/host.html#numba.cuda.per_thread_default_stream">per_thread_default_stream() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.pinned">pinned() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.pinned_array">pinned_array() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.pinned_array_like">pinned_array_like() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.PinnedMemory">PinnedMemory (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Context.pop">pop() (numba.cuda.cudadrv.driver.Context method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.popc">popc() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.popcll">popcll() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.pow">pow() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.powf">powf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.powi">powi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.powif">powif() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.profile_start">profile_start() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.profile_stop">profile_stop() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.profiling">profiling() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Context.push">push() (numba.cuda.cudadrv.driver.Context method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Event.query">query() (numba.cuda.cudadrv.driver.Event method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.ravel">ravel() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rcbrt">rcbrt() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rcbrtf">rcbrtf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Event.record">record() (numba.cuda.cudadrv.driver.Event method)</a>
+</li>
+      <li><a href="user/reduction.html#numba.cuda.Reduce">Reduce (class in numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.remainder">remainder() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.remainderf">remainderf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.remquo">remquo() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.remquof">remquof() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.require_context">require_context() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.BaseCUDAMemoryManager.reset">reset() (numba.cuda.BaseCUDAMemoryManager method)</a>
+
+      <ul>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Context.reset">(numba.cuda.cudadrv.driver.Context method)</a>
+</li>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.reset">(numba.cuda.cudadrv.driver.Device method)</a>
+</li>
+        <li><a href="user/external-memory.html#numba.cuda.HostOnlyCUDAMemoryManager.reset">(numba.cuda.HostOnlyCUDAMemoryManager method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.reshape">reshape() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rhadd">rhadd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rint">rint() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rintf">rintf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.round">round() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.roundf">roundf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rsqrt">rsqrt() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.rsqrtf">rsqrtf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.runtime.Runtime">Runtime (class in numba.cuda.cudadrv.runtime)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sad">sad() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.saturatef">saturatef() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.scalbn">scalbn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.scalbnf">scalbnf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.select_device">select_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.set_memory_manager">set_memory_manager() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.signbitd">signbitd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.signbitf">signbitf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sin">sin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sincos">sincos() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sincosf">sincosf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sincospi">sincospi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sincospif">sincospif() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sinf">sinf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sinh">sinh() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sinhf">sinhf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sinpi">sinpi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sinpif">sinpif() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.specialize">specialize() (numba.cuda.dispatcher.CUDADispatcher method)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.dispatcher.CUDADispatcher.specialized">specialized (numba.cuda.dispatcher.CUDADispatcher property)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.DeviceNDArray.split">split() (numba.cuda.cudadrv.devicearray.DeviceNDArray method)</a>
+
+      <ul>
+        <li><a href="reference/memory.html#numba.cuda.cudadrv.devicearray.MappedNDArray.split">(numba.cuda.cudadrv.devicearray.MappedNDArray method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sqrt">sqrt() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.sqrtf">sqrtf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Stream">Stream (class in numba.cuda.cudadrv.driver)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.stream">stream() (in module numba.cuda)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.runtime.Runtime.supported_versions">supported_versions (numba.cuda.cudadrv.runtime.Runtime property)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.supports_float16">supports_float16 (numba.cuda.cudadrv.driver.Device attribute)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.cg.GridGroup.sync">sync() (numba.cuda.cg.GridGroup method)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.synchronize">synchronize() (in module numba.cuda)</a>
+
+      <ul>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Event.synchronize">(numba.cuda.cudadrv.driver.Event method)</a>
+</li>
+        <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Stream.synchronize">(numba.cuda.cudadrv.driver.Stream method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tan">tan() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tanf">tanf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tanh">tanh() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tanhf">tanhf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tgamma">tgamma() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.tgammaf">tgammaf() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/kernel.html#numba.cuda.threadIdx">threadIdx (numba.cuda attribute)</a>
+</li>
+      <li><a href="reference/memory.html#numba.cuda.to_device">to_device() (in module numba.cuda)</a>
+</li>
+      <li><a href="user/external-memory.html#numba.cuda.MemoryInfo.total">total (numba.cuda.MemoryInfo attribute)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.trunc">trunc() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.truncf">truncf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uhadd">uhadd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uint2double_rn">uint2double_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uint2float_rd">uint2float_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uint2float_rn">uint2float_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uint2float_ru">uint2float_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.uint2float_rz">uint2float_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2double_rd">ull2double_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2double_rn">ull2double_rn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2double_ru">ull2double_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2double_rz">ull2double_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2float_rd">ull2float_rd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2float_rn">ull2float_rn() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2float_ru">ull2float_ru() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ull2float_rz">ull2float_rz() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ullmax">ullmax() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ullmin">ullmin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.umax">umax() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.umin">umin() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.umul24">umul24() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.umul64hi">umul64hi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.umulhi">umulhi() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.urhadd">urhadd() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.usad">usad() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Device.uuid">uuid (numba.cuda.cudadrv.driver.Device attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/host.html#numba.cuda.cudadrv.driver.Event.wait">wait() (numba.cuda.cudadrv.driver.Event method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/kernel.html#numba.cuda.warpsize">warpsize (numba.cuda attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.y0">y0() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.y0f">y0f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.y1">y1() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.y1f">y1f() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.yn">yn() (in module numba.cuda.libdevice)</a>
+</li>
+      <li><a href="reference/libdevice.html#numba.cuda.libdevice.ynf">ynf() (in module numba.cuda.libdevice)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+<a class="footer-brand logo" href="https://www.nvidia.com">
+  <img src="_static/nvidia-logo-horiz-rgb-1c-blk-for-screen.svg" class="logo__image only-light" alt="NVIDIA"/>
+  <img src="_static/nvidia-logo-horiz-rgb-1c-wht-for-screen.svg" class="logo__image only-dark" alt="NVIDIA"/>
+</a></div>
+      
+        <div class="footer-item">
+
+<div class="footer-links">
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-policy/">Privacy Policy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/privacy-center/">Manage My Privacy</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/preferences/start/">Do Not Sell or Share My Data</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/terms-of-service/">Terms of Service</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/accessibility/">Accessibility</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/about-nvidia/company-policies/">Corporate Policies</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/product-security/">Product Security</a>
+   | 
+  
+  
+  
+  <a class="external" href="https://www.nvidia.com/en-us/contact/">Contact</a>
+  
+  
+  
+</div>
+</div>
+      
+        <div class="footer-item">
+
+
+  <p class="copyright">
+    
+      Copyright © 2012-2024 Anaconda Inc. 2024, NVIDIA Corporation..
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>
