@@ -35,6 +35,8 @@ from numba.core import utils, serialize, config
 from .error import CudaSupportError, CudaDriverError
 from .drvapi import API_PROTOTYPES
 from .drvapi import cu_occupancy_b2d_size, cu_stream_callback_pyobj, cu_uuid
+from .mappings import FILE_EXTENSION_MAP
+from .linkable_code import LinkableCode
 from numba.cuda.cudadrv import enums, drvapi, nvrtc
 
 USE_NV_BINDING = config.CUDA_USE_NVIDIA_BINDING
@@ -54,6 +56,12 @@ _py_decref = ctypes.pythonapi.Py_DecRef
 _py_incref = ctypes.pythonapi.Py_IncRef
 _py_decref.argtypes = [ctypes.py_object]
 _py_incref.argtypes = [ctypes.py_object]
+
+pynvjitlink_import_err = None
+try:
+    from pynvjitlink.api import NvJitLinker, NvJitLinkError
+except ImportError as err:
+    pynvjitlink_import_err = err
 
 
 def make_logger():
@@ -2546,34 +2554,31 @@ def launch_kernel(cufunc_handle,
                               extra)
 
 
-if USE_NV_BINDING:
-    jitty = binding.CUjitInputType
-    FILE_EXTENSION_MAP = {
-        'o': jitty.CU_JIT_INPUT_OBJECT,
-        'ptx': jitty.CU_JIT_INPUT_PTX,
-        'a': jitty.CU_JIT_INPUT_LIBRARY,
-        'lib': jitty.CU_JIT_INPUT_LIBRARY,
-        'cubin': jitty.CU_JIT_INPUT_CUBIN,
-        'fatbin': jitty.CU_JIT_INPUT_FATBINARY,
-    }
-else:
-    FILE_EXTENSION_MAP = {
-        'o': enums.CU_JIT_INPUT_OBJECT,
-        'ptx': enums.CU_JIT_INPUT_PTX,
-        'a': enums.CU_JIT_INPUT_LIBRARY,
-        'lib': enums.CU_JIT_INPUT_LIBRARY,
-        'cubin': enums.CU_JIT_INPUT_CUBIN,
-        'fatbin': enums.CU_JIT_INPUT_FATBINARY,
-    }
-
-
 class Linker(metaclass=ABCMeta):
     """Abstract base class for linkers"""
 
     @classmethod
-    def new(cls, max_registers=0, lineinfo=False, cc=None):
+    def new(cls,
+            max_registers=0,
+            lineinfo=False,
+            cc=None,
+            lto=None,
+            additional_flags=None
+            ):
         if config.CUDA_ENABLE_MINOR_VERSION_COMPATIBILITY:
-            return MVCLinker(max_registers, lineinfo, cc)
+            # TODO: circular
+            from . import runtime
+            driver_ver, runtime_ver = (
+                driver.get_version(), runtime.get_version()
+            )
+            if driver_ver >= (12, 0) and runtime_ver > driver_ver:
+                # runs once
+                return PyNvJitLinker(
+                    max_registers, lineinfo, cc, lto, additional_flags
+                )
+            else:
+                return MVCLinker(max_registers, lineinfo, cc)
+
         elif USE_NV_BINDING:
             return CudaPythonLinker(max_registers, lineinfo, cc)
         else:
@@ -2929,6 +2934,143 @@ class CudaPythonLinker(Linker):
         cubin_ptr = ctypes.cast(cubin_buf, ctypes.POINTER(ctypes.c_char))
         return bytes(np.ctypeslib.as_array(cubin_ptr, shape=(size,)))
 
+
+class PyNvJitLinker(Linker):
+    def __init__(
+        self,
+        max_registers=None,
+        lineinfo=False,
+        cc=None,
+        lto=False,
+        additional_flags=None,
+    ):
+        if pynvjitlink_import_err is not None:
+            raise ImportError(_MVC_ERROR_MESSAGE)
+        if cc is None:
+            raise RuntimeError("PyNvJitLinker requires CC to be specified")
+        if not any(isinstance(cc, t) for t in [list, tuple]):
+            raise TypeError("`cc` must be a list or tuple of length 2")
+
+        sm_ver = f"{cc[0] * 10 + cc[1]}"
+        arch = f"-arch=sm_{sm_ver}"
+        options = [arch]
+        if max_registers:
+            options.append(f"-maxrregcount={max_registers}")
+        if lineinfo:
+            options.append("-lineinfo")
+        if lto:
+            options.append("-lto")
+        if additional_flags is not None:
+            options.extend(additional_flags)
+
+        self._linker = NvJitLinker(*options)
+        self.lto = lto
+        self.options = options
+
+    @property
+    def info_log(self):
+        return self._linker.info_log
+
+    @property
+    def error_log(self):
+        return self._linker.error_log
+
+    def add_ptx(self, ptx, name="<cudapy-ptx>"):
+        self._linker.add_ptx(ptx, name)
+
+    def add_fatbin(self, fatbin, name="<external-fatbin>"):
+        self._linker.add_fatbin(fatbin, name)
+
+    def add_ltoir(self, ltoir, name="<external-ltoir>"):
+        self._linker.add_ltoir(ltoir, name)
+
+    def add_object(self, obj, name="<external-object>"):
+        self._linker.add_object(obj, name)
+
+    def add_file_guess_ext(self, path_or_code):
+        # Numba's add_file_guess_ext expects to always be passed a path to a
+        # file that it will load from the filesystem to link. We augment it
+        # here with the ability to provide a file from memory.
+
+        # To maintain compatibility with the original interface, all strings
+        # are treated as paths in the filesystem.
+        if isinstance(path_or_code, str):
+            # Upstream numba does not yet recognize LTOIR, so handle that
+            # separately here.
+            extension = pathlib.Path(path_or_code).suffix
+            if extension == ".ltoir":
+                self.add_file(path_or_code, "ltoir")
+            else:
+                # Use Numba's logic for non-LTOIR
+                super().add_file_guess_ext(path_or_code)
+
+            return
+
+        # Otherwise, we should have been given a LinkableCode object
+        if not isinstance(path_or_code, LinkableCode):
+            raise TypeError("Expected path to file or a LinkableCode object")
+
+        if path_or_code.kind == "cu":
+            self.add_cu(path_or_code.data, path_or_code.name)
+        else:
+            self.add_data(
+                path_or_code.data, path_or_code.kind, path_or_code.name
+            )
+
+    def add_file(self, path, kind):
+        try:
+            with open(path, "rb") as f:
+                data = f.read()
+        except FileNotFoundError:
+            raise LinkerError(f"{path} not found")
+
+        name = pathlib.Path(path).name
+        self.add_data(data, kind, name)
+
+    def add_data(self, data, kind, name):
+        if kind == FILE_EXTENSION_MAP["cubin"]:
+            fn = self._linker.add_cubin
+        elif kind == FILE_EXTENSION_MAP["fatbin"]:
+            fn = self._linker.add_fatbin
+        elif kind == FILE_EXTENSION_MAP["a"]:
+            fn = self._linker.add_library
+        elif kind == FILE_EXTENSION_MAP["ptx"]:
+            return self.add_ptx(data, name)
+        elif kind == FILE_EXTENSION_MAP["o"]:
+            fn = self._linker.add_object
+        elif kind == "ltoir":
+            fn = self._linker.add_ltoir
+        else:
+            raise LinkerError(f"Don't know how to link {kind}")
+
+        try:
+            fn(data, name)
+        except NvJitLinkError as e:
+            raise LinkerError from e
+
+    def add_cu(self, cu, name):
+        with driver.get_active_context() as ac:
+            dev = driver.get_device(ac.devnum)
+            cc = dev.compute_capability
+
+        ptx, log = nvrtc.compile(cu, name, cc)
+
+        if config.DUMP_ASSEMBLY:
+            print(("ASSEMBLY %s" % name).center(80, "-"))
+            print(ptx)
+            print("=" * 80)
+
+        # Link the program's PTX using the normal linker mechanism
+        ptx_name = os.path.splitext(name)[0] + ".ptx"
+        self.add_ptx(ptx.encode(), ptx_name)
+
+    def complete(self):
+        try:
+            cubin = self._linker.get_linked_cubin()
+            self._linker._complete = True
+            return cubin
+        except NvJitLinkError as e:
+            raise LinkerError from e
 
 # -----------------------------------------------------------------------------
 
